@@ -18,7 +18,7 @@ const AuthCheck = ({ navigation }) => {
                 if(auth) {
                     
                 } else {
-
+                    navigation.navigate('MainNavigator');
                 }
             } catch(e) {
                 console.dir(e);
