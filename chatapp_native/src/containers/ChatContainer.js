@@ -2,7 +2,9 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Chat from '../components/Chat';
-import { plus } from '../modules/chat';
+import {
+    plus,
+} from '../modules/chat';
 
 const ChatContainer = () => {
     const { num } = useSelector(({ chat }) => ({
@@ -10,6 +12,18 @@ const ChatContainer = () => {
     }));
 
     const dispatch = useDispatch();
+
+    // useEffect(() => {
+    //     console.log('connect');
+    //     dispatch(connectWebsocket());
+    // }, [dispatch]);
+
+    // useEffect(() => {
+    //     return () => {
+    //         console.log('disconnect');
+    //         dispatch(disconnectWebsocket());
+    //     }
+    // }, [dispatch]);
 
     const onClick = () => {
         dispatch(plus());

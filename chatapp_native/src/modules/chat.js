@@ -1,5 +1,6 @@
 import { createAction, handleActions } from 'redux-actions';
 import { takeEvery, fork, take, cancel } from 'redux-saga/effects';
+import { connectNamespace } from '../lib/websocket/websocket';
 
 const PLUS = 'chat/PLUS';
 const CONNECT_WEBSOCKET = 'chat/CONNECT_WEBSOCKET';
@@ -16,7 +17,7 @@ function* connectWebsocketSaga (action) {
     const query = action.payload;
 
     const socketTask = yield fork(connectNamespace, {
-        url: '/chat',
+        url: 'http://localhost:5000/chat',
         initializeValue,
         changeValue,
         query,
