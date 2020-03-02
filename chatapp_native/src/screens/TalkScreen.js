@@ -1,10 +1,10 @@
 import React from 'react';
 
-const SettingTab = () => {
+const TalkScreen = () => {
     return (
         <>
         </>
     );
 };
 
-export default SettingTab;
+export default TalkScreen;

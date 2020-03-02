@@ -1,10 +1,10 @@
 import React from 'react';
 
-const HomeTab = () => {
+const SettingScreen = () => {
     return (
         <>
         </>
     );
 };
 
-export default HomeTab;
+export default SettingScreen;

@@ -1,10 +1,10 @@
 import React from 'react';
 
-const TalkTab = () => {
+const HomeScreen = () => {
     return (
         <>
         </>
     );
 };
 
-export default TalkTab;
+export default HomeScreen;

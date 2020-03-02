@@ -1,10 +1,10 @@
 import React from 'react';
 
-const LikeTab = () => {
+const AuthScreen = () => {
     return (
         <>
         </>
-    );
+    )
 };
 
-export default LikeTab;
+export default AuthScreen;
