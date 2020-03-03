@@ -6,6 +6,7 @@ import morgan from 'morgan';
 import cors from 'cors';
 
 import api from './api';
+import socket from './socket';
 
 dotenv.config();
 
@@ -34,3 +35,5 @@ app.set('port', process.env.PORT || 4000);
 const server = app.listen(app.get('port'), () => {
     console.dir(`Port ${app.get('port')} => listening`);
 });
+
+socket(server, app, sessionMiddleware);

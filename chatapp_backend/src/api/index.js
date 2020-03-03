@@ -1,7 +1,8 @@
 import express from 'express';
-import msg from './msg';
+import chat from './chat';
 
 const router = express.Router();
-router.use('/msg', msg);
+
+router.use('/chat', chat);
 
 export default router;
