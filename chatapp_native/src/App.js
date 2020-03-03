@@ -1,4 +1,5 @@
 import React from 'react';
+import { useSelector } from 'react-redux';
 import styled from 'styled-components/native';;
 import 'react-native-gesture-handler';
 
@@ -18,15 +19,23 @@ const ImageBlock = styled.Image`
 
 const Stack = createStackNavigator();
 
-
 const App = () => {
+  const { auth, loading } = useSelector(({ auth }) => ({
+    auth: auth.auth,
+    loading: auth.loading,
+  }));
+
   return (
-    <NavigationContainer
-      initialRouteName="Auth"
-    >
-      <Stack.Navigator>
-        <Stack.Screen name="Auth" component={AuthNavigator} />
-        <Stack.Screen name="Main" component={MainNavigator} />
+    <NavigationContainer>
+      <Stack.Navigator
+        headerMode='none'
+      >
+        {auth ? (
+          <Stack.Screen name="Main" component={MainNavigator} />
+        )
+        : (
+          <Stack.Screen name="Auth" component={AuthNavigator} />
+        )}
       </Stack.Navigator>
     </NavigationContainer>
   );
