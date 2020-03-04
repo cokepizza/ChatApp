@@ -6,7 +6,7 @@ import 'react-native-gesture-handler';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
-import AuthNavigator from './screens/auth/AuthNavigator';
+import AuthNavigator from './screens/AuthNavigator';
 import MainNavigator from './screens/main/MainNavigator';
 
 import HomeIcon from './assets/images/home.png';
