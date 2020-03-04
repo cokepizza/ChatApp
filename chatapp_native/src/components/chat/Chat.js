@@ -1,4 +1,5 @@
 import React from 'react';
+import { FlatList } from 'react-native';
 import styled from 'styled-components/native';
 
 const ChatBlock = styled.View`
@@ -11,6 +12,16 @@ const ChatTextInputBlock = styled.TextInput`
     height: 30px;
     background: green;
 `;
+
+const MessageFrameBlock = styled.View`
+    width:100px;
+    height: 30px;
+    background: yellow;
+`;
+
+const MessageBlock = styled.Text`
+    font-size: 12px;
+`
 
 const ChatTextBlock = styled.Text`
     font-size:50px;
@@ -27,13 +38,23 @@ const SendButtonBlock = styled.View`
 
 
 
-const Chat = ({ num, message, onClick, onChangeText }) => {
+const Chat = ({ message, messages, onClick, onChangeText }) => {
 
     return (
         <ChatBlock>
-            <ChatTextBlock>
-                {num}
-            </ChatTextBlock>
+            <FlatList
+                data={messages}
+                keyExtractor={(item, index) => {
+                    return `message_${index}`;
+                }}
+                renderItem={({ item }) => { console.log(item); return (
+                    <MessageFrameBlock>
+                        <MessageBlock>
+                            {item}
+                        </MessageBlock>
+                    </MessageFrameBlock>
+                )}}
+            />
             <ChatTextInputBlock
                 value={message}
                 onChangeText={onChangeText}

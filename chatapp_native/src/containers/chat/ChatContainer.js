@@ -45,8 +45,8 @@ const ChatContainer = () => {
     
     return (
         <Chat
-            num={num}
             message={message}
+            messages={messages}
             onClick={onClick}
             onChangeText={onChangeText}
         />
