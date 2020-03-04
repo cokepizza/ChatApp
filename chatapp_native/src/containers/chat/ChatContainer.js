@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -8,6 +8,7 @@ import {
     disconnectWebsocket,
     sendMessage,
     setMessage,
+    clearMessage,
 } from '../../modules/chat';
 
 const ChatContainer = () => {
@@ -17,6 +18,7 @@ const ChatContainer = () => {
     }));
 
     const dispatch = useDispatch();
+    const flatListRef = useRef();
 
     useFocusEffect(useCallback(() => {
         console.log('connect');
@@ -31,6 +33,7 @@ const ChatContainer = () => {
         dispatch(sendMessage({
             message,
         }));
+        dispatch(clearMessage());
     }, [dispatch, message]);
 
     const onChangeText = useCallback(message => {
@@ -39,16 +42,18 @@ const ChatContainer = () => {
         }))
     }, [dispatch]);
 
-    useEffect(() => {
-        console.log(messages);
-    }, [messages]);
-    
+    const onContentSizeChange = useCallback(() => {
+        flatListRef.current.scrollToEnd();
+    }, []);
+
     return (
         <Chat
             message={message}
             messages={messages}
             onClick={onClick}
             onChangeText={onChangeText}
+            flatListRef={flatListRef}
+            onContentSizeChange={onContentSizeChange}
         />
     );
 };

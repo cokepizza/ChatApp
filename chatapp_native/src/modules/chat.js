@@ -16,8 +16,10 @@ export const disconnectWebsocket = createAction(DISCONNECT_WEBSOCKET);
 
 const [ SEND_MESSAGE, SEND_MESSAGE_SUCCESS, SEND_MESSAGE_FAILURE ] = createRequestActionTypes('chat/SEND_MESSAGE');
 const SET_MESSAGE = 'chat/SET_MESSAGE';
+const CLEAR_MESSAGE = 'chat/CLEAR_MESSAGE';
 export const sendMessage = createRequestThunk(SEND_MESSAGE, chatCtrl.createMessage);
 export const setMessage = createAction(SET_MESSAGE, payload => payload);
+export const clearMessage = createAction(CLEAR_MESSAGE);
 
 function* connectWebsocketSaga (action) {
     const query = action.payload;
@@ -57,4 +59,8 @@ export default handleActions({
     }),
     [SEND_MESSAGE_SUCCESS]: state => state,
     [SEND_MESSAGE_FAILURE]: state => state,
+    [CLEAR_MESSAGE]: state => ({
+        ...state,
+        message: initialState.message,
+    }),
 }, initialState);

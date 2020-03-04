@@ -23,11 +23,6 @@ const MessageBlock = styled.Text`
     font-size: 12px;
 `
 
-const ChatTextBlock = styled.Text`
-    font-size:50px;
-    color: black;
-`;
-
 const SendButtonFrameBlock = styled.TouchableOpacity``;
 
 const SendButtonBlock = styled.View`
@@ -36,24 +31,36 @@ const SendButtonBlock = styled.View`
     background: pink;
 `;
 
+const Message = React.memo(({ message }) => 
+    (
+        <MessageFrameBlock>
+            <MessageBlock>
+                {message}
+            </MessageBlock>
+        </MessageFrameBlock>
+    )
+);
 
-
-const Chat = ({ message, messages, onClick, onChangeText }) => {
+const Chat = ({
+    message,
+    messages,
+    onClick,
+    onChangeText,
+    flatListRef,
+    onContentSizeChange,
+}) => {
 
     return (
         <ChatBlock>
             <FlatList
+                ref={flatListRef}
                 data={messages}
-                keyExtractor={(item, index) => {
-                    return `message_${index}`;
-                }}
-                renderItem={({ item }) => { console.log(item); return (
-                    <MessageFrameBlock>
-                        <MessageBlock>
-                            {item}
-                        </MessageBlock>
-                    </MessageFrameBlock>
-                )}}
+                keyExtractor={(item, index) => `message_${index}`}
+                showsVerticalScrollIndicator={false}
+                onContentSizeChange={onContentSizeChange}
+                renderItem={({ item }) => (
+                    <Message message={item} />
+                )}
             />
             <ChatTextInputBlock
                 value={message}
