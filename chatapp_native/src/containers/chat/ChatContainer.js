@@ -29,7 +29,7 @@ const ChatContainer = () => {
         };
     }, [dispatch]));
 
-    const onClick = useCallback(e => {
+    const onPress = useCallback(e => {
         dispatch(sendMessage({
             message,
         }));
@@ -50,7 +50,7 @@ const ChatContainer = () => {
         <Chat
             message={message}
             messages={messages}
-            onClick={onClick}
+            onPress={onPress}
             onChangeText={onChangeText}
             flatListRef={flatListRef}
             onContentSizeChange={onContentSizeChange}

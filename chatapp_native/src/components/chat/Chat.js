@@ -1,8 +1,8 @@
 import React from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
-const ChatBlock = styled.View`
+const ChatBlock = styled.SafeAreaView`
     flex: 1;
     background: white;
 `;
@@ -13,8 +13,13 @@ const ChatTextInputBlock = styled.TextInput`
     background: green;
 `;
 
+const MessageListFrameBlock = styled.View`
+    /* height: 300px; */
+    flex:1;
+`;
+
 const MessageFrameBlock = styled.View`
-    width:100px;
+    width: 100%;
     height: 30px;
     background: yellow;
 `;
@@ -44,7 +49,7 @@ const Message = React.memo(({ message }) =>
 const Chat = ({
     message,
     messages,
-    onClick,
+    onPress,
     onChangeText,
     flatListRef,
     onContentSizeChange,
@@ -52,22 +57,24 @@ const Chat = ({
 
     return (
         <ChatBlock>
-            <FlatList
-                ref={flatListRef}
-                data={messages}
-                keyExtractor={(item, index) => `message_${index}`}
-                showsVerticalScrollIndicator={false}
-                onContentSizeChange={onContentSizeChange}
-                renderItem={({ item }) => (
-                    <Message message={item} />
-                )}
-            />
+            <MessageListFrameBlock>
+                <FlatList
+                    ref={flatListRef}
+                    data={messages}
+                    keyExtractor={(item, index) => `message_${index}`}
+                    showsVerticalScrollIndicator={false}
+                    onContentSizeChange={onContentSizeChange}
+                    renderItem={({ item }) => (
+                        <Message message={item} />
+                    )}
+                />
+            </MessageListFrameBlock>
             <ChatTextInputBlock
                 value={message}
                 onChangeText={onChangeText}
             />
             <SendButtonFrameBlock
-                onPress={onClick}
+                onPress={onPress}
             >
                 <SendButtonBlock />
             </SendButtonFrameBlock>
