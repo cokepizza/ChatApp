@@ -7,7 +7,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer } from '@react-navigation/native';
 
 import AuthNavigator from './screens/AuthNavigator';
-import MainNavigator from './screens/main/MainNavigator';
+import MainNavigator from './screens/MainNavigator';
 
 import HomeIcon from './assets/images/home.png';
 import HomeFocusedIcon from './assets/images/home_focused.png';
@@ -25,13 +25,33 @@ const App = () => {
     loading: auth.loading,
   }));
 
+  //  render instantly
+  const transitionSpec = {
+    open: {
+      config: {
+        duration: 0,
+      }
+    },
+    close: {
+      config: {
+        duration: 0,
+      }
+    }
+  };
+
   return (
     <NavigationContainer>
       <Stack.Navigator
         headerMode='none'
       >
         {auth ? (
-          <Stack.Screen name="Main" component={MainNavigator} />
+          <Stack.Screen
+            name="Main"
+            component={MainNavigator}
+            options={{
+              transitionSpec,
+            }}
+          />
         )
         : (
           <Stack.Screen name="Auth" component={AuthNavigator} />
