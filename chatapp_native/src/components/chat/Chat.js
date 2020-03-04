@@ -7,42 +7,50 @@ const ChatBlock = styled.SafeAreaView`
     background: white;
 `;
 
-const ChatTextInputBlock = styled.TextInput`
+const MessageListBlock = styled.View`
+    /* height: 300px; */
+    flex:1;
+`;
+
+
+const MessageViewBlock = styled.View`
+    height: 30px;
+    background: yellow;
+    border: 1px solid black;
+`;
+
+const MessageTextBlock = styled.Text`
+    font-size: 12px;
+`
+
+const SendBlock = styled.View`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    height: 50px;
+    width: 100%;
+`;
+
+const SendTouchBlock = styled.TouchableOpacity`
+    height: 100%;
+    width: 30px;
+    background: pink;
+`;
+
+const MessageInputBlock = styled.TextInput`
     width: 200px;
     height: 30px;
     background: green;
 `;
 
-const MessageListFrameBlock = styled.View`
-    /* height: 300px; */
-    flex:1;
-`;
-
-const MessageFrameBlock = styled.View`
-    width: 100%;
-    height: 30px;
-    background: yellow;
-`;
-
-const MessageBlock = styled.Text`
-    font-size: 12px;
-`
-
-const SendButtonFrameBlock = styled.TouchableOpacity``;
-
-const SendButtonBlock = styled.View`
-    width: 150px;
-    height: 100px;
-    background: pink;
-`;
-
 const Message = React.memo(({ message }) => 
     (
-        <MessageFrameBlock>
-            <MessageBlock>
+        <MessageViewBlock>
+            <MessageTextBlock>
                 {message}
-            </MessageBlock>
-        </MessageFrameBlock>
+            </MessageTextBlock>
+        </MessageViewBlock>
     )
 );
 
@@ -57,7 +65,7 @@ const Chat = ({
 
     return (
         <ChatBlock>
-            <MessageListFrameBlock>
+            <MessageListBlock>
                 <FlatList
                     ref={flatListRef}
                     data={messages}
@@ -68,16 +76,14 @@ const Chat = ({
                         <Message message={item} />
                     )}
                 />
-            </MessageListFrameBlock>
-            <ChatTextInputBlock
-                value={message}
-                onChangeText={onChangeText}
-            />
-            <SendButtonFrameBlock
-                onPress={onPress}
-            >
-                <SendButtonBlock />
-            </SendButtonFrameBlock>
+            </MessageListBlock>
+            <SendBlock>
+                <MessageInputBlock
+                    value={message}
+                    onChangeText={onChangeText}
+                />
+                <SendTouchBlock onPress={onPress} />
+            </SendBlock>
         </ChatBlock>
     );
 };
