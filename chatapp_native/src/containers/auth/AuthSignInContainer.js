@@ -7,13 +7,8 @@ const AuthSignInContainer = () => {
     const inputRef = useRef([ createRef(), createRef() ]);
 
     const onPress = index => {
-        console.log('aa');
-        // console.log(inputRef.current);
-        // if(inputRef.current[index]) {
+        console.log('Inner onPress');
         inputRef.current[index].focus();
-        // inputRef.current[index].blur();
-        // }
-        
     };
 
     const onFocus = index => {
@@ -24,10 +19,23 @@ const AuthSignInContainer = () => {
         })
     };
 
+    const onSubmit = () => {
+        onPressBackground();
+
+    }
+
+    const onPressBackground = () => {
+        console.log('outer onPress');
+        inputRef.current.forEach(input => input.blur());
+        setFocused([ false, false ]);
+    }
+
     return (
         <AuthSignIn
             focused={focused}
             onPress={onPress}
+            onPressBackground={onPressBackground}
+            onSubmit={onSubmit}
             onFocus={onFocus}
             inputRef={inputRef}
         />

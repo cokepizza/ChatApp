@@ -10,23 +10,23 @@ const AuthSignInBlock = styled.SafeAreaView`
     background: white;
 `;
 
-const InputFrameTouchBlock = styled.TouchableWithoutFeedback`
+const AuthSignInTouchBlock = styled.TouchableWithoutFeedback``;
 
-`;
+const InputFrameTouchBlock = styled.TouchableWithoutFeedback``;
 
 const InputFrameBlock = styled.View`
     flex-direction: row;
     width: 90%;
     height: 30px;
     border-bottom-width: 1px;
-    background: red;
+    opacity: 0.5;
 
     ${props => props.margin && css`
         margin-top: 10px;
     `}
 
     ${props => props.focused && css`
-        background: blue;
+        opacity: 1;
     `}
 `;
 
@@ -54,56 +54,45 @@ const ButtonTextBlock = styled.Text`
     font-size: 12px;
 `;
 
-const AuthSignIn = ({ focused, inputRef, onPress, onFocus }) => {
+const AuthSignIn = ({ focused, inputRef, onPress, onPressBackground, onSubmit, onFocus }) => {
     return (
-        <AuthSignInBlock>
-            <InputFrameTouchBlock
-                onPress={() => onPress(0)}
-            >
-                <InputFrameBlock
-                    focused={focused[0]}
-                >
-                    <ImageBlock
-                        source={UserIcon}
-                    />
-                    <InputBlock
-                        ref={ref => inputRef.current[0] = ref}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        allowFontScaling={false}
-                        onFocus={() => onFocus(0)}
-                        placeholderTextColor="rgba(176, 196, 222, 0.5)"
-                        placeholder='Username'
-                    />
-                </InputFrameBlock>
-            </InputFrameTouchBlock>
-            <InputFrameTouchBlock
-               onPress={() => onPress(1)}
-            >
-                <InputFrameBlock
-                    margin
-                    focused={focused[1]}
-                >
-                    <ImageBlock
-                        source={LockIcon}
-                    />
-                    <InputBlock
-                        ref={ref => inputRef.current[1] = ref}
-                        autoCapitalize="none"
-                        autoCorrect={false}
-                        allowFontScaling={false}
-                        onFocus={() => onFocus(1)}
-                        placeholderTextColor="rgba(176, 196, 222, 0.5)"
-                        placeholder='Password'
-                    />
-                </InputFrameBlock>
-            </InputFrameTouchBlock>
-            <ButtonTouchBlock>
-                <ButtonTextBlock>
-                    Sign In
-                </ButtonTextBlock>
-            </ButtonTouchBlock>
-        </AuthSignInBlock>
+        <AuthSignInTouchBlock onPress={onPressBackground}>
+            <AuthSignInBlock>
+                <InputFrameTouchBlock onPress={() => onPress(0)}>
+                    <InputFrameBlock focused={focused[0]}>
+                        <ImageBlock source={UserIcon} />
+                        <InputBlock
+                            ref={ref => inputRef.current[0] = ref}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            allowFontScaling={false}
+                            onFocus={() => onFocus(0)}
+                            placeholderTextColor="rgba(176, 196, 222, 0.5)"
+                            placeholder='Username'
+                        />
+                    </InputFrameBlock>
+                </InputFrameTouchBlock>
+                <InputFrameTouchBlock onPress={() => onPress(1)}>
+                    <InputFrameBlock focused={focused[1]} margin>
+                        <ImageBlock source={LockIcon} />
+                        <InputBlock
+                            ref={ref => inputRef.current[1] = ref}
+                            autoCapitalize="none"
+                            autoCorrect={false}
+                            allowFontScaling={false}
+                            onFocus={() => onFocus(1)}
+                            placeholderTextColor="rgba(176, 196, 222, 0.5)"
+                            placeholder='Password'
+                        />
+                    </InputFrameBlock>
+                </InputFrameTouchBlock>
+                <ButtonTouchBlock onPress={onSubmit} >
+                    <ButtonTextBlock>
+                        Sign In
+                    </ButtonTextBlock>
+                </ButtonTouchBlock>
+            </AuthSignInBlock>
+        </AuthSignInTouchBlock>
     );
 };
 
