@@ -16,8 +16,8 @@ const AuthCheckContainer = () => {
                 if(auth) {
                     
                 } else {
-                    // dispatch(setCheck(true));
-                    dispatch(setAuth(true));
+                    dispatch(setCheck(true));
+                    // dispatch(setAuth(true));
                 }
             } catch(e) {
                 console.dir(e);

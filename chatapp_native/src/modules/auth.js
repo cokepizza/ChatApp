@@ -6,6 +6,8 @@ export const setCheck = createAction(SET_CHECK, payload => payload);
 export const setAuth = createAction(SET_AUTH, payload => payload);
 
 const initialState = {
+    username: '',
+    password: '',
     auth: null,
     check: false,
     loading: false,
