@@ -1,4 +1,4 @@
-import React, { useCallback, useState, useRef } from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import { useFocusEffect } from '@react-navigation/native';
 
@@ -18,19 +18,10 @@ const ChatContainer = () => {
     }));
 
     const dispatch = useDispatch();
-    const flatListRef = useRef();
-
-    const [ init, setInit ] = useState(false);
 
     useFocusEffect(useCallback(() => {
         console.log('connect');
         dispatch(connectWebsocket());
-        setTimeout(() => {
-            flatListRef.current.scrollToEnd({ animated: false });
-            setTimeout(() => {
-                setInit(true);
-            }, 0);
-        }, 200);
         return () => {
             console.log('disconnect');
             dispatch(disconnectWebsocket());
@@ -50,20 +41,12 @@ const ChatContainer = () => {
         }))
     }, [dispatch]);
 
-    const onContentSizeChange = useCallback(() => {
-        if(init) {
-            flatListRef.current.scrollToEnd();
-        }
-    }, [init]);
-
     return (
         <Chat
             message={message}
             messages={messages}
             onPress={onPress}
             onChangeText={onChangeText}
-            flatListRef={flatListRef}
-            onContentSizeChange={onContentSizeChange}
         />
     );
 };

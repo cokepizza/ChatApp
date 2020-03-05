@@ -59,19 +59,16 @@ const Chat = ({
     messages,
     onPress,
     onChangeText,
-    flatListRef,
-    onContentSizeChange,
 }) => {
 
     return (
         <ChatBlock>
             <MessageListBlock>
                 <FlatList
-                    ref={flatListRef}
+                    inverted={-1}
                     data={messages}
                     keyExtractor={(item, index) => `message_${index}`}
                     showsVerticalScrollIndicator={false}
-                    onContentSizeChange={onContentSizeChange}
                     renderItem={({ item }) => (
                         <Message message={item} />
                     )}
