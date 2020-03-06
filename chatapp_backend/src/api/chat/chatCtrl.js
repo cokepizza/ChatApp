@@ -6,6 +6,7 @@ export const createMessage = (req, res, next) => {
         type: 'change',
         message,
     });
+    
     // console.dir(message);
     res.status(200).end();
 };

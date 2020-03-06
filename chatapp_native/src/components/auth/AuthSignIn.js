@@ -6,13 +6,25 @@ import LockIcon from '../../assets/images/lock.png';
 
 const AuthSignInBlock = styled.SafeAreaView`
     flex: 1;
-    align-items: center;
-    background: white;
 `;
 
 const AuthSignInTouchBlock = styled.TouchableWithoutFeedback``;
 
 const InputFrameTouchBlock = styled.TouchableWithoutFeedback``;
+
+const HeaderViewBlock = styled.View`
+    flex: 3;
+    width: 100%;
+    align-items: center;
+    background: white;
+`;
+
+const BodyViewBlock = styled.View`
+    flex: 2;
+    width: 100%;
+    align-items: center;
+    background: white;
+`;
 
 const InputFrameBlock = styled.View`
     flex-direction: row;
@@ -48,49 +60,68 @@ const ButtonTouchBlock = styled.TouchableOpacity`
     align-items: center;
     border-radius: 5px;
     background: rgba(176, 196, 222, 0.5);
+    margin-top: 10px;
 `;
 
 const ButtonTextBlock = styled.Text`
     font-size: 12px;
 `;
 
-const AuthSignIn = ({ focused, inputRef, onPress, onPressBackground, onSubmit, onFocus }) => {
+const AuthSignIn = ({
+    focused,
+    inputRef,
+    onPress,
+    onPressBackground,
+    onSubmit,
+    onFocus,
+    onChangeText,
+    username,
+    password,
+}) => {
     return (
         <AuthSignInTouchBlock onPress={onPressBackground}>
             <AuthSignInBlock>
-                <InputFrameTouchBlock onPress={() => onPress(0)}>
-                    <InputFrameBlock focused={focused[0]}>
-                        <ImageBlock source={UserIcon} />
-                        <InputBlock
-                            ref={ref => inputRef.current[0] = ref}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            allowFontScaling={false}
-                            onFocus={() => onFocus(0)}
-                            placeholderTextColor="rgba(176, 196, 222, 0.5)"
-                            placeholder='Username'
-                        />
-                    </InputFrameBlock>
-                </InputFrameTouchBlock>
-                <InputFrameTouchBlock onPress={() => onPress(1)}>
-                    <InputFrameBlock focused={focused[1]} margin>
-                        <ImageBlock source={LockIcon} />
-                        <InputBlock
-                            ref={ref => inputRef.current[1] = ref}
-                            autoCapitalize="none"
-                            autoCorrect={false}
-                            allowFontScaling={false}
-                            onFocus={() => onFocus(1)}
-                            placeholderTextColor="rgba(176, 196, 222, 0.5)"
-                            placeholder='Password'
-                        />
-                    </InputFrameBlock>
-                </InputFrameTouchBlock>
-                <ButtonTouchBlock onPress={onSubmit} >
-                    <ButtonTextBlock>
-                        Sign In
-                    </ButtonTextBlock>
-                </ButtonTouchBlock>
+                <HeaderViewBlock>
+                </HeaderViewBlock>
+                <BodyViewBlock>
+                    <InputFrameTouchBlock onPress={() => onPress(0)}>
+                        <InputFrameBlock focused={focused[0]}>
+                            <ImageBlock source={UserIcon} />
+                            <InputBlock
+                                ref={ref => inputRef.current[0] = ref}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                allowFontScaling={false}
+                                onFocus={() => onFocus(0)}
+                                placeholderTextColor="rgba(176, 196, 222, 0.5)"
+                                placeholder='Username'
+                                value={username}
+                                onChangeText={text => onChangeText('username', text)}
+                            />
+                        </InputFrameBlock>
+                    </InputFrameTouchBlock>
+                    <InputFrameTouchBlock onPress={() => onPress(1)}>
+                        <InputFrameBlock focused={focused[1]} margin>
+                            <ImageBlock source={LockIcon} />
+                            <InputBlock
+                                ref={ref => inputRef.current[1] = ref}
+                                autoCapitalize="none"
+                                autoCorrect={false}
+                                allowFontScaling={false}
+                                onFocus={() => onFocus(1)}
+                                placeholderTextColor="rgba(176, 196, 222, 0.5)"
+                                placeholder='Password'
+                                value={password}
+                                onChangeText={text => onChangeText('password', text)}
+                            />
+                        </InputFrameBlock>
+                    </InputFrameTouchBlock>
+                    <ButtonTouchBlock onPress={onSubmit} >
+                        <ButtonTextBlock>
+                            Sign In
+                        </ButtonTextBlock>
+                    </ButtonTouchBlock>
+                </BodyViewBlock>
             </AuthSignInBlock>
         </AuthSignInTouchBlock>
     );
