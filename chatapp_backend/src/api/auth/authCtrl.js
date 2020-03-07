@@ -6,8 +6,7 @@ export const check = (req, res, next) => {
 export const signIn = (req, res, next) => {
     const { username, password } = req.body;    
     
-    console.dir(username);
-    console.dir(password);
+    
 
     res.status(200).send({
         username,

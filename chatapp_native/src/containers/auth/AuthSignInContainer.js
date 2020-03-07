@@ -1,7 +1,8 @@
 import React, { useCallback, useRef, createRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+
 import AuthSignIn from '../../components/auth/AuthSignIn';
-import { signIn } from '../../modules/auth';
+import { signIn, setValue } from '../../modules/auth';
 
 const AuthSignInContainer = () => {
     const { username, password } = useSelector(({ auth }) => ({
@@ -28,11 +29,13 @@ const AuthSignInContainer = () => {
 
     const onSubmit = useCallback(() => {
         onPressBackground();
-        dispatch(signIn({
-            username,
-            password, 
-        }));
-    }, [dispatch, onPressBackground]);
+        dispatch(
+            signIn({
+                username,
+                password,
+            })
+        );
+    }, [dispatch, username, password, onPressBackground]);
 
     const onPressBackground = useCallback(() => {
         inputRef.current.forEach(input => input.blur());
@@ -46,7 +49,7 @@ const AuthSignInContainer = () => {
                 value,
             })
         );
-    }, [dispatch])
+    }, [dispatch]);
 
     return (
         <AuthSignIn

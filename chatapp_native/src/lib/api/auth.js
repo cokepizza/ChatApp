@@ -1,13 +1,13 @@
 import client from './client';
 
 export const check = () =>
-    client.get('/auth/check');
+    client.get('/api/auth/check');
 
 export const signIn = params =>
-    client.post('/auth/signIn', params);
+    client.post('/api/auth/signIn', params);
 
 export const signUp = params =>
-    client.post('/auth/signUp', params);
+    client.post('/api/auth/signUp', params);
 
-export const singOut = () =>
-    client.post('/auth/signOut');
+export const signOut = () =>
+    client.post('/api/auth/signOut');

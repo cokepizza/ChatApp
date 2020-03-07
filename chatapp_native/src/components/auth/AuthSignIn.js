@@ -60,7 +60,7 @@ const ButtonTouchBlock = styled.TouchableOpacity`
     align-items: center;
     border-radius: 5px;
     background: rgba(176, 196, 222, 0.5);
-    margin-top: 10px;
+    margin-top: 20px;
 `;
 
 const ButtonTextBlock = styled.Text`
@@ -97,6 +97,7 @@ const AuthSignIn = ({
                                 placeholder='Username'
                                 value={username}
                                 onChangeText={text => onChangeText('username', text)}
+                                keyboardType='email-address'
                             />
                         </InputFrameBlock>
                     </InputFrameTouchBlock>
@@ -113,6 +114,8 @@ const AuthSignIn = ({
                                 placeholder='Password'
                                 value={password}
                                 onChangeText={text => onChangeText('password', text)}
+                                secureTextEntry={true}
+                                keyboardType='default'
                             />
                         </InputFrameBlock>
                     </InputFrameTouchBlock>
