@@ -4,10 +4,10 @@ import { useSelector, useDispatch } from 'react-redux';
 import AuthSignIn from '../../components/auth/AuthSignIn';
 import { signIn, setValue } from '../../modules/auth';
 
-const AuthSignInContainer = () => {
+const AuthSignInContainer = ({ navigation }) => {
     const { username, password } = useSelector(({ auth }) => ({
-        username: auth.username,
-        password: auth.password,
+        username: auth.signIn.username,
+        password: auth.signIn.password,
     }));
 
     const dispatch = useDispatch();
@@ -27,6 +27,16 @@ const AuthSignInContainer = () => {
         })
     }, []);
 
+    const onChangeText = useCallback((key, value) => {
+        dispatch(
+            setValue({
+                kind: 'signIn',
+                key,
+                value,
+            })
+        );
+    }, [dispatch]);
+
     const onSubmit = useCallback(() => {
         onPressBackground();
         dispatch(
@@ -42,14 +52,9 @@ const AuthSignInContainer = () => {
         setFocused([ false, false ]);
     }, []);
 
-    const onChangeText = useCallback((key, value) => {
-        dispatch(
-            setValue({
-                key,
-                value,
-            })
-        );
-    }, [dispatch]);
+    const onPressNavigate = useCallback(() => {
+        navigation.navigate('AuthSignUp');
+    }, []);
 
     return (
         <AuthSignIn
@@ -57,6 +62,7 @@ const AuthSignInContainer = () => {
             focused={focused}
             onPress={onPress}
             onPressBackground={onPressBackground}
+            onPressNavigate={onPressNavigate}
             onSubmit={onSubmit}
             onFocus={onFocus}
             onChangeText={onChangeText}

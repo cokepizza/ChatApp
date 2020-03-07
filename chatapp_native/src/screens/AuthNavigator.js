@@ -4,6 +4,7 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import AuthCheckContainer from '../containers/auth/AuthCheckContainer';
 import AuthSignInContainer from '../containers/auth/AuthSignInContainer';
+import AuthSignUpContainer from '../containers/auth/AuthSignUpContainer';
 
 const Stack = createStackNavigator();
 const AuthNavigator = () => {
@@ -30,13 +31,19 @@ const AuthNavigator = () => {
       headerMode='none'
     >
       {check ? (
-        <Stack.Screen
-          name='AuthSignIn'
-          component={AuthSignInContainer}
-          options={{
-            transitionSpec
-          }}
-        />
+        <>
+          <Stack.Screen
+            name='AuthSignIn'
+            component={AuthSignInContainer}
+            options={{
+              transitionSpec
+            }}
+          />
+          <Stack.Screen
+            name='AuthSignUp'
+            component={AuthSignUpContainer}
+          />
+        </>
       ) : (
         <Stack.Screen name='AuthCheck' component={AuthCheckContainer} />
       )}

@@ -67,11 +67,29 @@ const ButtonTextBlock = styled.Text`
     font-size: 12px;
 `;
 
+const NavigateViewBlock = styled.View`
+    flex-direction: row;
+    margin-top: 20px;
+`;
+
+const NavigateTouchBlock = styled.TouchableOpacity`
+    margin-left:10px;
+`;
+
+const NavigateInformTextBlock = styled.Text`
+    
+`;
+
+const NavigateTextBlock = styled.Text`
+
+`;
+
 const AuthSignIn = ({
     focused,
     inputRef,
     onPress,
     onPressBackground,
+    onPressNavigate,
     onSubmit,
     onFocus,
     onChangeText,
@@ -124,6 +142,16 @@ const AuthSignIn = ({
                             Sign In
                         </ButtonTextBlock>
                     </ButtonTouchBlock>
+                    <NavigateViewBlock>
+                        <NavigateInformTextBlock>
+                            아직 계정이 없으신가요?
+                        </NavigateInformTextBlock>
+                        <NavigateTouchBlock onPress={onPressNavigate}>
+                            <NavigateTextBlock>
+                                회원가입
+                            </NavigateTextBlock>
+                        </NavigateTouchBlock>    
+                    </NavigateViewBlock>
                 </BodyViewBlock>
             </AuthSignInBlock>
         </AuthSignInTouchBlock>

@@ -19,8 +19,15 @@ export const signOut = createRequestThunk(SIGNOUT, authCtrl.signOut);
 export const check = createRequestThunk(CHECK, authCtrl.check);
 
 const initialState = {
-    username: '',
-    password: '',
+    signIn: {
+        username: '',
+        password: '',    
+    },
+    signUp: {
+        username: '',
+        password: '',
+        passwordConfirm: '',    
+    },
     auth: null,
     check: false,
     loading: false,
@@ -35,9 +42,12 @@ export default handleActions({
         ...state,
         auth,
     }),
-    [SET_VALUE]: (state, { payload: { key, value } }) => ({
+    [SET_VALUE]: (state, { payload: { kind, key, value } }) => ({
         ...state,
-        [key]: value,
+        [kind]: {
+            ...state[kind],
+            [key]: value,
+        }
     }),
     [CHECK_SUCCESS]: (state, { payload: auth }) => ({
         ...state,
