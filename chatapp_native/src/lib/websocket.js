@@ -44,6 +44,7 @@ export function* connectNamespace(params) {
         const io = SocketIo(url, {
             query,
             // reconnection: false,
+            transports: ['websocket'],
             secure: true,
         });
         

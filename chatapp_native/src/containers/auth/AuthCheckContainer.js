@@ -1,6 +1,5 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { ActivityIndicator } from 'react-native';
 
 import AuthCheck from '../../components/auth/AuthCheck';
 import { setCheck, autoSignInThunk } from '../../modules/auth';
@@ -11,10 +10,8 @@ const AuthCheckContainer = () => {
     useEffect(() => {
         (async() => {
             try {
-                console.dir('store');
                 await dispatch(autoSignInThunk());
             } catch(e) {
-                console.dir('AuthCheckContainer');
                 console.dir(e);
                 setTimeout(() => {
                     dispatch(setCheck(true));

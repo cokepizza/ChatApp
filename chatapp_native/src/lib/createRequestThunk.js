@@ -16,7 +16,7 @@ export default function createRequestThunk (type, request) {
             });
             return response.data;
         } catch(e) {
-            console.dir(e);
+            // console.dir(e);
             dispatch({
                 type: FAILURE,
                 payload: e,

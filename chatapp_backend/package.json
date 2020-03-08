@@ -23,6 +23,7 @@
   "type": "module",
   "scripts": {
     "start": "node -r esm src",
-    "start:dev": "nodemon --watch src/ -r esm src/index.js"
+    "start:dev": "nodemon --watch src/ -r esm src/index.js",
+    "start:mul": "pm2 start --name chat -i max src/index.js"
   }
 }

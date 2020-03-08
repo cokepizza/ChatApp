@@ -22,7 +22,6 @@ export const signIn = (req, res, next) => {
             return res.status(400).send(err || info);
         };
 
-        console.dir('login success');
         //  req.login()은 req.user에 user정보를 담아주는 역할
         return req.login(user, { session: false }, err => {
             if(err) {
@@ -31,7 +30,7 @@ export const signIn = (req, res, next) => {
             }
             
             // const tokenTimeLimit = Number(60 * 60 * 12 * 1 * 1000);
-            const tokenTimeLimit = Number(60*60);
+            const tokenTimeLimit = Number(10);
             const expiryDate = new Date().getTime() + tokenTimeLimit;
             const token = jwt.sign(user, process.env.JWT_SECRET, {
                 issuer: 'cokepizza',
@@ -53,6 +52,7 @@ export const signUp = async (req, res, next) => {
     try {
         const exist = await User.findOne({ where: { username } });
         if(exist) {
+            console.dir('Registered user');
             return res.status(409).send('Registered user');
         }
         

@@ -120,7 +120,7 @@ const AuthSignIn = ({
                         </InputFrameBlock>
                     </InputFrameTouchBlock>
                     <InputFrameTouchBlock onPress={() => onPress(1)}>
-                        <InputFrameBlock focused={focused[1]} margin>
+                        <InputFrameBlock focused={focused[1]} margin={1}>
                             <ImageBlock source={LockIcon} />
                             <InputBlock
                                 ref={ref => inputRef.current[1] = ref}

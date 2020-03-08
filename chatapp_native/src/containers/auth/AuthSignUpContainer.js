@@ -2,7 +2,7 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUp from '../../components/auth/AuthSignUp';
-import { signUp, setValue } from '../../modules/auth';
+import { signUpThunk, setValue } from '../../modules/auth';
 
 const AuthSignUpContainer = ({ navigation }) => {
     const { username, password, passwordConfirm } = useSelector(({ auth }) => ({
@@ -19,11 +19,11 @@ const AuthSignUpContainer = ({ navigation }) => {
             key,
             value,
         }));
-    }, [dispatch])
+    }, [dispatch]);
 
     const onPressSubmit = useCallback(() => {
         if(password === passwordConfirm) {
-            dispatch(signUp({
+            dispatch(signUpThunk({
                 username,
                 password,
             }));

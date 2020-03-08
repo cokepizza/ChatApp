@@ -74,6 +74,7 @@ export const signUpThunk = ({ username, password }) => async ( dispatch, getStat
 
 export const signOutThunk = () => async ( dispatch, getState ) => {
     await storage.clearAsyncStorage([ 'token', 'expiryDate' ]);
+    dispatch(setCheck(true));
     dispatch(clearAuth());
 }
 
@@ -87,13 +88,11 @@ export const autoSignInThunk = () => async ( dispatch, getState ) => {
 
     try {
         let storageToken, storageExpiryDate;
-        // if(!stateToken || !stateExpiryDate || new Date(stateExpiryDate) <= new Date()) {
-        if(!stateToken || !stateExpiryDate) {
+        if(!stateToken || !stateExpiryDate || new Date(stateExpiryDate) <= new Date()) {
             const [ receivedToken, receivedExpiryDate ] = await storage.getAsyncStorage([ 'token', 'expiryDate' ]);
             storageToken = receivedToken;
             storageExpiryDate = parseInt(receivedExpiryDate);
-            // if(!storageToken || !storageExpiryDate || new Date(storageExpiryDate) <= new Date()) {
-            if(!storageToken || !storageExpiryDate) {
+            if(!storageToken || !storageExpiryDate || new Date(storageExpiryDate) <= new Date()) {
                 throw new Error('token is invalid or out of date!');
             }
         }

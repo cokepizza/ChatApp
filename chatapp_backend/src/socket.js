@@ -16,8 +16,10 @@ export default (server, app) => {
         console.dir('-------------socket(chat)--------------');        
         //  인증 후 username에 맞는 방 list 불러오기
         // const list = await client.lrange(username, 0, -1);
-        
+        console.dir('ws connected // processid : ' + process.pid);
+
         socket.on('disconnect', () => {
+            console.dir('ws disconnected // processid : ' + process.pid);
             console.dir('-------------socketDis(chat)--------------');
 
         });
