@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 
-import HomeScreen from './home/HomeScreen';
+import HomeContainer from '../containers/home/HomeContainer';
 import TalkScreen from './talk/TalkScreen';
 import LikeScreen from './like/LikeScreen';
 import ChatNavigator from './ChatNavigator';
@@ -10,7 +10,7 @@ import SettingScreen from './setting/SettingScreen';
 const Tab = createBottomTabNavigator();
 const MainNavigator = () => (
   <Tab.Navigator>
-      <Tab.Screen name='Home' component={HomeScreen}/>
+      <Tab.Screen name='Home' component={HomeContainer}/>
       <Tab.Screen name='Talk' component={TalkScreen}/>
       <Tab.Screen name='Like' component={LikeScreen}/>
       <Tab.Screen

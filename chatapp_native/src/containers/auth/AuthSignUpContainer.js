@@ -32,7 +32,7 @@ const AuthSignUpContainer = ({ navigation }) => {
 
     const onPressNavigate = useCallback(() => {
         navigation.goBack();
-    }, []);
+    }, [navigation]);
 
     return (
         <AuthSignUp

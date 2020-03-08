@@ -1,10 +1,9 @@
 import React, { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { ActivityIndicator } from 'react-native';
-import AsyncStorage from '@react-native-community/async-storage';
 
 import AuthCheck from '../../components/auth/AuthCheck';
-import { setCheck } from '../../modules/auth';
+import { setCheck, autoSignInThunk } from '../../modules/auth';
 
 const AuthCheckContainer = () => {
     const dispatch = useDispatch();
@@ -12,24 +11,20 @@ const AuthCheckContainer = () => {
     useEffect(() => {
         (async() => {
             try {
-                const auth = await AsyncStorage.getItem('auth:chat');
-                if(auth) {
-                    
-                } else {
-                    dispatch(setCheck(true));
-                }
+                console.dir('store');
+                await dispatch(autoSignInThunk());
             } catch(e) {
+                console.dir('AuthCheckContainer');
                 console.dir(e);
+                setTimeout(() => {
+                    dispatch(setCheck(true));
+                }, 500);
             }
         })();
     }, [dispatch]);
 
     return (
-        <>
-        </>
-        // <AuthCheck>
-        //     <ActivityIndicator color="black" size="large" />
-        // </AuthCheck>
+        <AuthCheck />
     );
 };
 

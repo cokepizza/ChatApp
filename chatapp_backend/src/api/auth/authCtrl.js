@@ -5,8 +5,10 @@ import jwt from 'jsonwebtoken';
 const { User } = db;
 
 export const check = (req, res, next) => {
-
-    res.status(200).end();
+    res.status(200).send({
+        user: req.user,
+        expiryDate: req.user.exp,
+    });
 };
 
 export const signIn = (req, res, next) => {
@@ -27,12 +29,13 @@ export const signIn = (req, res, next) => {
                 console.dir(err);
                 return res.status(400).send(err);
             }
-
-            const tokenTimeLimit = Number(60 * 60 * 12 * 1 * 1000);
+            
+            // const tokenTimeLimit = Number(60 * 60 * 12 * 1 * 1000);
+            const tokenTimeLimit = Number(60*60);
             const expiryDate = new Date().getTime() + tokenTimeLimit;
             const token = jwt.sign(user, process.env.JWT_SECRET, {
                 issuer: 'cokepizza',
-                expiresIn: tokenTimeLimit / 1000,
+                expiresIn: tokenTimeLimit,
             });
 
             return res.status(200).send({

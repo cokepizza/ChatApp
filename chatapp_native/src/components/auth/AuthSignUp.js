@@ -28,7 +28,7 @@ const InputBlock = styled.TextInput`
     margin-left: 10px;
 `;
 
-const NavigateTouchBlock = styled.TouchableOpacity`
+const NavigationTouchBlock = styled.TouchableOpacity`
     flex-direction: row;
     justify-content: center;
     align-items: center;
@@ -40,7 +40,7 @@ const ImageBlock = styled.Image`
     height: 30px;
 `;
 
-const NavigateTextBlock = styled.Text``;
+const NavigationTextBlock = styled.Text``;
 
 const ButtonTouchBlock = styled.TouchableOpacity`
     width: 90%;
@@ -111,12 +111,12 @@ const AuthSignUp = ({
                         Sign Up
                     </ButtonTextBlock>
                 </ButtonTouchBlock>
-                <NavigateTouchBlock onPress={onPressNavigate}>
+                <NavigationTouchBlock onPress={onPressNavigate}>
                     <ImageBlock source={BackIcon} />
-                    <NavigateTextBlock>
+                    <NavigationTextBlock>
                         기존회원 로그인
-                    </NavigateTextBlock>
-                </NavigateTouchBlock>
+                    </NavigationTextBlock>
+                </NavigationTouchBlock>
             </BodyViewBlock>
         </AuthSignUpBlock>
     );

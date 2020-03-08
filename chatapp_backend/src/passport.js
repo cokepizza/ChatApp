@@ -53,11 +53,16 @@ const passportConfig = () => {
     }));
 
     passport.use(new JwtStrategy({
-        jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+        jwtFromRequest: ExtractJwt.fromAuthHeaderWithScheme('JWT'),
         secretOrKey: process.env.JWT_SECRET,
     }, (payload, done) => {
-        console.dir('passport-jwt~');
+        const date = new Date();
+        console.dir(date.getTime());
         console.dir(payload);
+        //  find the user in db if needed.
+        //  This functionality may be omitted if you store everything you'll need in JWT payload.
+
+
         return done(null, payload);
     }));
 }

@@ -1,7 +1,8 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import styled from 'styled-components/native';
 
-const AuthCheckBlock = styled.View`
+const AuthCheckBlock = styled.SafeAreaView`
     flex: 1;
     justify-content: center;
     align-items: center;
@@ -10,7 +11,9 @@ const AuthCheckBlock = styled.View`
 
 const AuthCheck = () => {
     return (
-        <AuthCheckBlock />
+        <AuthCheckBlock>
+            <ActivityIndicator color="black" size="large" />
+        </AuthCheckBlock>
     );
 };
 

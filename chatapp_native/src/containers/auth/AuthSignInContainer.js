@@ -50,7 +50,7 @@ const AuthSignInContainer = ({ navigation }) => {
 
     const onPressNavigate = useCallback(() => {
         navigation.navigate('AuthSignUp');
-    }, []);
+    }, [navigation]);
 
     return (
         <AuthSignIn

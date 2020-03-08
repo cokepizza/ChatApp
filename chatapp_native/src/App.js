@@ -20,8 +20,8 @@ const ImageBlock = styled.Image`
 const Stack = createStackNavigator();
 
 const App = () => {
-  const { auth, loading } = useSelector(({ auth }) => ({
-    auth: auth.auth,
+  const { user, loading } = useSelector(({ auth }) => ({
+    user: auth.user,
     loading: auth.loading,
   }));
 
@@ -44,7 +44,7 @@ const App = () => {
       <Stack.Navigator
         headerMode='none'
       >
-        {auth ? (
+        {user ? (
           <Stack.Screen
             name="Main"
             component={MainNavigator}
@@ -54,7 +54,13 @@ const App = () => {
           />
         )
         : (
-          <Stack.Screen name="Auth" component={AuthNavigator} />
+          <Stack.Screen
+            name="Auth"
+            component={AuthNavigator}
+            options={{
+              transitionSpec,
+            }}
+          />
         )}
       </Stack.Navigator>
     </NavigationContainer>
