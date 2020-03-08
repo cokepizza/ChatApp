@@ -4,7 +4,7 @@ import { ActivityIndicator } from 'react-native';
 import AsyncStorage from '@react-native-community/async-storage';
 
 import AuthCheck from '../../components/auth/AuthCheck';
-import { setCheck, setAuth } from '../../modules/auth';
+import { setCheck } from '../../modules/auth';
 
 const AuthCheckContainer = () => {
     const dispatch = useDispatch();
@@ -17,7 +17,6 @@ const AuthCheckContainer = () => {
                     
                 } else {
                     dispatch(setCheck(true));
-                    // dispatch(setAuth(true));
                 }
             } catch(e) {
                 console.dir(e);

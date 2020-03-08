@@ -2,8 +2,9 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUp from '../../components/auth/AuthSignUp';
+import { signUp, setValue } from '../../modules/auth';
 
-const AuthSignUpContainer = () => {
+const AuthSignUpContainer = ({ navigation }) => {
     const { username, password, passwordConfirm } = useSelector(({ auth }) => ({
         username: auth.signUp.username,
         password: auth.signUp.password,
@@ -12,23 +13,35 @@ const AuthSignUpContainer = () => {
 
     const dispatch = useDispatch();
 
-    const onSubmit = useCallback(() => {
+    const onChangeText = useCallback((key, value) => {
+        dispatch(setValue({
+            kind: 'signUp',
+            key,
+            value,
+        }));
+    }, [dispatch])
 
+    const onPressSubmit = useCallback(() => {
         if(password === passwordConfirm) {
             dispatch(signUp({
                 username,
-                password,   
+                password,
             }));
         }
-        
-    }, [dispatch, username, password]);
+    }, [dispatch, username, password, passwordConfirm]);
+
+    const onPressNavigate = useCallback(() => {
+        navigation.goBack();
+    }, []);
 
     return (
         <AuthSignUp
             username={username}
             password={password}
             passwordConfirm={passwordConfirm}
-            onSubmit={onSubmit}
+            onChangeText={onChangeText}
+            onPressSubmit={onPressSubmit}
+            onPressNavigate={onPressNavigate}
         />
     )
 };

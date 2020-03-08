@@ -2,7 +2,7 @@ import React, { useCallback, useRef, createRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignIn from '../../components/auth/AuthSignIn';
-import { signIn, setValue } from '../../modules/auth';
+import { signInThunk, setValue } from '../../modules/auth';
 
 const AuthSignInContainer = ({ navigation }) => {
     const { username, password } = useSelector(({ auth }) => ({
@@ -28,23 +28,19 @@ const AuthSignInContainer = ({ navigation }) => {
     }, []);
 
     const onChangeText = useCallback((key, value) => {
-        dispatch(
-            setValue({
-                kind: 'signIn',
-                key,
-                value,
-            })
-        );
+        dispatch(setValue({
+            kind: 'signIn',
+            key,
+            value,
+        }));
     }, [dispatch]);
 
-    const onSubmit = useCallback(() => {
+    const onPressSubmit = useCallback(() => {
         onPressBackground();
-        dispatch(
-            signIn({
-                username,
-                password,
-            })
-        );
+        dispatch(signInThunk({
+            username,
+            password,
+        }));
     }, [dispatch, username, password, onPressBackground]);
 
     const onPressBackground = useCallback(() => {
@@ -63,7 +59,7 @@ const AuthSignInContainer = ({ navigation }) => {
             onPress={onPress}
             onPressBackground={onPressBackground}
             onPressNavigate={onPressNavigate}
-            onSubmit={onSubmit}
+            onPressSubmit={onPressSubmit}
             onFocus={onFocus}
             onChangeText={onChangeText}
             username={username}
