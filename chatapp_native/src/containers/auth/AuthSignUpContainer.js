@@ -5,10 +5,11 @@ import AuthSignUp from '../../components/auth/AuthSignUp';
 import { signUpThunk, setValue } from '../../modules/auth';
 
 const AuthSignUpContainer = ({ navigation }) => {
-    const { username, password, passwordConfirm } = useSelector(({ auth }) => ({
+    const { username, password, passwordConfirm, gender } = useSelector(({ auth }) => ({
         username: auth.signUp.username,
         password: auth.signUp.password,
         passwordConfirm: auth.signUp.passwordConfirm,
+        gender: auth.signUp.gender,
     }));
 
     const dispatch = useDispatch();
@@ -34,14 +35,24 @@ const AuthSignUpContainer = ({ navigation }) => {
         navigation.goBack();
     }, [navigation]);
 
+    const onPressCheckBox = useCallback((key, value) => {
+        dispatch(setValue({
+            kind: 'signUp',
+            key,
+            value,
+        }))
+    }, [dispatch])
+
     return (
         <AuthSignUp
             username={username}
             password={password}
             passwordConfirm={passwordConfirm}
+            gender={gender}
             onChangeText={onChangeText}
             onPressSubmit={onPressSubmit}
             onPressNavigate={onPressNavigate}
+            onPressCheckBox={onPressCheckBox}
         />
     )
 };

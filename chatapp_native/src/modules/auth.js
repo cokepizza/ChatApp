@@ -118,7 +118,8 @@ const initialState = {
     signUp: {
         username: '',
         password: '',
-        passwordConfirm: '',    
+        passwordConfirm: '',
+        gender: '',
     },
     user: null,
     token: null,

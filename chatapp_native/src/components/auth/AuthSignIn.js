@@ -111,7 +111,7 @@ const AuthSignIn = ({
                                 autoCorrect={false}
                                 allowFontScaling={false}
                                 onFocus={() => onFocus(0)}
-                                placeholderTextColor="rgba(176, 196, 222, 0.5)"
+                                placeholderTextColor="rgba(33, 87, 142, 0.5)"
                                 placeholder='Username'
                                 value={username}
                                 onChangeText={text => onChangeText('username', text)}
@@ -128,7 +128,7 @@ const AuthSignIn = ({
                                 autoCorrect={false}
                                 allowFontScaling={false}
                                 onFocus={() => onFocus(1)}
-                                placeholderTextColor="rgba(176, 196, 222, 0.5)"
+                                placeholderTextColor="rgba(33, 87, 142, 0.5)"
                                 placeholder='Password'
                                 value={password}
                                 onChangeText={text => onChangeText('password', text)}

@@ -1,17 +1,28 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import { Dimensions } from 'react-native';
+import styled, { css } from 'styled-components/native';
 
 import BackIcon from '../../assets/images/back.png';
+import CheckBeforeIcon from '../../assets/images/check_before.png';
+import CheckAfterIcon from '../../assets/images/check_after.png';
 
 const AuthSignUpBlock = styled.SafeAreaView`
     flex: 1;
     background: white;
 `;
 
-const BodyViewBlock = styled.View`
-    flex: 1;
-    justify-content: center;
+const HeaderViewBlock = styled.View`
+    flex: 3;
+    width: 100%;
     align-items: center;
+    background: white;
+`;
+
+const BodyViewBlock = styled.View`
+    flex: 2;
+    width: 100%;
+    align-items: center;
+    background: white;
 `;
 
 const InputFrameBlock = styled.View`
@@ -20,6 +31,7 @@ const InputFrameBlock = styled.View`
     height: 30px;
     border-bottom-width: 1px;
     opacity: 0.5;
+    align-items: center;
 `;
 
 const InputBlock = styled.TextInput`
@@ -30,17 +42,21 @@ const InputBlock = styled.TextInput`
 
 const NavigationTouchBlock = styled.TouchableOpacity`
     flex-direction: row;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    width: 90%;
     margin-top: 20px;
+    margin-left: 20px;
 `;
 
 const ImageBlock = styled.Image`
-    width: 30px;
-    height: 30px;
+    width: 20px;
+    height: 20px;
 `;
 
-const NavigationTextBlock = styled.Text``;
+const NavigationTextBlock = styled.Text`
+    margin-left: 10px;
+`;
 
 const ButtonTouchBlock = styled.TouchableOpacity`
     width: 90%;
@@ -56,24 +72,51 @@ const ButtonTextBlock = styled.Text`
     font-size: 12px;
 `;
 
+const CheckBoxFrameBlock = styled.View`
+    align-items: center;
+    justify-content: center;
+    width: ${(parseInt(Dimensions.get('window').width * 0.9) - 30) / 2}px;
+
+    ${props => props.margin && css`
+        margin-left: 10px;
+    `}
+`;
+
+const CheckBoxTouchBlock = styled.TouchableOpacity``;
+
+const CheckBoxTextBlock = styled.Text`
+    font-size: 12px;
+
+    ${props => props.gender && css`
+        font-size: 15px;
+        font-weight: bold;
+    `}
+`
+
 const AuthSignUp = ({
     username,
     password,
     passwordConfirm,
+    gender,
     onPressSubmit,
     onPressNavigate,
+    onPressCheckBox,
     onChangeText
 }) => {
     
     return (
         <AuthSignUpBlock>
+            <HeaderViewBlock>
+                 
+            </HeaderViewBlock>
             <BodyViewBlock>
                 <InputFrameBlock>
+                    <ImageBlock source={CheckBeforeIcon} />
                     <InputBlock
                         autoCapitalize="none"
                         autoCorrect={false}
                         allowFontScaling={false}
-                        placeholderTextColor="rgba(176, 196, 222, 0.5)"
+                        placeholderTextColor="rgba(33, 87, 142, 0.5)"
                         placeholder='Username'
                         value={username}
                         onChangeText={text => onChangeText('username', text)}
@@ -81,11 +124,12 @@ const AuthSignUp = ({
                     />
                 </InputFrameBlock>
                 <InputFrameBlock>
+                    <ImageBlock source={CheckBeforeIcon} />
                     <InputBlock
                         autoCapitalize="none"
                         autoCorrect={false}
                         allowFontScaling={false}
-                        placeholderTextColor="rgba(176, 196, 222, 0.5)"
+                        placeholderTextColor="rgba(33, 87, 142, 0.5)"
                         placeholder='Password'
                         value={password}
                         onChangeText={text => onChangeText('password', text)}
@@ -94,17 +138,36 @@ const AuthSignUp = ({
                     />
                 </InputFrameBlock>
                 <InputFrameBlock>
+                    <ImageBlock source={CheckBeforeIcon} />
                     <InputBlock
                         autoCapitalize="none"
                         autoCorrect={false}
                         allowFontScaling={false}
-                        placeholderTextColor="rgba(176, 196, 222, 0.5)"
+                        placeholderTextColor="rgba(33, 87, 142, 0.5)"
                         placeholder='PasswordConfirm'
                         value={passwordConfirm}
                         onChangeText={text => onChangeText('passwordConfirm', text)}
                         secureTextEntry={true}
                         keyboardType='default'
                     />
+                </InputFrameBlock>
+                <InputFrameBlock>
+                    <ImageBlock source={CheckBeforeIcon} />
+                    {/* <ImageBlock source={CheckAfterIcon} /> */}
+                    <CheckBoxFrameBlock margin={1}>
+                        <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'male')}>
+                            <CheckBoxTextBlock gender={gender === 'male'}>
+                                Male
+                            </CheckBoxTextBlock>
+                        </CheckBoxTouchBlock>
+                    </CheckBoxFrameBlock>
+                    <CheckBoxFrameBlock>
+                        <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'female')}>
+                            <CheckBoxTextBlock gender={gender === 'female'}>
+                                Female
+                            </CheckBoxTextBlock>
+                        </CheckBoxTouchBlock>
+                    </CheckBoxFrameBlock>
                 </InputFrameBlock>
                 <ButtonTouchBlock onPress={onPressSubmit}>
                     <ButtonTextBlock>
