@@ -107,11 +107,11 @@ const AuthSignIn = ({
                             <ImageBlock source={UserIcon} />
                             <InputBlock
                                 ref={ref => inputRef.current[0] = ref}
-                                autoCapitalize="none"
+                                autoCapitalize='none'
                                 autoCorrect={false}
                                 allowFontScaling={false}
                                 onFocus={() => onFocus(0)}
-                                placeholderTextColor="rgba(33, 87, 142, 0.5)"
+                                placeholderTextColor='rgba(33, 87, 142, 0.5)'
                                 placeholder='Username'
                                 value={username}
                                 onChangeText={text => onChangeText('username', text)}
@@ -124,15 +124,16 @@ const AuthSignIn = ({
                             <ImageBlock source={LockIcon} />
                             <InputBlock
                                 ref={ref => inputRef.current[1] = ref}
-                                autoCapitalize="none"
+                                autoCapitalize='none'
                                 autoCorrect={false}
                                 allowFontScaling={false}
                                 onFocus={() => onFocus(1)}
-                                placeholderTextColor="rgba(33, 87, 142, 0.5)"
+                                placeholderTextColor='rgba(33, 87, 142, 0.5)'
                                 placeholder='Password'
                                 value={password}
                                 onChangeText={text => onChangeText('password', text)}
-                                secureTextEntry={true}
+                                secureTextEntry
+                                textContentType='newPassword'
                                 keyboardType='default'
                             />
                         </InputFrameBlock>

@@ -16,7 +16,7 @@ const user = sequelize => {
             type: DataTypes.STRING(30),
             allowNull: false,
         },
-        sex: {
+        gender: {
             type: DataTypes.STRING(10),
             allowNull: false,
         },

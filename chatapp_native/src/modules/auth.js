@@ -117,9 +117,11 @@ const initialState = {
     },
     signUp: {
         username: '',
+        nickname: '',
         password: '',
         passwordConfirm: '',
         gender: '',
+        validation: [0, 0, 0, 0, 0],
     },
     user: null,
     token: null,

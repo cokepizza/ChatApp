@@ -47,7 +47,7 @@ export const signIn = (req, res, next) => {
 };
 
 export const signUp = async (req, res, next) => {
-    const { username, password } = req.body;
+    const { username, password, nickname, gender } = req.body;
 
     try {
         const exist = await User.findOne({ where: { username } });
@@ -58,8 +58,8 @@ export const signUp = async (req, res, next) => {
         
         const user = await User.build({
             username,
-            nickname: username,
-            sex: 'male',
+            nickname,
+            gender,
         });
 
         await user.setPassword(password);

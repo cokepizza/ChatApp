@@ -32,6 +32,14 @@ const InputFrameBlock = styled.View`
     border-bottom-width: 1px;
     opacity: 0.5;
     align-items: center;
+
+    ${props => props.margin && css`
+        margin-top: 10px;
+    `}
+
+    ${props => props.focused && css`
+        opacity: 1;
+    `}
 `;
 
 const InputBlock = styled.TextInput`
@@ -95,6 +103,7 @@ const CheckBoxTextBlock = styled.Text`
 
 const AuthSignUp = ({
     username,
+    nickname,
     password,
     passwordConfirm,
     gender,
@@ -113,7 +122,7 @@ const AuthSignUp = ({
                 <InputFrameBlock>
                     <ImageBlock source={CheckBeforeIcon} />
                     <InputBlock
-                        autoCapitalize="none"
+                        autoCapitalize='none'
                         autoCorrect={false}
                         allowFontScaling={false}
                         placeholderTextColor="rgba(33, 87, 142, 0.5)"
@@ -123,35 +132,50 @@ const AuthSignUp = ({
                         keyboardType='email-address'
                     />
                 </InputFrameBlock>
-                <InputFrameBlock>
+                <InputFrameBlock margin={1}>
                     <ImageBlock source={CheckBeforeIcon} />
                     <InputBlock
-                        autoCapitalize="none"
+                        autoCapitalize='none'
                         autoCorrect={false}
                         allowFontScaling={false}
-                        placeholderTextColor="rgba(33, 87, 142, 0.5)"
+                        placeholderTextColor='rgba(33, 87, 142, 0.5)'
+                        placeholder='Nickname'
+                        value={nickname}
+                        onChangeText={text => onChangeText('nickname', text)}
+                        keyboardType='default'
+                    />
+                </InputFrameBlock>
+                <InputFrameBlock margin={1}>
+                    <ImageBlock source={CheckBeforeIcon} />
+                    <InputBlock
+                        autoCapitalize='none'
+                        autoCorrect={false}
+                        allowFontScaling={false}
+                        placeholderTextColor='rgba(33, 87, 142, 0.5)'
                         placeholder='Password'
                         value={password}
                         onChangeText={text => onChangeText('password', text)}
-                        secureTextEntry={true}
+                        secureTextEntry
+                        textContentType='newPassword'
                         keyboardType='default'
                     />
                 </InputFrameBlock>
-                <InputFrameBlock>
+                <InputFrameBlock margin={1}>
                     <ImageBlock source={CheckBeforeIcon} />
                     <InputBlock
-                        autoCapitalize="none"
+                        autoCapitalize='none'
                         autoCorrect={false}
                         allowFontScaling={false}
-                        placeholderTextColor="rgba(33, 87, 142, 0.5)"
+                        placeholderTextColor='rgba(33, 87, 142, 0.5)'
                         placeholder='PasswordConfirm'
                         value={passwordConfirm}
                         onChangeText={text => onChangeText('passwordConfirm', text)}
-                        secureTextEntry={true}
+                        secureTextEntry
+                        textContentType='newPassword'
                         keyboardType='default'
                     />
                 </InputFrameBlock>
-                <InputFrameBlock>
+                <InputFrameBlock margin={1}>
                     <ImageBlock source={CheckBeforeIcon} />
                     {/* <ImageBlock source={CheckAfterIcon} /> */}
                     <CheckBoxFrameBlock margin={1}>
