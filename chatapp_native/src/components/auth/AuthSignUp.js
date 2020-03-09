@@ -107,6 +107,7 @@ const AuthSignUp = ({
     password,
     passwordConfirm,
     gender,
+    validation,
     onPressSubmit,
     onPressNavigate,
     onPressCheckBox,
@@ -120,7 +121,11 @@ const AuthSignUp = ({
             </HeaderViewBlock>
             <BodyViewBlock>
                 <InputFrameBlock>
-                    <ImageBlock source={CheckBeforeIcon} />
+                    {validation.username ? (
+                        <ImageBlock source={CheckAfterIcon} />
+                    ) : (
+                        <ImageBlock source={CheckBeforeIcon} />
+                    )}
                     <InputBlock
                         autoCapitalize='none'
                         autoCorrect={false}
@@ -133,7 +138,11 @@ const AuthSignUp = ({
                     />
                 </InputFrameBlock>
                 <InputFrameBlock margin={1}>
-                    <ImageBlock source={CheckBeforeIcon} />
+                    {validation.nickname ? (
+                        <ImageBlock source={CheckAfterIcon} />
+                    ) : (
+                        <ImageBlock source={CheckBeforeIcon} />
+                    )}
                     <InputBlock
                         autoCapitalize='none'
                         autoCorrect={false}
@@ -146,7 +155,11 @@ const AuthSignUp = ({
                     />
                 </InputFrameBlock>
                 <InputFrameBlock margin={1}>
-                    <ImageBlock source={CheckBeforeIcon} />
+                    {validation.password ? (
+                        <ImageBlock source={CheckAfterIcon} />
+                    ) : (
+                        <ImageBlock source={CheckBeforeIcon} />
+                    )}
                     <InputBlock
                         autoCapitalize='none'
                         autoCorrect={false}
@@ -161,7 +174,11 @@ const AuthSignUp = ({
                     />
                 </InputFrameBlock>
                 <InputFrameBlock margin={1}>
-                    <ImageBlock source={CheckBeforeIcon} />
+                    {validation.passwordConfirm ? (
+                        <ImageBlock source={CheckAfterIcon} />
+                    ) : (
+                        <ImageBlock source={CheckBeforeIcon} />
+                    )}
                     <InputBlock
                         autoCapitalize='none'
                         autoCorrect={false}
@@ -176,8 +193,11 @@ const AuthSignUp = ({
                     />
                 </InputFrameBlock>
                 <InputFrameBlock margin={1}>
-                    <ImageBlock source={CheckBeforeIcon} />
-                    {/* <ImageBlock source={CheckAfterIcon} /> */}
+                    {validation.gender ? (
+                        <ImageBlock source={CheckAfterIcon} />
+                    ) : (
+                        <ImageBlock source={CheckBeforeIcon} />
+                    )}
                     <CheckBoxFrameBlock margin={1}>
                         <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'male')}>
                             <CheckBoxTextBlock gender={gender === 'male'}>

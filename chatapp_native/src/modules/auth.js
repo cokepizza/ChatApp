@@ -121,7 +121,15 @@ const initialState = {
         password: '',
         passwordConfirm: '',
         gender: '',
-        validation: [0, 0, 0, 0, 0],
+    },
+    validation: {
+        signUp: {
+            username: false,
+            nickname: false,
+            password: false,
+            passwordConfirm: false,
+            gender: false,
+        }
     },
     user: null,
     token: null,
