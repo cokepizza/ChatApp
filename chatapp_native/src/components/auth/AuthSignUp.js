@@ -117,7 +117,7 @@ const AuthSignUp = ({
     return (
         <AuthSignUpBlock>
             <HeaderViewBlock>
-                 
+
             </HeaderViewBlock>
             <BodyViewBlock>
                 <InputFrameBlock>
