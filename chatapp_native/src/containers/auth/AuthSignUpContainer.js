@@ -1,7 +1,6 @@
 import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Joi from 'react-native-joi';
-import ImagePicker from 'react-native-image-crop-picker';
 
 import AuthSignUp from '../../components/auth/AuthSignUp';
 import { signUpThunk, setValue } from '../../modules/auth';
@@ -27,22 +26,6 @@ const AuthSignUpContainer = ({ navigation }) => {
 
     const dispatch = useDispatch();
         
-    useEffect(() => {
-        ImagePicker.openPicker({
-            width: 30,
-            height: 100,
-            cropperToolbarTitle: 'crop',
-            avoidEmptySpaceAroundImage: false,
-            // cropperCircleOverlay: true,
-            cropping: true,
-            mediaType: 'photo',
-            // freeStyleCropEnabled: true,
-            // showCropGuidelines: true,
-        }).then(image => {
-            console.log(image);
-        })
-    }, []);
-
     useEffect(() => {
         const schema = Joi.object().keys({
             username: Joi.string().email({ minDomainAtoms: 2 }).min(3).max(30).required(),
@@ -91,14 +74,15 @@ const AuthSignUpContainer = ({ navigation }) => {
     }, [dispatch]);
 
     const onPressSubmit = useCallback(() => {
-        if(password === passwordConfirm) {
-            dispatch(signUpThunk({
-                username,
-                nickname,
-                password,
-                gender,
-            }));
-        }
+        // if(password === passwordConfirm) {
+        //     dispatch(signUpThunk({
+        //         username,
+        //         nickname,
+        //         password,
+        //         gender,
+        //     }));
+        // }
+        navigation.navigate('AuthSignUpDetail');
     }, [dispatch, username, nickname, password, passwordConfirm, gender]);
 
     const onPressNavigate = useCallback(() => {

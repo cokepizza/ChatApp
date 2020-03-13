@@ -11,3 +11,10 @@ export const signUp = params =>
 
 export const signOut = () =>
     client.post('/api/auth/signOut');
+
+export const imageUpload = params =>
+    client.post('/api/auth/image', params, {
+        headers: {
+            'Content-type': 'multipart/form-data'
+        }
+    });

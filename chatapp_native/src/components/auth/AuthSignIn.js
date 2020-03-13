@@ -6,6 +6,7 @@ import LockIcon from '../../assets/images/lock.png';
 
 const AuthSignInBlock = styled.SafeAreaView`
     flex: 1;
+    background: white;
 `;
 
 const AuthSignInTouchBlock = styled.TouchableWithoutFeedback``;
