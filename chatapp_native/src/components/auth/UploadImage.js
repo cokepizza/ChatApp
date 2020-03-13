@@ -1,6 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import styled, { css } from 'styled-components/native';
+import Icon from 'react-native-vector-icons/FontAwesome';
 
 const croppedCanvas = Dimensions.get('window').width - 60;
 const bigCanvasSize = parseInt((croppedCanvas / 3 * 2) + 10);
@@ -57,6 +58,9 @@ const ImageTouchBlock = styled.TouchableOpacity``;
 const ImageCircularBlock = styled.View`
     width: 100%;
     height: 100%;
+    justify-content: center;
+    align-items: center;
+    background: blue;
     border-radius: 10px;
 `;
 
@@ -82,18 +86,33 @@ const ImageCanvas = React.memo(({
             marginLeft={marginLeft}
             size={type === 'big' ? bigCanvasSize: smallCanvasSize}
         >
-            <ImageTouchBlock onPress={() => onPressImageCrop(index)}>
                 {image ?
-                    (
-                        <ImageBlock source={image} />
+                    (   <ImageTouchBlock onPress={() => onPressImageCrop(index)}>
+                            <ImageBlock source={image} />
+                        </ImageTouchBlock>
                     ) :
                     (
-                        <ImageCircularBlock>
-                            
-                        </ImageCircularBlock>
+                        
+                            <ImageCircularBlock>
+                                <Icon.Button 
+                                    name='plus'
+                                    backgroundColor='transparent'
+                                    onPress={() => onPressImageCrop(index)}
+                                    size={100}
+                                    iconStyle={{marginRight:0}}
+                                    color='rgba(255, 255, 255, 0.5)'
+                                    style={{ 
+                                        flex: 1,
+                                        marginRight: 0,
+                                        alignItems: 'center',
+                                        textAlignVertical: 'center', height: '100%', width: '100%', textAlign: 'center', color: 'red', backgroundColor: 'black' }}
+                                >
+                                
+                                </Icon.Button>
+                            </ImageCircularBlock>
+                        
                     )
-                }
-            </ImageTouchBlock>
+                }   
         </ImageViewBlock>
     )
 });
