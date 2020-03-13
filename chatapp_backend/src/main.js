@@ -4,7 +4,6 @@ import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import cors from 'cors';
 import passport from 'passport';
-
 import api from './api';
 import socket from './socket';
 import passportConfig from './passport';
