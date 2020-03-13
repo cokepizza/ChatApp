@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
+import communications from 'react-native-communications';
 
 import UploadImage from '../../components/auth/UploadImage';
 import { setImages } from '../../modules/auth';
@@ -11,6 +12,11 @@ const AuthSignUpImageContainer = () => {
     }));
 
     const dispatch = useDispatch();
+
+    //  test
+    useEffect(() => {
+        communications.phonecall('01077486664', 'hi hello cokepizza');
+    }, []);
 
     const onPressImageCrop = index => {
         ImagePicker.openPicker({

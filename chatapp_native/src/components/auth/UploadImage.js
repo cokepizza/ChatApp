@@ -1,7 +1,7 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
 import styled, { css } from 'styled-components/native';
-import Icon from 'react-native-vector-icons/FontAwesome';
+import Icon from 'react-native-vector-icons/Ionicons';
 
 const croppedCanvas = Dimensions.get('window').width - 60;
 const bigCanvasSize = parseInt((croppedCanvas / 3 * 2) + 10);
@@ -11,7 +11,7 @@ const OuterFrameBlock = styled.View`
     width: 100%;
     height: ${bigCanvasSize + smallCanvasSize + 50}px;
     padding: 20px;
-    background: red;
+    
 `;
 
 const BigHorizontalFrameBlock = styled.View`
@@ -35,7 +35,9 @@ const VerticalFrameBlock = styled.View`
 const ImageViewBlock = styled.View`
     width: ${props => props.size}px;
     height: ${props => props.size}px;
-    border: 1px solid #eee;
+    justify-content: center;
+    align-items: center;
+    border: 1px solid rgba(0, 0, 0, 0.1);
     border-radius: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -55,21 +57,14 @@ const ImageViewBlock = styled.View`
 
 const ImageTouchBlock = styled.TouchableOpacity``;
 
-const ImageCircularBlock = styled.View`
-    width: 100%;
-    height: 100%;
-    justify-content: center;
-    align-items: center;
-    background: blue;
-    border-radius: 10px;
-`;
-
 const ImageBlock = styled.Image`
     width: 100%;
     height: 100%;
     border-radius: 10px;
 `;
 
+//  Icon.Button에서는 iconStyle={{marginRight:0}} 속성이 들어가야 중앙정렬됨
+//  Icon.Button 말고 Icon에 touchable을 wrapping 하는 식으로 사용하는게 좋을듯
 const ImageCanvas = React.memo(({
     type,
     index,
@@ -80,40 +75,32 @@ const ImageCanvas = React.memo(({
 }) => {
 
     return (
-        <ImageViewBlock
-            image={image}
-            marginTop={marginTop}
-            marginLeft={marginLeft}
-            size={type === 'big' ? bigCanvasSize: smallCanvasSize}
-        >
+        <ImageTouchBlock onPress={() => onPressImageCrop(index)}>
+            <ImageViewBlock
+                image={image}
+                marginTop={marginTop}
+                marginLeft={marginLeft}
+                size={type === 'big' ? bigCanvasSize: smallCanvasSize}
+            >
                 {image ?
-                    (   <ImageTouchBlock onPress={() => onPressImageCrop(index)}>
-                            <ImageBlock source={image} />
-                        </ImageTouchBlock>
+                    (   
+                        <ImageBlock source={image} />
                     ) :
                     (
-                        
-                            <ImageCircularBlock>
-                                <Icon.Button 
-                                    name='plus'
-                                    backgroundColor='transparent'
-                                    onPress={() => onPressImageCrop(index)}
-                                    size={100}
-                                    iconStyle={{marginRight:0}}
-                                    color='rgba(255, 255, 255, 0.5)'
-                                    style={{ 
-                                        flex: 1,
-                                        marginRight: 0,
-                                        alignItems: 'center',
-                                        textAlignVertical: 'center', height: '100%', width: '100%', textAlign: 'center', color: 'red', backgroundColor: 'black' }}
-                                >
-                                
-                                </Icon.Button>
-                            </ImageCircularBlock>
-                        
+                        <Icon
+                            name='ios-add'
+                            backgroundColor='transparent'
+                            size={50}
+                            style={{
+                                justifyContent: 'center',
+                                alignItems: 'center',
+                                color: 'rgba(0, 0, 0, 0.1)',
+                            }}
+                        />
                     )
-                }   
-        </ImageViewBlock>
+                }
+            </ImageViewBlock>
+        </ImageTouchBlock>
     )
 });
 

@@ -51,6 +51,9 @@ const AuthNavigator = () => {
           <Stack.Screen
             name='AuthSignUpDetail'
             component={AuthSignUpDetailContainer}
+            options={{
+              headerTitle: null,
+            }}
           />
         </>
       ) : (
