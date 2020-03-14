@@ -9,13 +9,10 @@ const SET_CHECK = 'auth/SET_CHECK';
 const SET_AUTH = 'auth/SET_AUTH';
 const CLEAR_AUTH = 'auth/CLEAR_AUTH'
 const SET_VALUE = 'auth/SET_VALUE';
-const SET_IMAGES = 'auth/SET_IMAGES';
 export const setValue = createAction(SET_VALUE, payload => payload);
 export const setCheck = createAction(SET_CHECK, payload => payload);
 export const setAuth = createAction(SET_AUTH, payload => payload);
 export const clearAuth = createAction(CLEAR_AUTH);
-export const setImages = createAction(SET_IMAGES, payload => payload);
-
 
 const [ SIGNIN, SIGNIN_SUCCESS, SIGNIN_FAILURE ] = createRequestActionTypes('auth/SIGNIN');
 const [ SIGNUP, SIGNUP_SUCCESS, SIGNUP_FAILURE ] = createRequestActionTypes('auth/SIGNUP');
@@ -25,7 +22,6 @@ export const signIn = createRequestThunk(SIGNIN, authCtrl.signIn);
 export const signUp = createRequestThunk(SIGNUP, authCtrl.signUp);
 export const signOut = createRequestThunk(SIGNOUT, authCtrl.signOut);
 export const check = createRequestThunk(CHECK, authCtrl.check);
-
 
 const loginMode = async ({ user, token, expiryDate }, dispatch) => {
     try {
@@ -136,7 +132,6 @@ const initialState = {
             gender: false,
         }
     },
-    images: [ null, null, null, null ],
     user: null,
     token: null,
     expiryDate: null,
@@ -167,14 +162,6 @@ export default handleActions({
             ...state[kind],
             [key]: value,
         }
-    }),
-    [SET_IMAGES]: (state, { payload: { index, image } }) => ({
-        ...state,
-        images: [
-            ...state.images.slice(0, index),
-            image,
-            ...state.images.slice(index+1, state.images.length),
-        ]
     }),
     [CHECK_SUCCESS]: state => state,
     [SIGNIN_SUCCESS]: state => state,

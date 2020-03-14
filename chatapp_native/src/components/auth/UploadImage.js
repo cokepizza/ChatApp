@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, ActivityIndicator } from 'react-native';
 import styled, { css } from 'styled-components/native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
@@ -10,8 +10,7 @@ const smallCanvasSize = parseInt((bigCanvasSize - 10) / 2);
 const OuterFrameBlock = styled.View`
     width: 100%;
     height: ${bigCanvasSize + smallCanvasSize + 50}px;
-    padding: 20px;
-    
+    padding: 20px;  
 `;
 
 const BigHorizontalFrameBlock = styled.View`
@@ -69,6 +68,7 @@ const ImageCanvas = React.memo(({
     type,
     index,
     image,
+    loading,
     marginTop,
     marginLeft,
     onPressImageCrop
@@ -82,23 +82,27 @@ const ImageCanvas = React.memo(({
                 marginLeft={marginLeft}
                 size={type === 'big' ? bigCanvasSize: smallCanvasSize}
             >
-                {image ?
-                    (   
-                        <ImageBlock source={image} />
-                    ) :
-                    (
-                        <Icon
-                            name='ios-add'
-                            backgroundColor='transparent'
-                            size={50}
-                            style={{
-                                justifyContent: 'center',
-                                alignItems: 'center',
-                                color: 'rgba(0, 0, 0, 0.1)',
-                            }}
-                        />
-                    )
-                }
+                {!loading ? (
+                    image ?
+                        (
+                            <ImageBlock source={image} />
+                        )
+                        : (
+                            <Icon
+                                name='ios-add'
+                                backgroundColor='transparent'
+                                size={50}
+                                style={{
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    color: 'rgba(0, 0, 0, 0.1)',
+                                }}
+                            />
+                        )
+                )
+                : (
+                    <ActivityIndicator color="black" size="small" />
+                )}
             </ImageViewBlock>
         </ImageTouchBlock>
     )
@@ -106,6 +110,7 @@ const ImageCanvas = React.memo(({
 
 const AuthSignUpImage = ({
     images,
+    loadings,
     onPressImageCrop
 }) => {
 
@@ -116,6 +121,7 @@ const AuthSignUpImage = ({
                     type='big'
                     index={0}
                     image={images[0]}
+                    loading={loadings[0]}
                     onPressImageCrop={onPressImageCrop}
                 />
                 <VerticalFrameBlock>
@@ -123,12 +129,14 @@ const AuthSignUpImage = ({
                         type='small'
                         index={1}
                         image={images[1]}
+                        loading={loadings[1]}
                         onPressImageCrop={onPressImageCrop}
                     />
                     <ImageCanvas
                         type='small'
                         index={2}
                         image={images[2]}
+                        loading={loadings[2]}
                         onPressImageCrop={onPressImageCrop}
                     />
                 </VerticalFrameBlock>
@@ -138,18 +146,21 @@ const AuthSignUpImage = ({
                         type='small'
                         index={3}
                         image={images[3]}
+                        loading={loadings[3]}
                         onPressImageCrop={onPressImageCrop}
                     />
                      <ImageCanvas
                         type='small'
                         index={4}
                         image={images[4]}
+                        loading={loadings[4]}
                         onPressImageCrop={onPressImageCrop}
                     />
                      <ImageCanvas
                         type='small'
                         index={5}
                         image={images[5]}
+                        loading={loadings[5]}
                         onPressImageCrop={onPressImageCrop}
                     />
             </SmallHorizontalFrameBlock>
