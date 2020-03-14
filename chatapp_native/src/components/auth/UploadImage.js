@@ -9,6 +9,7 @@ const smallCanvasSize = parseInt((bigCanvasSize - 10) / 2);
 
 const OuterFrameBlock = styled.View`
     width: 100%;
+    /* bigCanvasSize + smallCanvasSize + 50 까지가 frame 영역 */
     height: ${bigCanvasSize + smallCanvasSize + 50}px;
     padding: 20px;  
 `;
@@ -30,6 +31,28 @@ const VerticalFrameBlock = styled.View`
     width: ${smallCanvasSize}px;
     height: ${bigCanvasSize}px;
 `;
+
+const LayoutFrameBlock = styled.View`
+    position: relative;
+`;
+
+const TextViewBlock = styled.View`
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 40px;
+    justify-content: center;
+    align-items: center;
+    background: rgba(0, 0, 0, 0.5);
+    border-radius: 10px;
+    border-top-right-radius: 0px;
+    border-bottom-left-radius: 0px;
+`;
+
+const TextBlock = styled.Text`
+    font-size: 12px;
+    color: white;
+`
 
 const ImageViewBlock = styled.View`
     width: ${props => props.size}px;
@@ -101,7 +124,10 @@ const ImageCanvas = React.memo(({
                         )
                 )
                 : (
-                    <ActivityIndicator color="black" size="small" />
+                    <ActivityIndicator
+                        color='rgba(0, 0, 0, 0.3)'
+                        size='large'
+                    />
                 )}
             </ImageViewBlock>
         </ImageTouchBlock>
@@ -117,13 +143,20 @@ const AuthSignUpImage = ({
     return (
         <OuterFrameBlock>
             <BigHorizontalFrameBlock>
-                <ImageCanvas
-                    type='big'
-                    index={0}
-                    image={images[0]}
-                    loading={loadings[0]}
-                    onPressImageCrop={onPressImageCrop}
-                />
+                <LayoutFrameBlock>
+                    <ImageCanvas
+                        type='big'
+                        index={0}
+                        image={images[0]}
+                        loading={loadings[0]}
+                        onPressImageCrop={onPressImageCrop}
+                    />
+                    <TextViewBlock>
+                        <TextBlock>
+                            Main
+                        </TextBlock>
+                    </TextViewBlock>
+                </LayoutFrameBlock>
                 <VerticalFrameBlock>
                     <ImageCanvas
                         type='small'

@@ -4,7 +4,14 @@ import ImagePicker from 'react-native-image-crop-picker';
 // import communications from 'react-native-communications';
 
 import UploadImage from '../../components/auth/UploadImage';
-import { setImage, clearImage, setLoading, clearLoading } from '../../modules/uploadImage';
+import {
+    setFile,
+    clearFile,
+    setImage,
+    clearImage,
+    setLoading,
+    clearLoading
+} from '../../modules/uploadImage';
 
 const AuthSignUpImageContainer = () => {
     const { images, loadings } = useSelector(({ uploadImage }) => ({
@@ -20,11 +27,13 @@ const AuthSignUpImageContainer = () => {
     // }, []);
 
     const onPressImageCrop = useCallback(index => {
-        dispatch(setLoading({
-            index,
-        }));
-
         if(images[index] === null) {
+            setTimeout(() => {
+                dispatch(setLoading({
+                    index,
+                }));
+            }, 500);
+
             ImagePicker.openPicker({
                 width: 1000,
                 height: 1000,
@@ -35,35 +44,41 @@ const AuthSignUpImageContainer = () => {
                 mediaType: 'photo',
                 // freeStyleCropEnabled: true,
                 // showCropGuidelines: true,
-            }).then(imageFile => {
-                console.log(image);
+            }).then(file => {
                 const image = {
-                    uri: imageFile.path,
-                    width: imageFile.width,
-                    height: imageFile.height,
-                    mime: imageFile.mime,
+                    uri: file.path,
+                    width: file.width,
+                    height: file.height,
+                    mime: file.mime,
                 };
 
                 dispatch(clearLoading({
                     index,
                 }));
-
                 dispatch(setImage({
                     index,
                     image,
                 }));
-            });
-        } else {
-
-            setTimeout(() => {
-                dispatch(clearImage({
+                dispatch(setFile({
                     index,
+                    file,
                 }));
-
+            }).catch(e => {
+                console.log(e);
                 dispatch(clearLoading({
                     index,
                 }));
-            }, 200);
+            });
+        } else {
+            dispatch(clearLoading({
+                index,
+            }));
+            dispatch(clearImage({
+                index,
+            }));
+            dispatch(clearFile({
+                index,
+            }))
         }
     }, [images]);
 
