@@ -134,7 +134,7 @@ const ImageCanvas = React.memo(({
     )
 });
 
-const AuthSignUpImage = ({
+const AuthImage = ({
     images,
     loadings,
     onPressImageCrop
@@ -201,4 +201,4 @@ const AuthSignUpImage = ({
     );
 };
 
-export default AuthSignUpImage;
+export default AuthImage;

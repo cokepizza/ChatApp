@@ -3,12 +3,12 @@ import { all } from 'redux-saga/effects';
 
 import auth from './auth';
 import chat, { chatSaga } from './chat';
-import uploadImage from './uploadImage';
+import image from './image';
 
 const rootReducer = combineReducers({
     auth,
     chat,
-    uploadImage,
+    image,
 });
 
 export function* rootSaga() {

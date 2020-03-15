@@ -2,11 +2,11 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpDetail from '../../components/auth/AuthSignUpDetail';
-import { imageUpload } from '../../lib/api/auth';
+import { createAuthImage } from '../../modules/image';
 
 const AuthSignUpDetailContainer = () => {
-    const { files } = useSelector(({ uploadImage }) => ({
-        files: uploadImage.files,
+    const { files } = useSelector(({ image }) => ({
+        files: image.files,
     }));
 
     const dispatch = useDispatch();
@@ -22,10 +22,10 @@ const AuthSignUpDetailContainer = () => {
 
         formData.append('files', revisedFiles);
 
-        await dispatch(imageUpload({
+        await dispatch(createAuthImage({
             formData,
         }));
-        
+
     }, [dispatch, files]);
     
     return (

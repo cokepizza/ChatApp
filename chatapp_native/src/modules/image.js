@@ -1,17 +1,24 @@
 import { createAction, handleActions } from 'redux-actions';
 
-const SET_FILE = 'auth/SET_FILE';
-const CLEAR_FILE = 'auth/CLEAR_FILE';
-const SET_IMAGE = 'auth/SET_IMAGE';
-const CLEAR_IMAGE = 'auth/CLEAR_IMAGE';
-const SET_LOADING = 'auth/SET_LOADING';
-const CLEAR_LOADING = 'auth/CLEAR_LOADING';
+import createRequestThunk, { createRequestActionTypes } from '../lib/createRequestThunk';
+
+import * as imageCtrl from '../lib/api/image';
+
+const SET_FILE = 'image/SET_FILE';
+const CLEAR_FILE = 'image/CLEAR_FILE';
+const SET_IMAGE = 'image/SET_IMAGE';
+const CLEAR_IMAGE = 'image/CLEAR_IMAGE';
+const SET_LOADING = 'image/SET_LOADING';
+const CLEAR_LOADING = 'image/CLEAR_LOADING';
 export const setFile = createAction(SET_FILE, payload => payload);
 export const clearFile = createAction(CLEAR_FILE, payload => payload);
 export const setImage = createAction(SET_IMAGE, payload => payload);
 export const clearImage = createAction(CLEAR_IMAGE, payload => payload);
 export const setLoading = createAction(SET_LOADING, payload => payload);
 export const clearLoading = createAction(CLEAR_LOADING, payload => payload);
+
+const [ CREATE_AUTH_IMAGE, CREATE_AUTH_IMAGE_SUCCESS, CREATE_AUTH_IMAGE_FAILURE ] = createRequestActionTypes('image/CREATE_AUTH_IMAGE');
+export const createAuthImage = createRequestThunk(CREATE_AUTH_IMAGE, imageCtrl.createAuthImage);
 
 const initialState = {
     loadings: [ null, null, null, null, null, null ],
@@ -68,4 +75,5 @@ export default handleActions({
             ...state.loadings.slice(index+1, state.loadings.length),  
         ]
     }),
+    [CREATE_AUTH_IMAGE_SUCCESS]: state => state,
 }, initialState);

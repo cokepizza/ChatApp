@@ -1,9 +1,9 @@
 import Sequelize from 'sequelize';
-import configJson from '../config/config.json';
+import dbConfig from '../config/dbConfig.json';
 import user from './user';
 
 const env = process.env.NODE_ENV || 'development';
-const config = configJson[env];
+const config = dbConfig[env];
 const db = {};
 
 const sequelize = new Sequelize(config.database, config.username, config.password, config);

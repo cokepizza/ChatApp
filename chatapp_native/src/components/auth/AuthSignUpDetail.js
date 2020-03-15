@@ -1,7 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
-import UploadImageContainer from '../../containers/auth/UploadImageContainer';
+import AuthImageContainer from '../../containers/auth/AuthImageContainer';
 import ProfileContainer from '../../containers/auth/ProfileContainer';
 
 const SubmitTouchBlock = styled.TouchableOpacity`
@@ -23,7 +23,7 @@ const AuthSignUpDetailBlock = styled.SafeAreaView`
 const AuthSignUpDetail = ({ onPressSubmit }) => {
     return (
         <AuthSignUpDetailBlock>
-            <UploadImageContainer />
+            <AuthImageContainer />
             <ProfileContainer />
             <SubmitTouchBlock onPress={onPressSubmit}>
                 <SubmitTextBlock>

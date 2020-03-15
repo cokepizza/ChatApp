@@ -1,6 +1,7 @@
 import { createAction, handleActions } from 'redux-actions';
 
 import createRequestThunk, { createRequestActionTypes } from '../lib/createRequestThunk';
+
 import * as authCtrl from '../lib/api/auth';
 import client from '../lib/api/client';
 import storage from '../lib/storage';
@@ -22,9 +23,6 @@ export const signIn = createRequestThunk(SIGNIN, authCtrl.signIn);
 export const signUp = createRequestThunk(SIGNUP, authCtrl.signUp);
 export const signOut = createRequestThunk(SIGNOUT, authCtrl.signOut);
 export const check = createRequestThunk(CHECK, authCtrl.check);
-
-const [ IMAGE_UPLOAD, IMAGE_UPLOAD_SUCCESS, IMAGE_UPLOAD_FAILURE ] = createRequestActionTypes('auth/IMAGE_UPLOAD');
-export const imageUpload = createRequestThunk(IMAGE_UPLOAD, authCtrl.imageUpload);
 
 const loginMode = async ({ user, token, expiryDate }, dispatch) => {
     try {
@@ -170,5 +168,4 @@ export default handleActions({
     [SIGNIN_SUCCESS]: state => state,
     [SIGNUP_SUCCESS]: state => state,
     [SIGNOUT_SUCCESS]: state => state,
-    [IMAGE_UPLOAD_SUCCESS]: state => state,
 }, initialState);

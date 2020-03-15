@@ -3,7 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
 // import communications from 'react-native-communications';
 
-import UploadImage from '../../components/auth/UploadImage';
+import AuthImage from '../../components/auth/AuthImage';
 import {
     setFile,
     clearFile,
@@ -11,12 +11,12 @@ import {
     clearImage,
     setLoading,
     clearLoading
-} from '../../modules/uploadImage';
+} from '../../modules/image';
 
-const AuthSignUpImageContainer = () => {
-    const { images, loadings } = useSelector(({ uploadImage }) => ({
-        images: uploadImage.images,
-        loadings: uploadImage.loadings,
+const AuthImageContainer = () => {
+    const { images, loadings } = useSelector(({ image }) => ({
+        images: image.images,
+        loadings: image.loadings,
     }));
 
     const dispatch = useDispatch();
@@ -39,11 +39,8 @@ const AuthSignUpImageContainer = () => {
                 height: 1000,
                 cropperToolbarTitle: 'crop',
                 avoidEmptySpaceAroundImage: false,
-                // cropperCircleOverlay: true,
                 cropping: true,
                 mediaType: 'photo',
-                // freeStyleCropEnabled: true,
-                // showCropGuidelines: true,
             }).then(file => {
                 const image = {
                     uri: file.path,
@@ -83,7 +80,7 @@ const AuthSignUpImageContainer = () => {
     }, [images]);
 
     return (
-        <UploadImage
+        <AuthImage
             images={images}
             loadings={loadings}
             onPressImageCrop={onPressImageCrop}
@@ -91,4 +88,4 @@ const AuthSignUpImageContainer = () => {
     );
 };
 
-export default AuthSignUpImageContainer;
+export default AuthImageContainer;
