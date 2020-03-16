@@ -5,28 +5,40 @@ import AuthSignUpDetail from '../../components/auth/AuthSignUpDetail';
 import { createAuthImage } from '../../modules/image';
 
 const AuthSignUpDetailContainer = () => {
-    const { files } = useSelector(({ image }) => ({
+    const { files, username } = useSelector(({ image, auth }) => ({
         files: image.files,
+        username: auth.signUp.username,
     }));
 
     const dispatch = useDispatch();
 
     const onPressSubmit = useCallback(async () => {
         const formData = new FormData();
+        
+        const imageIndex = [];
+        files.forEach((file, index) => {
+            if(file !== null) {
+                imageIndex.push(index);
+                formData.append('authImages', {
+                    name: file.path.split('/').pop(),
+                    type: file.mime,
+                    uri: Platform.OS === 'android' ? file.path : file.path.replace('file://', ''),
+                });
+            }
+        });
 
-        const revisedFiles = files.map(file => file ? ({
-            name: file.path.split('/').pop(),
-            type: file.mime,
-            uri: file.path,
-        }) : null);
+        const inform = {
+            username,
+            imageIndex,
+        }
 
-        formData.append('files', revisedFiles);
+        formData.append('authInform', JSON.stringify(inform));
 
-        await dispatch(createAuthImage({
+        await dispatch(createAuthImage(
             formData,
-        }));
+        ));
 
-    }, [dispatch, files]);
+    }, [dispatch, files, username]);
     
     return (
         <AuthSignUpDetail
