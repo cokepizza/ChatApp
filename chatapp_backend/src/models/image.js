@@ -11,27 +11,10 @@ const image = sequelize => {
             type: DataTypes.STRING(10),
             allowNull: false,
         },
-        owner: {
-            
-        },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: sequelize.literal('now()'),
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: sequelize.literal('now()'),
-        },
     }, {
-        timestamps: false,
+        timestamps: true,
+        paranoid: true,
     });
-
-    Image.prototype.checkPassword = async function(password) {
-        const result = await bcrypt.compare(password, this.password);
-        return result;
-    };
 
     return Image;
 }

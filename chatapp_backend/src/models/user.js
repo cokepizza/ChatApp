@@ -20,18 +20,9 @@ const user = sequelize => {
             type: DataTypes.STRING(10),
             allowNull: false,
         },
-        createdAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: sequelize.literal('now()'),
-        },
-        updatedAt: {
-            type: DataTypes.DATE,
-            allowNull: false,
-            defaultValue: sequelize.literal('now()'),
-        },
     }, {
-        timestamps: false,
+        timestamps: true,
+        paranoid: true,
     });
 
     User.prototype.checkPassword = async function(password) {
