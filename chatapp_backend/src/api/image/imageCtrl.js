@@ -1,7 +1,26 @@
+import db from '../../models';
 
-export const createAuthImage = (req, res, next) => {
+const { AuthImage, User } = db;
+
+export const createAuthImage = async (req, res, next) => {
+    const { authInform } = req.body;
+    const { authImages } = req.files;
+    const parsedInform = JSON.parse(authInform);
+    const { username, imageOrder } = parsedInform;
     
-    console.dir(req.files);
-    console.dir(req.body);
+    const user = await User.findOne({ where: { username } });
+
+    const promiseArr = [];
+    imageOrder.forEach((order, index) => {
+        const { key, size } = authImages[index];
+        promiseArr.push(AuthImage.create({
+            imagename: key,
+            order,
+            size,
+            userId: user.id,
+        }));
+    });
+
+    await Promise.all(promiseArr);
     res.status(200).end();
 };

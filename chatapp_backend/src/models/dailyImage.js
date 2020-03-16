@@ -1,22 +1,22 @@
 import { DataTypes } from 'sequelize';
 
-const image = sequelize => {
-    const Image = sequelize.define('image', {
+const dailyImage = sequelize => {
+    const DailyImage = sequelize.define('dailyImage', {
         imagename: {
             type: DataTypes.STRING(200),
             allowNull: false,
             unique: true,   
         },
-        type: {
-            type: DataTypes.STRING(10),
-            allowNull: false,
-        },
+        size: {
+            type : DataTypes.INTEGER.UNSIGNED,
+            allowNull : false,
+        }
     }, {
         timestamps: true,
         paranoid: true,
     });
 
-    return Image;
+    return DailyImage;
 }
 
-export default image;
+export default dailyImage;

@@ -15,10 +15,10 @@ const AuthSignUpDetailContainer = () => {
     const onPressSubmit = useCallback(async () => {
         const formData = new FormData();
         
-        const imageIndex = [];
+        const imageOrder = [];
         files.forEach((file, index) => {
             if(file !== null) {
-                imageIndex.push(index);
+                imageOrder.push(index);
                 formData.append('authImages', {
                     name: file.path.split('/').pop(),
                     type: file.mime,
@@ -29,7 +29,7 @@ const AuthSignUpDetailContainer = () => {
 
         const inform = {
             username,
-            imageIndex,
+            imageOrder,
         }
 
         formData.append('authInform', JSON.stringify(inform));
