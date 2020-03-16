@@ -4,11 +4,13 @@ import { all } from 'redux-saga/effects';
 import auth from './auth';
 import chat, { chatSaga } from './chat';
 import image from './image';
+import profile from './profile';
 
 const rootReducer = combineReducers({
     auth,
     chat,
     image,
+    profile,
 });
 
 export function* rootSaga() {

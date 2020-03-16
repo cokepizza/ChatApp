@@ -49,7 +49,8 @@ const AuthSignInContainer = ({ navigation }) => {
     }, []);
 
     const onPressNavigate = useCallback(() => {
-        navigation.navigate('AuthSignUp');
+        // navigation.navigate('AuthSignUp');
+        navigation.navigate('AuthSignUpDetail');
     }, [navigation]);
 
     return (

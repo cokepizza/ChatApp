@@ -74,6 +74,10 @@ const ButtonTouchBlock = styled.TouchableOpacity`
     border-radius: 5px;
     background: rgba(176, 196, 222, 0.5);
     margin-top: 20px;
+
+    ${props => props.disabled && css`
+        background: rgba(176, 196, 222, 0.2);
+    `}
 `;
 
 const ButtonTextBlock = styled.Text`
@@ -114,6 +118,13 @@ const AuthSignUp = ({
     onChangeText
 }) => {
     
+    let inValidSignUp = false;
+    Object.keys(validation).forEach(key => {
+        if(!validation[key]) {
+            inValidSignUp = true;
+        }
+    })
+
     return (
         <AuthSignUpBlock>
             <HeaderViewBlock>
@@ -213,7 +224,10 @@ const AuthSignUp = ({
                         </CheckBoxTouchBlock>
                     </CheckBoxFrameBlock>
                 </InputFrameBlock>
-                <ButtonTouchBlock onPress={onPressSubmit}>
+                <ButtonTouchBlock
+                    disabled={inValidSignUp}
+                    onPress={onPressSubmit}
+                >
                     <ButtonTextBlock>
                         Sign Up
                     </ButtonTextBlock>

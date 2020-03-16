@@ -20,16 +20,22 @@ const AuthSignUpDetailBlock = styled.SafeAreaView`
     align-items: center;
 `;
 
+const AuthSignUpScrollView = styled.ScrollView`
+    width: 100%;
+`;
+
 const AuthSignUpDetail = ({ onPressSubmit }) => {
     return (
         <AuthSignUpDetailBlock>
-            <AuthImageContainer />
-            <ProfileContainer />
-            <SubmitTouchBlock onPress={onPressSubmit}>
-                <SubmitTextBlock>
-                    Submit
-                </SubmitTextBlock>
-            </SubmitTouchBlock>
+            <AuthSignUpScrollView horizontal={false}>
+                <AuthImageContainer />
+                <ProfileContainer />
+                <SubmitTouchBlock onPress={onPressSubmit}>
+                    <SubmitTextBlock>
+                        Submit
+                    </SubmitTextBlock>
+                </SubmitTouchBlock>
+            </AuthSignUpScrollView>
         </AuthSignUpDetailBlock>
     );
 };
