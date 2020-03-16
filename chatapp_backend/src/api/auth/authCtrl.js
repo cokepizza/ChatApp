@@ -55,7 +55,7 @@ export const signUp = async (req, res, next) => {
             console.dir('Registered user');
             return res.status(409).send('Registered user');
         }
-        
+
         const user = await User.build({
             username,
             nickname,

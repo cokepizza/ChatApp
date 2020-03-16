@@ -23,7 +23,8 @@ export const createAuthImage = createRequestThunk(CREATE_AUTH_IMAGE, imageCtrl.c
 const initialState = {
     loadings: [ null, null, null, null, null, null ],
     files: [ null, null, null, null, null, null ],
-    images: [ null, null, null, null, null, null ]
+    images: [ null, null, null, null, null, null ],
+    authImage: null,
 };
 
 export default handleActions({
@@ -75,5 +76,8 @@ export default handleActions({
             ...state.loadings.slice(index+1, state.loadings.length),  
         ]
     }),
-    [CREATE_AUTH_IMAGE_SUCCESS]: state => state,
+    [CREATE_AUTH_IMAGE_SUCCESS]: (state, { payload: { authImage } }) => ({
+        ...state,
+        authImage,
+    }),
 }, initialState);

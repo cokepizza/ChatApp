@@ -3,16 +3,27 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpDetail from '../../components/auth/AuthSignUpDetail';
 import { createAuthImage } from '../../modules/image';
+import { signUpThunk } from '../../modules/auth';
 
 const AuthSignUpDetailContainer = () => {
-    const { files, username } = useSelector(({ image, auth }) => ({
+    const { files, username, nickname, password, gender } = useSelector(({ image, auth }) => ({
         files: image.files,
         username: auth.signUp.username,
+        nickname: auth.signUp.nickname,
+        password: auth.signUp.password,
+        gender: auth.signUp.gender,
     }));
 
     const dispatch = useDispatch();
 
     const onPressSubmit = useCallback(async () => {
+        const { user } = await dispatch(signUpThunk({
+            username,
+            nickname,
+            password,
+            gender,
+        }));
+
         const formData = new FormData();
         
         const imageOrder = [];
@@ -28,7 +39,7 @@ const AuthSignUpDetailContainer = () => {
         });
 
         const inform = {
-            username,
+            userId: user.id,
             imageOrder,
         }
 
@@ -38,7 +49,7 @@ const AuthSignUpDetailContainer = () => {
             formData,
         ));
 
-    }, [dispatch, files, username]);
+    }, [dispatch, files, username, nickname, password, gender]);
     
     return (
         <AuthSignUpDetail

@@ -53,22 +53,19 @@ export const signInThunk = ({ username, password }) => async ( dispatch, getStat
             password,
         }));
 
-        console.dir(response.expiryDate);
-
         await loginMode(response, dispatch);
+        return response;
     } catch(e) {
         console.dir(e);
     }
 };
 
-export const signUpThunk = ({ username, password }) => async ( dispatch, getState ) => {
+export const signUpThunk = auth => async ( dispatch, getState ) => {
     try {
-        const response = await dispatch(signUp({
-            username,
-            password,
-        }));
+        const response = await dispatch(signUp(auth));
 
         await loginMode(response, dispatch);
+        return response;
     } catch(e) {
         console.dir(e);
     }

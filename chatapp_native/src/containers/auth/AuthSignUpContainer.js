@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Joi from 'react-native-joi';
 
 import AuthSignUp from '../../components/auth/AuthSignUp';
-import { signUpThunk, setValue } from '../../modules/auth';
+import { setValue } from '../../modules/auth';
 
 const AuthSignUpContainer = ({ navigation }) => {
     const {
@@ -74,16 +74,10 @@ const AuthSignUpContainer = ({ navigation }) => {
     }, [dispatch]);
 
     const onPressSubmit = useCallback(() => {
-        // if(password === passwordConfirm) {
-        //     dispatch(signUpThunk({
-        //         username,
-        //         nickname,
-        //         password,
-        //         gender,
-        //     }));
-        // }
-        navigation.navigate('AuthSignUpDetail');
-    }, [dispatch, username, nickname, password, passwordConfirm, gender]);
+        if(password === passwordConfirm) {
+            navigation.navigate('AuthSignUpDetail');
+        }
+    }, [dispatch, password, passwordConfirm]);
 
     const onPressNavigate = useCallback(() => {
         navigation.goBack();
