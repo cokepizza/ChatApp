@@ -23,7 +23,13 @@ const TextViewBlock = styled.Text`
     height: 20px;
 `;
 
-const TextArea = ({ textState, textLength, textLimit, onChangeTextState }) => {
+const TextArea = ({
+    textState,
+    textLength,
+    textLimit,
+    onFocus,
+    onChangeTextState
+}) => {
     return (
         <TextAreaFrameBlock>
             <TextAreaBlock
@@ -33,6 +39,7 @@ const TextArea = ({ textState, textLength, textLimit, onChangeTextState }) => {
                 autoCorrect={false}
                 allowFontScaling={false}
                 value={textState}
+                onFocus={onFocus}
                 onChangeText={text => onChangeTextState(text)}
             />
             <TextViewBlock>

@@ -4,9 +4,22 @@ import styled from 'styled-components/native';
 import AuthImageContainer from '../../containers/auth/AuthImageContainer';
 import ProfileContainer from '../../containers/auth/ProfileContainer';
 
-const SubmitTouchBlock = styled.TouchableOpacity`
-    width: 90%;
+const MarginBlock = styled.View`
+    height: 30px;
+`;
+
+const SubmitFrameBlock = styled.View`
+    width: 100%;
+    padding-left: 20px;
+    padding-right: 20px;
     height: 40px;
+    justify-content: center;
+    align-items: center;
+`;
+
+const SubmitTouchBlock = styled.TouchableOpacity`
+    width: 100%;
+    height: 100%;
     background: green;
     justify-content: center;
     align-items: center;
@@ -27,14 +40,20 @@ const AuthSignUpScrollView = styled.ScrollView`
 const AuthSignUpDetail = ({ onPressSubmit }) => {
     return (
         <AuthSignUpDetailBlock>
-            <AuthSignUpScrollView horizontal={false}>
+            <AuthSignUpScrollView
+                horizontal={false}
+                keyboardShouldPersistTaps='always'
+            >
                 <AuthImageContainer />
+                <MarginBlock />
                 <ProfileContainer />
-                <SubmitTouchBlock onPress={onPressSubmit}>
-                    <SubmitTextBlock>
-                        Submit
-                    </SubmitTextBlock>
-                </SubmitTouchBlock>
+                <SubmitFrameBlock>
+                    <SubmitTouchBlock onPress={onPressSubmit}>
+                        <SubmitTextBlock>
+                            Submit
+                        </SubmitTextBlock>
+                    </SubmitTouchBlock>
+                </SubmitFrameBlock>
             </AuthSignUpScrollView>
         </AuthSignUpDetailBlock>
     );

@@ -27,6 +27,11 @@ const AuthSignInContainer = ({ navigation }) => {
         })
     }, []);
 
+    const clearFocus = useCallback(() => {
+        inputRef.current.forEach(input => input.blur());
+        setFocused([ false, false ]);
+    }, []);
+
     const onChangeText = useCallback((key, value) => {
         dispatch(setValue({
             kind: 'signIn',
@@ -44,12 +49,12 @@ const AuthSignInContainer = ({ navigation }) => {
     }, [dispatch, username, password, onPressBackground]);
 
     const onPressBackground = useCallback(() => {
-        inputRef.current.forEach(input => input.blur());
-        setFocused([ false, false ]);
+        clearFocus();
     }, []);
 
     const onPressNavigate = useCallback(() => {
         // navigation.navigate('AuthSignUp');
+        clearFocus();
         navigation.navigate('AuthSignUpDetail');
     }, [navigation]);
 

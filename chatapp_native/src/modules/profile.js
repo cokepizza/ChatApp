@@ -6,6 +6,21 @@ export const setValue = createAction(SET_VALUE, payload => payload);
 const initialState = {
     introduction: '',
     introductionWordLimit: 100,
+    school: '',
+    major: '',
+    job: '',
+    region: '',
+    tags: '',
+    
+    validation: {
+        introduction: false,
+        school: false,
+        major: false,
+        job: false,
+        region: false,
+        tags: false,
+    }
+
 };
 
 export default handleActions({
