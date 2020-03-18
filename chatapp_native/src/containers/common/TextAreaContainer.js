@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import TextArea from '../../components/common/TextArea';
 
-const TextAreaContainer = ({ text, textLimit, onFocus, onChangeText }) => {
+const TextAreaContainer = ({ inputRef, index, text, textLimit, onFocus, onChangeText }) => {
     const [ textState, setTextState ] = useState(text);
     const [ textLength, setTextLength ] = useState(text.length);
 
@@ -20,9 +20,11 @@ const TextAreaContainer = ({ text, textLimit, onFocus, onChangeText }) => {
             }
         }
     }
-    
+
     return (
         <TextArea
+            inputRef={inputRef}
+            index={index}
             textState={textState}
             textLength={textLength}
             textLimit={textLimit}

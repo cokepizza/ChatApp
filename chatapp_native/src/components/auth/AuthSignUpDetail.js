@@ -29,33 +29,47 @@ const SubmitTextBlock = styled.Text``;
 
 const AuthSignUpDetailBlock = styled.SafeAreaView`
     flex: 1;
+    position: relative;
     background: white;
     align-items: center;
+`;
+
+const AuthSignUpDetailBackgroundBlock = styled.View`
+    position: absolute;
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.3);
+    z-index: 10;
 `;
 
 const AuthSignUpScrollView = styled.ScrollView`
     width: 100%;
 `;
 
-const AuthSignUpDetail = ({ onPressSubmit }) => {
+const AuthSignUpDetail = ({ modal, onPressSubmit }) => {
     return (
-        <AuthSignUpDetailBlock>
-            <AuthSignUpScrollView
-                horizontal={false}
-                keyboardShouldPersistTaps='always'
-            >
-                <AuthImageContainer />
-                <MarginBlock />
-                <ProfileContainer />
-                <SubmitFrameBlock>
-                    <SubmitTouchBlock onPress={onPressSubmit}>
-                        <SubmitTextBlock>
-                            Submit
-                        </SubmitTextBlock>
-                    </SubmitTouchBlock>
-                </SubmitFrameBlock>
-            </AuthSignUpScrollView>
-        </AuthSignUpDetailBlock>
+        <>
+            <AuthSignUpDetailBlock>
+                <AuthSignUpScrollView
+                    horizontal={false}
+                    keyboardShouldPersistTaps='always'
+                >
+                    <AuthImageContainer />
+                    <MarginBlock />
+                    <ProfileContainer />
+                    <SubmitFrameBlock>
+                        <SubmitTouchBlock onPress={onPressSubmit}>
+                            <SubmitTextBlock>
+                                Submit
+                            </SubmitTextBlock>
+                        </SubmitTouchBlock>
+                    </SubmitFrameBlock>
+                </AuthSignUpScrollView>
+            </AuthSignUpDetailBlock>
+            {modal &&  <AuthSignUpDetailBackgroundBlock /> }
+        </>
     );
 };
 

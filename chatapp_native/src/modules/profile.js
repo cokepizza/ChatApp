@@ -11,7 +11,6 @@ const initialState = {
     job: '',
     region: '',
     tags: '',
-    
     validation: {
         introduction: false,
         school: false,
@@ -19,8 +18,8 @@ const initialState = {
         job: false,
         region: false,
         tags: false,
-    }
-
+    },
+    modal: false,
 };
 
 export default handleActions({

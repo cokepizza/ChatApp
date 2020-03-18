@@ -24,6 +24,8 @@ const TextViewBlock = styled.Text`
 `;
 
 const TextArea = ({
+    inputRef,
+    index,
     textState,
     textLength,
     textLimit,
@@ -33,6 +35,7 @@ const TextArea = ({
     return (
         <TextAreaFrameBlock>
             <TextAreaBlock
+                ref={ref => inputRef.current[index] = ref}
                 multiline={true}
                 numberOfLines={4}
                 autoCapitalize='none'

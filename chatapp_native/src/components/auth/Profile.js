@@ -4,6 +4,7 @@ import styled, { css } from 'styled-components/native';
 import TextAreaContainer from '../../containers/common/TextAreaContainer';
 import CheckBeforeIcon from '../../assets/images/check_before.png';
 import CheckAfterIcon from '../../assets/images/check_after.png';
+import SelectionContainer from '../../containers/common/SelectionContainer';
 
 const ProfileTouchBlock = styled.TouchableWithoutFeedback``;
 
@@ -12,7 +13,6 @@ const ProfileBlock = styled.View`
     padding-left: 20px;
     padding-right: 20px;
     height: 800px;
-    /* background: red; */
 `;
 
 const ImageBlock = styled.Image`
@@ -53,6 +53,12 @@ const InputBlock = styled.TextInput`
     flex: 1;
     height: 30px;
     margin-left: 10px;
+`;
+
+const SelectionBlock = styled.Picker`
+    height: 30px;
+    width: 100%;
+    
 `;
 
 const TextInputForm = ({ validation, value, index, inputRef, ...rest }) => {
@@ -101,7 +107,8 @@ const Profile = ({
                             자기소개
                         </TextBlock>
                         <TextAreaContainer
-                            
+                            inputRef={inputRef}
+                            index={0}
                             text={introduction}
                             textLimit={introductionWordLimit}
                             onFocus={() => onFocus(0)}
@@ -154,6 +161,15 @@ const Profile = ({
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
+                <SelectionContainer />
+                {/* <SelectionBlock
+                    selectedValue={'python'}
+                >
+                    <SelectionBlock.Item label='java' value='java' />
+                    <SelectionBlock.Item label='c++' value='c++' />
+                    <SelectionBlock.Item label='python' value='python' />
+                </SelectionBlock> */}
+
             </ProfileBlock>
         </ProfileTouchBlock>
     );

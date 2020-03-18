@@ -6,12 +6,13 @@ import { createAuthImage } from '../../modules/image';
 import { signUpThunk } from '../../modules/auth';
 
 const AuthSignUpDetailContainer = () => {
-    const { files, username, nickname, password, gender } = useSelector(({ image, auth }) => ({
+    const { files, username, nickname, password, gender, modal } = useSelector(({ image, auth, profile }) => ({
         files: image.files,
         username: auth.signUp.username,
         nickname: auth.signUp.nickname,
         password: auth.signUp.password,
         gender: auth.signUp.gender,
+        modal: profile.modal,
     }));
 
     const dispatch = useDispatch();
@@ -53,6 +54,7 @@ const AuthSignUpDetailContainer = () => {
     
     return (
         <AuthSignUpDetail
+            modal={modal}
             onPressSubmit={onPressSubmit}
         />
     );

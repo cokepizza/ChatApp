@@ -1,7 +1,6 @@
 import React, { useEffect, useCallback } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import ImagePicker from 'react-native-image-crop-picker';
-// import communications from 'react-native-communications';
 
 import AuthImage from '../../components/auth/AuthImage';
 import {
@@ -20,11 +19,6 @@ const AuthImageContainer = () => {
     }));
 
     const dispatch = useDispatch();
-
-    //  test
-    // useEffect(() => {
-    //     communications.phonecall('01077486664', 'hi hello cokepizza');
-    // }, []);
 
     const onPressImageCrop = useCallback(index => {
         if(images[index] === null) {
