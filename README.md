@@ -40,8 +40,8 @@ Real-time Chat Application (Currently in development)
 ## Service Overview
 
 * How this service works
-  * How do I deploy to both devices Android & IOS ?
-    * Develop both devices at the same time using ReactNative
+  * How do you deploy to both devices Android & IOS ?
+    * By using ReactNative, you can replace native mobile development with javascript
   * How do you plan to handle if there are many requests?
     * Basically, the server is developed in a direction that allows scale out
     * For scale out, event sharing and query caching are conducted using Redis
@@ -49,31 +49,30 @@ Real-time Chat Application (Currently in development)
     * Static data such as images are stored in S3 storage and can be quickly received through cdn like cloudfront
 * Chat Rules
   * Authentication
-    * 
+    * JWT tokens are given through authentication. The token will be refreshed in the middle and remain in the device's asyncstorage for automatic login
+    * Considering Scalability, I used the passport library for login. In the future, Facebook and KakaoTalk login will be supported separately from email login
   * Chating
-    * 
+    * Chatting takes place in real time, and message notifications are sent even when you are not in the Chat tab
   * About Recommendation System
-    * 
-* Functions
-  * Utility
-    * 
-  * Replay
-    * 
-* ETC
-  
+    * We will calculate tastes and scores based on user-to-user evaluation
+    * The evaluation will be conducted by at least 30 people, a standard that can approximate the normal distribution
+    * Like Netflix, we will increase user satisfaction based on the recommendation algorithm
+
 ## Service Contents
 
+* SignIn & SignUp
+  Coming soon...
 * Initial Screen
-
-
-* Play Mode
-
-
-* Replay Mode
-
-
+  Coming soon...
 * Chat
-
+  Coming soon...
 * ETC
+  Coming soon...
 
 ## Upcoming Work
+
+* SignIn and SignUp have been implemented
+* Nginx, EC2, S3, and CloudFront infrastructure setup is complete
+* Crop and upload the image is complete
+* Scale out base such as event sharing based on socket.io-redis were implemented
+* Basic chat function is available
