@@ -4,7 +4,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Profile from '../../components/auth/Profile';
 import { setValue } from '../../modules/profile';
 
-const ProfileContainer = () => {
+const ProfileContainer = ({ scrollRef }) => {
     //  TextArea는 라이브러리 형태로 만들어봄
     const {
         introduction,
@@ -27,6 +27,8 @@ const ProfileContainer = () => {
     const dispatch = useDispatch();
 
     const [ focused, setFocused ] = useState([ false, false, false, false ]);
+    const [ containerHeight, setContainerHeight ] = useState(0);
+    const [ componentHeight, setComponentHeight ] = useState([ null, null, null, null ]);
     const inputRef = useRef([ createRef(), createRef(), createRef(), createRef() ]);
 
     const onPress = useCallback(index => {
@@ -39,12 +41,16 @@ const ProfileContainer = () => {
     }, []);
 
     const onFocus = useCallback(index => {
+        if(scrollRef.current) {
+            scrollRef.current.scrollTo({ y: containerHeight + componentHeight[index], animated: true });
+        }
+        
         setFocused(prevState => {
             const nextFocused = [ false, false, false, false ];
             nextFocused[index] = true;
             return nextFocused;
         })
-    }, []);
+    }, [containerHeight, componentHeight]);
 
     const onChangeText = useCallback((key, value) => {
         dispatch(setValue({
@@ -56,6 +62,18 @@ const ProfileContainer = () => {
     const onPressBackground = useCallback(() => {
         clearFocus();
     }, []);
+
+    const onLayout = ({ nativeEvent: { layout: { x, y, width, height }}}, index) => {
+        if(index === -1) {
+            setContainerHeight(y);
+        } else {
+            setComponentHeight(prevState => {
+                const nextState = [ ...prevState ];
+                nextState[index] = y;
+                return nextState;
+            });
+        }
+    }
 
     return (
         <Profile
@@ -72,6 +90,7 @@ const ProfileContainer = () => {
             onFocus={onFocus}
             onPress={onPress}
             onPressBackground={onPressBackground}
+            onLayout={onLayout}
         />
     );
 };

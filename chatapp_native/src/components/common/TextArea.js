@@ -38,7 +38,7 @@ const TextArea = ({
     textLength,
     textLimit,
     onFocus,
-    onChangeTextState
+    onChangeTextState,
 }) => {
     return (
         <TextAreaFrameBlock>

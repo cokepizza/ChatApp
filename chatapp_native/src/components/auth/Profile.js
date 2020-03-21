@@ -12,7 +12,7 @@ const ProfileBlock = styled.View`
     width: 100%;
     padding-left: 20px;
     padding-right: 20px;
-    height: 800px;
+    height: 1600px;
 `;
 
 const ImageBlock = styled.Image`
@@ -80,7 +80,6 @@ const TextInputForm = ({ validation, value, index, inputRef, ...rest }) => {
             />
         </InputInnerFrameBlock>
     )
-    
 }
 
 const Profile = ({
@@ -97,12 +96,16 @@ const Profile = ({
     onFocus,
     onPress,
     onPressBackground,
+    onLayout,
 }) => {
     return (
-        <ProfileTouchBlock>
-            <ProfileBlock>
+        <ProfileTouchBlock onPress={onPressBackground}>
+            <ProfileBlock onLayout={e => onLayout(e, -1)}>
                 <InputTouchFrameBlock onPress={() => onPress(0)}>
-                    <InputOuterFrameBlock focused={focused[0]}>
+                    <InputOuterFrameBlock
+                        focused={focused[0]}
+                        onLayout={e => onLayout(e, 0)}
+                    >
                         <TextBlock>
                             자기소개
                         </TextBlock>
@@ -117,7 +120,11 @@ const Profile = ({
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
                 <InputTouchFrameBlock onPress={() => onPress(1)}>
-                    <InputOuterFrameBlock focused={focused[1]} marginTop={1}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[1]}
+                        onLayout={e => onLayout(e, 1)}
+                    >
                         <TextBlock>
                             학교
                         </TextBlock>
@@ -132,7 +139,11 @@ const Profile = ({
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
                 <InputTouchFrameBlock onPress={() => onPress(2)}>
-                    <InputOuterFrameBlock focused={focused[2]} marginTop={1}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[2]}
+                        onLayout={e => onLayout(e, 2)}
+                    >
                         <TextBlock>
                             전공
                         </TextBlock>
@@ -147,7 +158,11 @@ const Profile = ({
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
                 <InputTouchFrameBlock onPress={() => onPress(3)}>
-                    <InputOuterFrameBlock focused={focused[3]} marginTop={1}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[3]}
+                        onLayout={e => onLayout(e, 3)}
+                    >
                         <TextBlock>
                             직업
                         </TextBlock>

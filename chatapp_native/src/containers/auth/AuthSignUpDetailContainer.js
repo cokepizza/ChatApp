@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useRef} from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpDetail from '../../components/auth/AuthSignUpDetail';
@@ -16,6 +16,7 @@ const AuthSignUpDetailContainer = () => {
     }));
 
     const dispatch = useDispatch();
+    const scrollRef = useRef();
 
     const onPressSubmit = useCallback(async () => {
         const { user } = await dispatch(signUpThunk({
@@ -56,6 +57,7 @@ const AuthSignUpDetailContainer = () => {
         <AuthSignUpDetail
             modal={modal}
             onPressSubmit={onPressSubmit}
+            scrollRef={scrollRef}
         />
     );
 };

@@ -28,7 +28,7 @@ const SubmitTouchBlock = styled.TouchableOpacity`
 const SubmitTextBlock = styled.Text``;
 
 const KeyboardAvoidingView = styled.KeyboardAvoidingView`
-    flex:1;
+    flex: 1;
 `;
 
 const AuthSignUpDetailBlock = styled.SafeAreaView`
@@ -52,19 +52,19 @@ const AuthSignUpScrollView = styled.ScrollView`
     width: 100%;
 `;
 
-const AuthSignUpDetail = ({ modal, onPressSubmit }) => {
+const AuthSignUpDetail = ({ modal, onPressSubmit, scrollRef }) => {
     return (
         <>
             <KeyboardAvoidingView>
                 <AuthSignUpDetailBlock>
                     <AuthSignUpScrollView
+                        ref={scrollRef}
                         horizontal={false}
-                        contentInsetAdjustmentBehavior="automatic"
                         keyboardShouldPersistTaps='always'
                     >
                         <AuthImageContainer />
                         <MarginBlock />
-                        <ProfileContainer />
+                        <ProfileContainer scrollRef={scrollRef} />
                         <SubmitFrameBlock>
                             <SubmitTouchBlock onPress={onPressSubmit}>
                                 <SubmitTextBlock>

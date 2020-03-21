@@ -21,7 +21,6 @@ const ShadowHeaderBlock = styled.View`
 const HeaderText = styled.Text``;
 
 const ShadowHeader = ({ children }) => {
-    console.log(children);
 
     return (
         <ShadowHeaderSafeBlock>

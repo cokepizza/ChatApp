@@ -137,7 +137,7 @@ const ImageCanvas = React.memo(({
 const AuthImage = ({
     images,
     loadings,
-    onPressImageCrop
+    onPressImageCrop,
 }) => {
 
     return (
