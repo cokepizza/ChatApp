@@ -27,6 +27,10 @@ const SubmitTouchBlock = styled.TouchableOpacity`
 
 const SubmitTextBlock = styled.Text``;
 
+const KeyboardAvoidingView = styled.KeyboardAvoidingView`
+    flex:1;
+`;
+
 const AuthSignUpDetailBlock = styled.SafeAreaView`
     flex: 1;
     position: relative;
@@ -51,24 +55,27 @@ const AuthSignUpScrollView = styled.ScrollView`
 const AuthSignUpDetail = ({ modal, onPressSubmit }) => {
     return (
         <>
-            <AuthSignUpDetailBlock>
-                <AuthSignUpScrollView
-                    horizontal={false}
-                    keyboardShouldPersistTaps='always'
-                >
-                    <AuthImageContainer />
-                    <MarginBlock />
-                    <ProfileContainer />
-                    <SubmitFrameBlock>
-                        <SubmitTouchBlock onPress={onPressSubmit}>
-                            <SubmitTextBlock>
-                                Submit
-                            </SubmitTextBlock>
-                        </SubmitTouchBlock>
-                    </SubmitFrameBlock>
-                </AuthSignUpScrollView>
-            </AuthSignUpDetailBlock>
-            {modal &&  <AuthSignUpDetailBackgroundBlock /> }
+            <KeyboardAvoidingView>
+                <AuthSignUpDetailBlock>
+                    <AuthSignUpScrollView
+                        horizontal={false}
+                        contentInsetAdjustmentBehavior="automatic"
+                        keyboardShouldPersistTaps='always'
+                    >
+                        <AuthImageContainer />
+                        <MarginBlock />
+                        <ProfileContainer />
+                        <SubmitFrameBlock>
+                            <SubmitTouchBlock onPress={onPressSubmit}>
+                                <SubmitTextBlock>
+                                    Submit
+                                </SubmitTextBlock>
+                            </SubmitTouchBlock>
+                        </SubmitFrameBlock>
+                    </AuthSignUpScrollView>
+                </AuthSignUpDetailBlock>
+                {modal &&  <AuthSignUpDetailBackgroundBlock /> }
+            </KeyboardAvoidingView>
         </>
     );
 };

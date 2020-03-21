@@ -10,6 +10,7 @@ const ShadowHeaderSafeBlock = styled.SafeAreaView`
     `}
 `;
 
+
 const ShadowHeaderBlock = styled.View`
     width: 100%;
     height: 45px;

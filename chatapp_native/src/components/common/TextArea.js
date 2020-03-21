@@ -1,6 +1,14 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+// const TextAreaFrameBlock = styled.View`
+//     border: 1px dashed rgba(0, 0, 0, 0.2);
+//     border-radius: 10px;
+//     padding: 10px;
+//     height: 150px;
+//     align-items: flex-end;
+// `;
+
 const TextAreaFrameBlock = styled.View`
     border: 1px dashed rgba(0, 0, 0, 0.2);
     border-radius: 10px;
