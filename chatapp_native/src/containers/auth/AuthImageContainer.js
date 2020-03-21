@@ -29,8 +29,8 @@ const AuthImageContainer = () => {
             }, 500);
 
             ImagePicker.openPicker({
-                width: 1000,
-                height: 1000,
+                width: 500,
+                height: 500,
                 cropperToolbarTitle: 'crop',
                 avoidEmptySpaceAroundImage: false,
                 cropping: true,

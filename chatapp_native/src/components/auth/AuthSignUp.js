@@ -103,7 +103,7 @@ const CheckBoxTextBlock = styled.Text`
         font-size: 15px;
         font-weight: bold;
     `}
-`
+`;
 
 const AuthSignUp = ({
     username,
