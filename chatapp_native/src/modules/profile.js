@@ -14,7 +14,7 @@ const initialState = {
     school: '',
     major: '',
     job: '',
-    work: 'hihi',
+    work: '',
     region: '',
     tags: '',
     validation: {

@@ -3,7 +3,6 @@ import styled from 'styled-components/native';
 
 import AuthImageContainer from '../../containers/auth/AuthImageContainer';
 import ProfileContainer from '../../containers/auth/ProfileContainer';
-import BaboContainer from '../../containers/auth/BaboContainer';
 
 const MarginBlock = styled.View`
     height: 30px;
@@ -40,7 +39,6 @@ const AuthSignUpScrollView = styled.ScrollView`
 `;
 
 const AuthSignUpDetail = ({ modal, onPressSubmit, scrollRef }) => {
-    console.log('AuthSignUpDetail');
     return (
         <AuthSignUpDetailBlock>
             <AuthSignUpScrollView
@@ -51,7 +49,6 @@ const AuthSignUpDetail = ({ modal, onPressSubmit, scrollRef }) => {
             >
                 <AuthImageContainer />
                 <MarginBlock />
-                <BaboContainer />
                 <ProfileContainer scrollRef={scrollRef} />
                 <SubmitFrameBlock>
                     <SubmitTouchBlock onPress={onPressSubmit}>

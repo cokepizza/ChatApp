@@ -17,8 +17,6 @@ const AuthImageContainer = () => {
         images: image.images,
         loadings: image.loadings,
     }));
-    
-    console.log('AuthImageContainer');
 
     const dispatch = useDispatch();
 

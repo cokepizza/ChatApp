@@ -121,7 +121,6 @@ const Profile = ({
     onPressBackground,
     onLayout,
 }) => {
-    console.log('Profile Renrender');
     return (
         <>
             <ProfileTouchBlock onPress={onPressBackground}>
@@ -254,15 +253,6 @@ const Profile = ({
                             />
                         </InputOuterFrameBlock>
                     </InputTouchFrameBlock>
-                    {/* <SelectionContainer /> */}
-                    
-                    {/* <SelectionBlock
-                        selectedValue={'python'}
-                    >
-                        <SelectionBlock.Item label='java' value='java' />
-                        <SelectionBlock.Item label='c++' value='c++' />
-                        <SelectionBlock.Item label='python' value='python' />
-                    </SelectionBlock> */}
 
                 </ProfileBlock>
             </ProfileTouchBlock>

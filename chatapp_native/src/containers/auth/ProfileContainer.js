@@ -33,8 +33,6 @@ const ProfileContainer = ({ scrollRef }) => {
         validation: profile.validation,
         modal: profile.modal,
     }));
-    console.log('ProfileContainer');
-    console.log(work);
 
     const dispatch = useDispatch();
 
@@ -51,8 +49,6 @@ const ProfileContainer = ({ scrollRef }) => {
     }, []);
 
     const [ focused, setFocused ] = useState(initialStateMaker(false));
-    // const [ containerHeight, setContainerHeight ] = useState(0);
-    // const [ componentHeight, setComponentHeight ] = useState(initialStateMaker(null));
     const containerHeight = useRef();
     const componentHeight = useRef(initialStateMaker(null));
     const inputRef = useRef(initialStateMaker(createRef));
@@ -88,9 +84,7 @@ const ProfileContainer = ({ scrollRef }) => {
         dispatch(setModal({
             modalType,
         }))
-
-        console.log('onPressPicker');
-        
+ 
         clearFocus();
         onFocus(index);
     }, [dispatch, clearFocus, onFocus]);
@@ -108,14 +102,8 @@ const ProfileContainer = ({ scrollRef }) => {
 
     const onLayout = useCallback(({ nativeEvent: { layout: { x, y, width, height }}}, index) => {
         if(index === -1) {
-            // setContainerHeight(y);
             containerHeight.current = y;
         } else {
-            // setComponentHeight(prevState => {
-            //     const nextState = [ ...prevState ];
-            //     nextState[index] = y;
-            //     return nextState;
-            // });
             componentHeight.current[index] = y;
         }
     }, []);

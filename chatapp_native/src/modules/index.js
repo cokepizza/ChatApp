@@ -6,7 +6,6 @@ import chat, { chatSaga } from './chat';
 import image from './image';
 import profile from './profile';
 import modal from './modal';
-import babo from './babo';
 
 const rootReducer = combineReducers({
     auth,
@@ -14,7 +13,6 @@ const rootReducer = combineReducers({
     image,
     profile,
     modal,
-    babo,
 });
 
 export function* rootSaga() {
