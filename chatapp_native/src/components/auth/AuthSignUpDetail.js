@@ -34,16 +34,6 @@ const AuthSignUpDetailBlock = styled.SafeAreaView`
     align-items: center;
 `;
 
-const AuthSignUpDetailBackgroundBlock = styled.View`
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 10;
-`;
-
 const AuthSignUpScrollView = styled.ScrollView`
     width: 100%;
 `;
@@ -55,6 +45,7 @@ const AuthSignUpDetail = ({ modal, onPressSubmit, scrollRef }) => {
                 <AuthSignUpScrollView
                     ref={scrollRef}
                     horizontal={false}
+                    scrollEnabled={!modal}
                     keyboardShouldPersistTaps='always'
                 >
                     <AuthImageContainer />
@@ -69,7 +60,6 @@ const AuthSignUpDetail = ({ modal, onPressSubmit, scrollRef }) => {
                     </SubmitFrameBlock>
                 </AuthSignUpScrollView>
             </AuthSignUpDetailBlock>
-            {modal &&  <AuthSignUpDetailBackgroundBlock /> }
         </>
     );
 };
