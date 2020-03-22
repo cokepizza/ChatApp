@@ -1,7 +1,7 @@
 import React from 'react';
 import styled, { css } from 'styled-components/native';
 
-const ShadowHeaderSafeBlock = styled.SafeAreaView`
+const HeaderSafeBlock = styled.SafeAreaView`
     background: white;
 
     ${props => props.modal && css`
@@ -11,26 +11,24 @@ const ShadowHeaderSafeBlock = styled.SafeAreaView`
 `;
 
 
-const ShadowHeaderBlock = styled.View`
+const HeaderBlock = styled.View`
     width: 100%;
     height: 45px;
-    
-    /* background: white; */
-    /* height: 80px; */
 `;
+
 const HeaderText = styled.Text``;
 
-const ShadowHeader = ({ children }) => {
+const Header = ({ modal }) => {
 
     return (
-        <ShadowHeaderSafeBlock>
-            <ShadowHeaderBlock>
+        <HeaderSafeBlock modal={modal}>
+            <HeaderBlock>
                 <HeaderText>
                     {'hahaha'}
                 </HeaderText>
-            </ShadowHeaderBlock>
-        </ShadowHeaderSafeBlock>
+            </HeaderBlock>
+        </HeaderSafeBlock>
     );
 };
 
-export default ShadowHeader;
+export default Header;

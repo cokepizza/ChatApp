@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 
 import AuthImageContainer from '../../containers/auth/AuthImageContainer';
 import ProfileContainer from '../../containers/auth/ProfileContainer';
+import BaboContainer from '../../containers/auth/BaboContainer';
 
 const MarginBlock = styled.View`
     height: 30px;
@@ -39,29 +40,29 @@ const AuthSignUpScrollView = styled.ScrollView`
 `;
 
 const AuthSignUpDetail = ({ modal, onPressSubmit, scrollRef }) => {
+    console.log('AuthSignUpDetail');
     return (
-        <>
-            <AuthSignUpDetailBlock>
-                <AuthSignUpScrollView
-                    ref={scrollRef}
-                    horizontal={false}
-                    scrollEnabled={!modal}
-                    keyboardShouldPersistTaps='always'
-                >
-                    <AuthImageContainer />
-                    <MarginBlock />
-                    <ProfileContainer scrollRef={scrollRef} />
-                    <SubmitFrameBlock>
-                        <SubmitTouchBlock onPress={onPressSubmit}>
-                            <SubmitTextBlock>
-                                Submit
-                            </SubmitTextBlock>
-                        </SubmitTouchBlock>
-                    </SubmitFrameBlock>
-                </AuthSignUpScrollView>
-            </AuthSignUpDetailBlock>
-        </>
+        <AuthSignUpDetailBlock>
+            <AuthSignUpScrollView
+                ref={scrollRef}
+                horizontal={false}
+                scrollEnabled={!modal}
+                keyboardShouldPersistTaps='always'
+            >
+                <AuthImageContainer />
+                <MarginBlock />
+                <BaboContainer />
+                <ProfileContainer scrollRef={scrollRef} />
+                <SubmitFrameBlock>
+                    <SubmitTouchBlock onPress={onPressSubmit}>
+                        <SubmitTextBlock>
+                            Submit
+                        </SubmitTextBlock>
+                    </SubmitTouchBlock>
+                </SubmitFrameBlock>
+            </AuthSignUpScrollView>
+        </AuthSignUpDetailBlock>
     );
 };
 
-export default AuthSignUpDetail;
+export default React.memo(AuthSignUpDetail);

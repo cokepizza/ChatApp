@@ -2,9 +2,11 @@ import React, { useState, useCallback, useRef, createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Profile from '../../components/auth/Profile';
-import { setValue } from '../../modules/profile';
+import { setValue, openModal } from '../../modules/profile';
+import { setModal } from '../../modules/modal';
 
 const componentNum = 7;
+const inputComponentNum = 6;
 
 const ProfileContainer = ({ scrollRef }) => {
     //  TextArea는 라이브러리 형태로 만들어봄
@@ -31,6 +33,8 @@ const ProfileContainer = ({ scrollRef }) => {
         validation: profile.validation,
         modal: profile.modal,
     }));
+    console.log('ProfileContainer');
+    console.log(work);
 
     const dispatch = useDispatch();
 
@@ -47,48 +51,55 @@ const ProfileContainer = ({ scrollRef }) => {
     }, []);
 
     const [ focused, setFocused ] = useState(initialStateMaker(false));
-    const [ containerHeight, setContainerHeight ] = useState(0);
-    const [ componentHeight, setComponentHeight ] = useState(initialStateMaker(null));
+    // const [ containerHeight, setContainerHeight ] = useState(0);
+    // const [ componentHeight, setComponentHeight ] = useState(initialStateMaker(null));
+    const containerHeight = useRef();
+    const componentHeight = useRef(initialStateMaker(null));
     const inputRef = useRef(initialStateMaker(createRef));
 
     const onPress = useCallback(index => {
         inputRef.current[index].focus();
     }, []);
-
-    const onPressPicker = index => {
-        if(scrollRef.current) {
-            scrollRef.current.scrollTo({ y: containerHeight + componentHeight[index], animated: true });
-        }
-
-        setFocused(prevState => {
-            const nextFocused = initialStateMaker(false);
-            nextFocused[index] = true;
-            return nextFocused;
-        });
-    }
     
     const clearFocus = useCallback(() => {
-        inputRef.current.forEach(input => input.blur());
+        inputRef.current.forEach((input, index) => {
+            if(index < inputComponentNum) {
+                input.blur();
+            }
+        });
+
         setFocused(initialStateMaker(false));
     }, []);
 
     const onFocus = useCallback(index => {
         if(scrollRef.current) {
-            scrollRef.current.scrollTo({ y: containerHeight + componentHeight[index], animated: true });
+            scrollRef.current.scrollTo({ y: containerHeight.current + componentHeight.current[index], animated: true });
         }
-        
+    
         setFocused(prevState => {
             const nextFocused = initialStateMaker(false);
             nextFocused[index] = true;
             return nextFocused;
         });
-    }, [containerHeight, componentHeight]);
+    }, []);
+
+    const onPressPicker = useCallback((modalType, index) => {
+        dispatch(openModal());
+        dispatch(setModal({
+            modalType,
+        }))
+
+        console.log('onPressPicker');
+        
+        clearFocus();
+        onFocus(index);
+    }, [dispatch, clearFocus, onFocus]);
 
     const onChangeText = useCallback((key, value) => {
         dispatch(setValue({
             key,
             value,
-        }))
+        }));
     }, []);
 
     const onPressBackground = useCallback(() => {
@@ -97,13 +108,15 @@ const ProfileContainer = ({ scrollRef }) => {
 
     const onLayout = useCallback(({ nativeEvent: { layout: { x, y, width, height }}}, index) => {
         if(index === -1) {
-            setContainerHeight(y);
+            // setContainerHeight(y);
+            containerHeight.current = y;
         } else {
-            setComponentHeight(prevState => {
-                const nextState = [ ...prevState ];
-                nextState[index] = y;
-                return nextState;
-            });
+            // setComponentHeight(prevState => {
+            //     const nextState = [ ...prevState ];
+            //     nextState[index] = y;
+            //     return nextState;
+            // });
+            componentHeight.current[index] = y;
         }
     }, []);
 

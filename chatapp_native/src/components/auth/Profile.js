@@ -4,7 +4,7 @@ import styled, { css } from 'styled-components/native';
 import TextAreaContainer from '../../containers/common/TextAreaContainer';
 import CheckBeforeIcon from '../../assets/images/check_before.png';
 import CheckAfterIcon from '../../assets/images/check_after.png';
-import SelectionContainer from '../../containers/common/SelectionContainer';
+import ModalContainer from '../../containers/common/ModalContainer';
 
 const ProfileTouchBlock = styled.TouchableWithoutFeedback``;
 
@@ -55,22 +55,14 @@ const InputBlock = styled.TextInput`
     margin-left: 10px;
 `;
 
-const SelectionBlock = styled.Picker`
+const SelectionBlock = styled.View`
     flex: 1;
     height: 30px;
     margin-left: 10px;
 `;
 
-const ModalBackgroundBlock = styled.View`
-    position: absolute;
-    top: 0px;
-    left: 0px;
-    width: 100%;
-    height: 100%;
-    background: rgba(0, 0, 0, 0.3);
-    z-index: 10;
-`;
-``
+const SelectionTextBlock = styled.Text``;
+
 const TextInputForm = ({ validation, value, index, inputRef, ...rest }) => {
     return (
         <InputInnerFrameBlock>
@@ -101,7 +93,9 @@ const SelectionForm = ({ validation, value }) => {
                 <ImageBlock source={CheckBeforeIcon} />
             )}
             <SelectionBlock>
-                {value}
+                <SelectionTextBlock>
+                    {value}
+                </SelectionTextBlock>
             </SelectionBlock>
         </InputInnerFrameBlock>
     );
@@ -127,6 +121,7 @@ const Profile = ({
     onPressBackground,
     onLayout,
 }) => {
+    console.log('Profile Renrender');
     return (
         <>
             <ProfileTouchBlock onPress={onPressBackground}>
@@ -244,7 +239,7 @@ const Profile = ({
                             />
                         </InputOuterFrameBlock>
                     </InputTouchFrameBlock>
-                    <InputTouchFrameBlock onPress={() => onPressPicker(6)}>
+                    <InputTouchFrameBlock onPress={() => onPressPicker('region', 6)}>
                         <InputOuterFrameBlock
                             marginTop={1}
                             focused={focused[6]}
@@ -253,10 +248,10 @@ const Profile = ({
                             <TextBlock>
                                 지역
                             </TextBlock>
-                            {/* <SelectionForm
+                            <SelectionForm
                                 validation={validation.region}
                                 value={region}
-                            /> */}
+                            />
                         </InputOuterFrameBlock>
                     </InputTouchFrameBlock>
                     {/* <SelectionContainer /> */}
@@ -271,7 +266,7 @@ const Profile = ({
 
                 </ProfileBlock>
             </ProfileTouchBlock>
-            {modal &&  <ModalBackgroundBlock /> }
+            {/* <ModalContainer /> */}
         </>
     );
 };
