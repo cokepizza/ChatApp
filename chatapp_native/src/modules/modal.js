@@ -10,17 +10,17 @@ const modalObject = {
 }
 
 const initialState = {
-    modalType: null,
+    modal: '',
     modalObject,
 };
 
 export default handleActions({
-    [SET_MODAL]: (state, { payload: { modalType } }) => ({
+    [SET_MODAL]: (state, { payload: { modal } }) => ({
         ...state,
-        modalType,
+        modal,
     }),
     [CLEAR_MODAL]: state => ({
         ...state,
-        modalType: initialState.modalType,
+        modal: initialState.modal,
     }),
 }, initialState);

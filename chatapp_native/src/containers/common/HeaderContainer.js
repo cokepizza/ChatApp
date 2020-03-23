@@ -4,10 +4,10 @@ import { useSelector } from 'react-redux';
 import Header from '../../components/common/Header';
 
 const HeaderContainer = () => {
-    const { modal } = useSelector(({ profile }) => ({
-        modal: profile.modal,
+    const { modal } = useSelector(({ modal }) => ({
+        modal: modal.modal,
     }));
-
+    
     return (
         <Header
             modal={modal}

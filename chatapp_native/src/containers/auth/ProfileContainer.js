@@ -2,7 +2,7 @@ import React, { useState, useCallback, useRef, createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Profile from '../../components/auth/Profile';
-import { setValue, openModal } from '../../modules/profile';
+import { setValue } from '../../modules/profile';
 import { setModal } from '../../modules/modal';
 
 const componentNum = 7;
@@ -20,7 +20,6 @@ const ProfileContainer = ({ scrollRef }) => {
         work,
         region,
         validation,
-        modal,
     } = useSelector(({ profile }) => ({
         introduction: profile.introduction,
         introductionWordLimit: profile.introductionWordLimit,
@@ -31,7 +30,6 @@ const ProfileContainer = ({ scrollRef }) => {
         work: profile.work,
         region: profile.region,
         validation: profile.validation,
-        modal: profile.modal,
     }));
 
     const dispatch = useDispatch();
@@ -79,10 +77,9 @@ const ProfileContainer = ({ scrollRef }) => {
         });
     }, []);
 
-    const onPressPicker = useCallback((modalType, index) => {
-        dispatch(openModal());
+    const onPressPicker = useCallback((modal, index) => {
         dispatch(setModal({
-            modalType,
+            modal,
         }))
  
         clearFocus();
@@ -121,7 +118,6 @@ const ProfileContainer = ({ scrollRef }) => {
             work={work}
             region={region}
             validation={validation}
-            modal={modal}
             onChangeText={onChangeText}
             onFocus={onFocus}
             onPress={onPress}

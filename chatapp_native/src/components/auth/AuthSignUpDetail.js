@@ -3,6 +3,7 @@ import styled from 'styled-components/native';
 
 import AuthImageContainer from '../../containers/auth/AuthImageContainer';
 import ProfileContainer from '../../containers/auth/ProfileContainer';
+import ModalContainer from '../../containers/common/ModalContainer';
 
 const MarginBlock = styled.View`
     height: 30px;
@@ -38,13 +39,13 @@ const AuthSignUpScrollView = styled.ScrollView`
     width: 100%;
 `;
 
-const AuthSignUpDetail = ({ modal, onPressSubmit, scrollRef }) => {
+const AuthSignUpDetail = ({ onPressSubmit, scrollRef }) => {
     return (
         <AuthSignUpDetailBlock>
             <AuthSignUpScrollView
                 ref={scrollRef}
                 horizontal={false}
-                scrollEnabled={!modal}
+                // scrollEnabled={!modal}
                 keyboardShouldPersistTaps='always'
             >
                 <AuthImageContainer />
@@ -58,6 +59,7 @@ const AuthSignUpDetail = ({ modal, onPressSubmit, scrollRef }) => {
                     </SubmitTouchBlock>
                 </SubmitFrameBlock>
             </AuthSignUpScrollView>
+            <ModalContainer />
         </AuthSignUpDetailBlock>
     );
 };

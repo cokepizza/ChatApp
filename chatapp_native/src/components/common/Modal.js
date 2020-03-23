@@ -9,29 +9,52 @@ const ModalBackgroundBlock = styled.View`
     height: 100%;
     background: rgba(0, 0, 0, 0.3);
     z-index: 10;
+    justify-content: center;
+    align-items: center;
 `;
 
-const ModalBlock = styled.Picker``;
-const ModalItem = ModalBlock.Item;
+const ModalBlock = styled.View`
+    height: 500px;
+    width: 300px;
+    z-index: 100;
+    background: red;
+`;
+
+const ModalPickerBlock = styled.Picker`
+`;
+
+const PickerItem = ModalPickerBlock.Item;
 
 const Modal = ({ modalArr }) => {
     if(!modalArr) {
-        return (
-            <ModalBackgroundBlock />
-        );
+        return null;
     }
 
+    console.log(modalArr);
+
     return (
+        <>
+        <ModalPickerBlock>
+            <ModalPickerBlock.Item label='hhhh' value='java' />
+            <ModalPickerBlock.Item label='java' value='java' />
+            <ModalPickerBlock.Item label='java' value='java' />
+            <ModalPickerBlock.Item label='java' value='java' />
+            <ModalPickerBlock.Item label='java' value='java' />
+        </ModalPickerBlock>
+
         <ModalBackgroundBlock>
             <ModalBlock>
-                {modalArr.map(item => { console.log(item); return (
-                    <ModalItem
-                        label={item}
-                        value={item}
-                    />
-                )})}
+                <ModalPickerBlock>
+                    {modalArr.map(item => { console.log(item); return (
+                        <PickerItem
+                            label={item}
+                            value={item}
+                        />
+                    )})}
+                </ModalPickerBlock>
             </ModalBlock>
         </ModalBackgroundBlock>
+        </>
     );
 };
 

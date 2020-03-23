@@ -6,13 +6,12 @@ import AuthCheckContainer from '../containers/auth/AuthCheckContainer';
 import AuthSignInContainer from '../containers/auth/AuthSignInContainer';
 import AuthSignUpContainer from '../containers/auth/AuthSignUpContainer';
 import AuthSignUpDetailContainer from '../containers/auth/AuthSignUpDetailContainer';
-import Header from '../components/common/Header';
+import HeaderContainer from '../containers/common/HeaderContainer';
 
 const Stack = createStackNavigator();
 const AuthNavigator = () => {
-  const { check, modal } = useSelector(({ auth, profile }) => ({
+  const { check } = useSelector(({ auth }) => ({
     check: auth.check,
-    modal: profile.modal,
   }));
 
   //  render instantly
@@ -54,16 +53,16 @@ const AuthNavigator = () => {
           <Stack.Screen
             name='AuthSignUpDetail'
             component={AuthSignUpDetailContainer}
+            options={{
+              header: props => (
+                <HeaderContainer {...props} />
+              )
+            }}
             // options={{
             //   headerTitle: props => (
             //     <ShadowHeader {...props}/>
             //   )
             // }}
-            options={{
-              header: props => (
-                <Header modal={modal} {...props} />
-              )
-            }}
             // options={{
             //   headerStyle:{
             //     backgroundColor: 'red'
