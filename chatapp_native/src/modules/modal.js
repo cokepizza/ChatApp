@@ -9,9 +9,14 @@ const modalObject = {
     'region': [ '서울', '경기', '인천', '대전', '충북', '충남', '강원', '부산', '경북', '경남', '대구', '울산', '광주', '전북', '전남', '제주' ],
 }
 
+const modalName = {
+    'region': '지역',
+}
+
 const initialState = {
     modal: '',
     modalObject,
+    modalName,
 };
 
 export default handleActions({
