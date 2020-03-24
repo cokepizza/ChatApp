@@ -35,14 +35,14 @@ const AuthSignUpDetailBlock = styled.SafeAreaView`
     align-items: center;
 `;
 
-const AuthSignUpScrollView = styled.ScrollView`
+const AuthSignUpScrollViewBlock = styled.ScrollView`
     width: 100%;
 `;
 
 const AuthSignUpDetail = ({ onPressSubmit, scrollRef }) => {
     return (
         <AuthSignUpDetailBlock>
-            <AuthSignUpScrollView
+            <AuthSignUpScrollViewBlock
                 ref={scrollRef}
                 horizontal={false}
                 // scrollEnabled={!modal}
@@ -58,7 +58,7 @@ const AuthSignUpDetail = ({ onPressSubmit, scrollRef }) => {
                         </SubmitTextBlock>
                     </SubmitTouchBlock>
                 </SubmitFrameBlock>
-            </AuthSignUpScrollView>
+            </AuthSignUpScrollViewBlock>
             <ModalContainer />
         </AuthSignUpDetailBlock>
     );
