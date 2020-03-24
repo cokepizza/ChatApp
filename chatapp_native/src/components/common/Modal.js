@@ -1,6 +1,6 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 const ModalBackgroundBlock = styled.View`
     position: absolute;
@@ -27,7 +27,7 @@ const ModalHeaderBlock = styled.View`
     padding-left: 10%;
     justify-content: center;
     border-bottom-width: 1px;
-    border-bottom-color: rgba(0, 0, 0, 0.3);
+    border-bottom-color: rgba(0, 0, 0, 0.1);
 `;
 
 const ModalTitleTextBlock = styled.Text`
@@ -36,22 +36,33 @@ const ModalTitleTextBlock = styled.Text`
 `;
 
 const ModalBodyBlock = styled.View`
-    height: 60%;
+    height: 65%;
     width: 100%;
     justify-content: center;
 `;
 
 const ModalFooterBlock = styled.View`
-    height: 20%;
+    height: 15%;
     width: 100%;
+    border-top-width: 1px;
+    border-top-color: rgba(0, 0, 0, 0.1);
     justify-content: center;
     flex-direction: row;
 `;
 
 const ButtonTouchBlock = styled.TouchableOpacity`
-    width: 50%;
+    width: 100%;
+    height: 100%;
     justify-content: center;
     align-items: center;
+`;
+
+const ButtonFrameBlock = styled.View`
+    width: 50%;
+    ${props => props.marginRight && css`
+        border-right-width: 1px;
+        border-right-color: rgba(0, 0, 0, 0.1);
+    `}
 `;
 
 const ButtonTextBlock = styled.Text`
@@ -62,17 +73,21 @@ const ButtonTextBlock = styled.Text`
 `;
 
 
-const ModalPickerBlock = styled.Picker`
-`;
+const ModalPickerBlock = styled.Picker``;
 
 const PickerItem = ModalPickerBlock.Item;
 
-const Modal = ({ modalTitle, modalArr }) => {
+const Modal = ({
+    modalTitle,
+    modalArr,
+    selectedValue,
+    onPressSubmit,
+    onPressCancel,
+    onValueChange
+}) => {
     if(!modalArr) {
         return null;
     }
-
-    console.log(modalArr);
 
     return (
         <ModalBackgroundBlock>
@@ -83,26 +98,34 @@ const Modal = ({ modalTitle, modalArr }) => {
                     </ModalTitleTextBlock>
                 </ModalHeaderBlock>
                 <ModalBodyBlock>
-                    <ModalPickerBlock>
-                        {modalArr.map(item => { console.log(item); return (
+                    <ModalPickerBlock
+                        selectedValue={selectedValue}
+                        onValueChange={(selectedValue, index) => onValueChange(selectedValue, index)}
+                    >
+                        {modalArr.map(item => (
                             <PickerItem
+                                key={item}
                                 label={item}
                                 value={item}
                             />
-                        )})}
+                        ))}
                     </ModalPickerBlock>
                 </ModalBodyBlock>
                 <ModalFooterBlock>
-                    <ButtonTouchBlock>
-                        <ButtonTextBlock>
-                            Submit
-                        </ButtonTextBlock>
-                    </ButtonTouchBlock>
-                    <ButtonTouchBlock>
-                        <ButtonTextBlock>
-                            Cancel
-                        </ButtonTextBlock>                        
-                    </ButtonTouchBlock>
+                    <ButtonFrameBlock marginRight={1}>
+                        <ButtonTouchBlock onPress={onPressSubmit}>
+                            <ButtonTextBlock>
+                                확인
+                            </ButtonTextBlock>
+                        </ButtonTouchBlock>
+                    </ButtonFrameBlock>
+                    <ButtonFrameBlock>
+                        <ButtonTouchBlock onPress={onPressCancel}>
+                            <ButtonTextBlock>
+                                취소
+                            </ButtonTextBlock>                        
+                        </ButtonTouchBlock>
+                    </ButtonFrameBlock>
                 </ModalFooterBlock>
             </ModalBlock>
         </ModalBackgroundBlock>

@@ -58,6 +58,7 @@ const SelectionBlock = styled.View`
     flex: 1;
     height: 30px;
     margin-left: 10px;
+    justify-content: center;
 `;
 
 const SelectionTextBlock = styled.Text``;

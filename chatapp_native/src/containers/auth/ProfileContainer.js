@@ -2,8 +2,8 @@ import React, { useState, useCallback, useRef, createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Profile from '../../components/auth/Profile';
-import { setValue } from '../../modules/profile';
-import { setModal } from '../../modules/modal';
+import { setValue as setProfileValue } from '../../modules/profile';
+import { setModal, setValue as setModalValue } from '../../modules/modal';
 
 const componentNum = 7;
 const inputComponentNum = 6;
@@ -80,14 +80,17 @@ const ProfileContainer = ({ scrollRef }) => {
     const onPressPicker = useCallback((modal, index) => {
         dispatch(setModal({
             modal,
-        }))
+        }));
+        dispatch(setModalValue({
+            
+        }));
  
         clearFocus();
         onFocus(index);
     }, [dispatch, clearFocus, onFocus]);
 
     const onChangeText = useCallback((key, value) => {
-        dispatch(setValue({
+        dispatch(setProfileValue({
             key,
             value,
         }));
