@@ -54,14 +54,14 @@ const InputBlock = styled.TextInput`
     margin-left: 10px;
 `;
 
-const SelectionBlock = styled.View`
+const PickerBlock = styled.View`
     flex: 1;
     height: 30px;
     margin-left: 10px;
     justify-content: center;
 `;
 
-const SelectionTextBlock = styled.Text``;
+const PickerTextBlock = styled.Text``;
 
 const TextInputForm = ({ validation, value, index, inputRef, ...rest }) => {
     return (
@@ -84,7 +84,7 @@ const TextInputForm = ({ validation, value, index, inputRef, ...rest }) => {
     )
 }
 
-const SelectionForm = ({ validation, value }) => {
+const PickerForm = ({ validation, value }) => {
     return (
         <InputInnerFrameBlock>
             {validation ? (
@@ -92,11 +92,11 @@ const SelectionForm = ({ validation, value }) => {
             ) : (
                 <ImageBlock source={CheckBeforeIcon} />
             )}
-            <SelectionBlock>
-                <SelectionTextBlock>
+            <PickerBlock>
+                <PickerTextBlock>
                     {value}
-                </SelectionTextBlock>
-            </SelectionBlock>
+                </PickerTextBlock>
+            </PickerBlock>
         </InputInnerFrameBlock>
     );
 }
@@ -245,7 +245,22 @@ const Profile = ({
                         <TextBlock>
                             지역
                         </TextBlock>
-                        <SelectionForm
+                        <PickerForm
+                            validation={validation.region}
+                            value={region}
+                        />
+                    </InputOuterFrameBlock>
+                </InputTouchFrameBlock>
+                <InputTouchFrameBlock onPress={() => onPressPicker('region', 6)}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[6]}
+                        onLayout={e => onLayout(e, 6)}
+                    >
+                        <TextBlock>
+                            성격
+                        </TextBlock>
+                        <PickerForm
                             validation={validation.region}
                             value={region}
                         />

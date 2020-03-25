@@ -78,31 +78,30 @@ const ModalPickerBlock = styled.Picker``;
 const PickerItem = ModalPickerBlock.Item;
 
 const Modal = ({
-    modalTitle,
-    modalArr,
-    selectedValue,
+    name,
+    type,
+    list,
+    value,
     onPressSubmit,
     onPressCancel,
     onValueChange
 }) => {
-    if(!modalArr) {
-        return null;
-    }
 
     return (
         <ModalBackgroundBlock>
             <ModalBlock>
                 <ModalHeaderBlock>
                     <ModalTitleTextBlock>
-                        {modalTitle}
+                        {name}
                     </ModalTitleTextBlock>
                 </ModalHeaderBlock>
                 <ModalBodyBlock>
-                    <ModalPickerBlock
-                        selectedValue={selectedValue}
+                    {type === 'picker' ? (
+                        <ModalPickerBlock
+                        selectedValue={value}
                         onValueChange={(selectedValue, index) => onValueChange(selectedValue, index)}
                     >
-                        {modalArr.map(item => (
+                        {list && list.map(item => (
                             <PickerItem
                                 key={item}
                                 label={item}
@@ -110,6 +109,10 @@ const Modal = ({
                             />
                         ))}
                     </ModalPickerBlock>
+                    ): (
+                        <>
+                        </>
+                    )}
                 </ModalBodyBlock>
                 <ModalFooterBlock>
                     <ButtonFrameBlock marginRight={1}>

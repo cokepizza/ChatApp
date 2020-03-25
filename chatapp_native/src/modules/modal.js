@@ -7,21 +7,20 @@ const CLEAR_VALUE = 'modal/CLEAR_VALUE';
 export const setModal = createAction(SET_MODAL, payload => payload);
 export const clearModal = createAction(CLEAR_MODAL);
 export const setValue = createAction(SET_VALUE, payload => payload);
-export const clearValue = createAction(CLEAR_VALUE);
+export const clearValue = createAction(CLEAR_VALUE, payload => payload);
 
-const modalObject = {
-    'region': [ '서울', '경기', '인천', '대전', '충북', '충남', '강원', '부산', '경북', '경남', '대구', '울산', '광주', '전북', '전남', '제주' ],
-}
-
-const modalName = {
-    'region': '지역',
+const modalInform = {
+    'region': {
+        name: '지역',
+        type: 'picker',
+        value: '',
+        list: [ '서울', '경기', '인천', '대전', '충북', '충남', '강원', '부산', '경북', '경남', '대구', '울산', '광주', '전북', '전남', '제주' ],
+    }
 }
 
 const initialState = {
     modal: '',
-    selectedValue: '',
-    modalObject,
-    modalName,
+    modalInform,
 };
 
 export default handleActions({
@@ -33,12 +32,21 @@ export default handleActions({
         ...state,
         modal: initialState.modal,
     }),
-    [SET_VALUE]: (state, { payload: { selectedValue } }) => ({
+    [SET_VALUE]: (state, { payload: { key, value } }) => ({
         ...state,
-        selectedValue,
+        modalInform: {
+            ...state.modalInform,
+            [key]: {
+                ...state.modalInform[key],
+                value,
+            },
+        }
     }),
-    [CLEAR_VALUE]: state => ({
+    [CLEAR_VALUE]: (state, { payload: { key } }) => ({
         ...state,
-        selectedValue: initialState.selectedValue,
+        modalInform: {
+            ...state.modalInform,
+            [key]: initialState.modalInform[key],
+        }
     }),
 }, initialState);

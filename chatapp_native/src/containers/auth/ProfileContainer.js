@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Profile from '../../components/auth/Profile';
 import { setValue as setProfileValue } from '../../modules/profile';
-import { setModal, setValue as setModalValue, clearValue } from '../../modules/modal';
+import { setModal } from '../../modules/modal';
 
 const componentNum = 7;
 const inputComponentNum = 6;
@@ -81,7 +81,6 @@ const ProfileContainer = ({ scrollRef }) => {
         dispatch(setModal({
             modal,
         }));
-        dispatch(clearValue());
  
         clearFocus();
         onFocus(index);
