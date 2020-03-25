@@ -98,17 +98,17 @@ const Modal = ({
                 <ModalBodyBlock>
                     {type === 'picker' ? (
                         <ModalPickerBlock
-                        selectedValue={value}
-                        onValueChange={(selectedValue, index) => onValueChange(selectedValue, index)}
-                    >
-                        {list && list.map(item => (
-                            <PickerItem
-                                key={item}
-                                label={item}
-                                value={item}
-                            />
-                        ))}
-                    </ModalPickerBlock>
+                            selectedValue={value}
+                            onValueChange={(selectedValue, index) => onValueChange(selectedValue, index)}
+                        >
+                            {list && list.map(item => (
+                                <PickerItem
+                                    key={item}
+                                    label={item}
+                                    value={item}
+                                />
+                            ))}
+                        </ModalPickerBlock>
                     ): (
                         <>
                         </>

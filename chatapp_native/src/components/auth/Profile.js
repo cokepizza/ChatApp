@@ -236,7 +236,7 @@ const Profile = ({
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
-                <InputTouchFrameBlock onPress={() => onPressPicker('region', 6)}>
+                <InputTouchFrameBlock onPress={() => onPressPicker('region', region, 6)}>
                     <InputOuterFrameBlock
                         marginTop={1}
                         focused={focused[6]}
@@ -251,7 +251,7 @@ const Profile = ({
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
-                <InputTouchFrameBlock onPress={() => onPressPicker('region', 6)}>
+                {/* <InputTouchFrameBlock onPress={() => onPressPicker('region', region, 6)}>
                     <InputOuterFrameBlock
                         marginTop={1}
                         focused={focused[6]}
@@ -265,7 +265,7 @@ const Profile = ({
                             value={region}
                         />
                     </InputOuterFrameBlock>
-                </InputTouchFrameBlock>
+                </InputTouchFrameBlock> */}
             </ProfileBlock>
         </ProfileTouchBlock>
     );

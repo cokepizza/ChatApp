@@ -15,7 +15,20 @@ const modalInform = {
         type: 'picker',
         value: '',
         list: [ '서울', '경기', '인천', '대전', '충북', '충남', '강원', '부산', '경북', '경남', '대구', '울산', '광주', '전북', '전남', '제주' ],
-    }
+    },
+    'birth': {
+        name: '생년월일',
+        type: 'birth_picker',
+        value: [],
+        range: [{ s: 1976, e: 2001 }, { s: 1, e: 12 }, { s: 1, e: 31 }],
+    },
+    'tall': {
+        name: '키',
+        type: 'picker',
+        value: '',
+        range: { s: 150, e: 190 },
+    },
+    
 }
 
 const initialState = {

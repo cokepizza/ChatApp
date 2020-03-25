@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 
 import Profile from '../../components/auth/Profile';
 import { setValue as setProfileValue } from '../../modules/profile';
-import { setModal } from '../../modules/modal';
+import { setModal, setValue as setModalValue } from '../../modules/modal';
 
 const componentNum = 7;
 const inputComponentNum = 6;
@@ -77,11 +77,19 @@ const ProfileContainer = ({ scrollRef }) => {
         });
     }, []);
 
-    const onPressPicker = useCallback((modal, index) => {
+    const onPressPicker = useCallback((key, value, index) => {
+        console.log(key);
+        console.log(value);
+        console.log(index);
+        
         dispatch(setModal({
-            modal,
+            modal: key,
         }));
- 
+        dispatch(setModalValue({
+            key,
+            value,
+        }))
+
         clearFocus();
         onFocus(index);
     }, [dispatch, clearFocus, onFocus]);

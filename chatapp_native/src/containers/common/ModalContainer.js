@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Modal from '../../components/common/Modal';
@@ -21,43 +21,44 @@ const ModalContainer = () => {
 
     let  name, type, list, value;
     if(modalInform[modal]) {
-        console.log(modalInform[modal]);
         ({ name, type, list, value } = modalInform[modal]);
     }
     
-    if(!modal) {
-        return (
-            <>
-            </>
-        )
-    }
-
-    console.log(modal);
-
-    const onPressSubmit = () => {
+    const onPressSubmit = useCallback(() => {
+        let selectedValue = value;
+        if(selectedValue === '') {
+            selectedValue = modalInform[modal].list[0];
+        }
         dispatch(setProfileValue({
             key: modal,
-            value,
+            value: selectedValue,
         }));
-        // dispatch(clearModalValue({
-        //     key: modal,
-        // }));
+        dispatch(clearModalValue({
+            key: modal,
+        }));
         dispatch(clearModal());
-    };
+    }, [dispatch, modal, value, modalInform]);
 
-    const onPressCancel = () => {
-        // dispatch(clearModalValue({
-        //     key: modal,
-        // }));
+    const onPressCancel = useCallback(() => {
+        dispatch(clearModalValue({
+            key: modal,
+        }));
         dispatch(clearModal());
-    };
+    }, [dispatch, modal]);
 
-    const onValueChange = (value, index) => {
+    const onValueChange = useCallback((value, index) => {
         dispatch(setModalValue({
             key: modal,
             value,
         }));
-    }
+    }, [dispatch, modal]);
+
+    if(!modal) {
+        return (
+            <>
+            </>
+        );
+    };
 
     return (
         <Modal
