@@ -19,6 +19,8 @@ const ProfileContainer = ({ scrollRef }) => {
         job,
         work,
         region,
+        birth,
+        tall,
         validation,
     } = useSelector(({ profile }) => ({
         introduction: profile.introduction,
@@ -29,6 +31,8 @@ const ProfileContainer = ({ scrollRef }) => {
         job: profile.job,
         work: profile.work,
         region: profile.region,
+        birth: profile.birth,
+        tall: profile.tall,
         validation: profile.validation,
     }));
 
@@ -81,7 +85,7 @@ const ProfileContainer = ({ scrollRef }) => {
         console.log(key);
         console.log(value);
         console.log(index);
-        
+
         dispatch(setModal({
             modal: key,
         }));
@@ -125,6 +129,8 @@ const ProfileContainer = ({ scrollRef }) => {
             job={job}
             work={work}
             region={region}
+            birth={birth}
+            tall={tall}
             validation={validation}
             onChangeText={onChangeText}
             onFocus={onFocus}

@@ -72,8 +72,14 @@ const ButtonTextBlock = styled.Text`
     font-size: 20px;
 `;
 
+const PickerFrameBlock = styled.View`
+    padding: 20px;
+    flex-direction: row;
+`;
 
-const ModalPickerBlock = styled.Picker``;
+const ModalPickerBlock = styled.Picker`
+    flex:1;
+`;
 
 const PickerItem = ModalPickerBlock.Item;
 
@@ -81,11 +87,27 @@ const Modal = ({
     name,
     type,
     list,
+    range,
+    unit,
     value,
     onPressSubmit,
     onPressCancel,
     onValueChange
 }) => {
+    const rangeList = [];
+
+    if(range) {
+        if(Array.isArray(range)) {
+            range.forEach((obj, index) => {
+                let rangeItem = [];
+                for(let i=obj.s; i<=obj.e; ++i) {
+                    rangeItem.push(`${i}${unit[index]}`);
+                }
+                rangeList.push(rangeItem);
+            })
+            console.log(rangeList);
+        }
+    };
 
     return (
         <ModalBackgroundBlock>
@@ -96,22 +118,36 @@ const Modal = ({
                     </ModalTitleTextBlock>
                 </ModalHeaderBlock>
                 <ModalBodyBlock>
-                    {type === 'picker' ? (
-                        <ModalPickerBlock
-                            selectedValue={value}
-                            onValueChange={(selectedValue, index) => onValueChange(selectedValue, index)}
-                        >
-                            {list && list.map(item => (
-                                <PickerItem
-                                    key={item}
-                                    label={item}
-                                    value={item}
-                                />
+                    {type === 'picker' && list && (
+                        <PickerFrameBlock>
+                            <ModalPickerBlock
+                                selectedValue={value}
+                                onValueChange={(selectedValue, index) => onValueChange(selectedValue, index)}
+                            >
+                                {list && list.map(item => (
+                                    <PickerItem
+                                        key={item}
+                                        label={item}
+                                        value={item}
+                                    />
+                                ))}
+                            </ModalPickerBlock>
+                        </PickerFrameBlock>
+                    )}
+                    {type === 'picker' && range && (
+                        <PickerFrameBlock>
+                            {rangeList.map((rangeItem, index) => (
+                                <ModalPickerBlock key={`modal_${index}`}>
+                                    {rangeItem.map(item => (
+                                        <PickerItem
+                                            key={item}
+                                            label={item}
+                                            value={item}
+                                        />
+                                    ))}
+                                </ModalPickerBlock>
                             ))}
-                        </ModalPickerBlock>
-                    ): (
-                        <>
-                        </>
+                        </PickerFrameBlock>
                     )}
                 </ModalBodyBlock>
                 <ModalFooterBlock>

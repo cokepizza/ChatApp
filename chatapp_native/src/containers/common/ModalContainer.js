@@ -19,15 +19,20 @@ const ModalContainer = () => {
 
     const dispatch = useDispatch();
 
-    let  name, type, list, value;
+    let  name, type, list, range, unit, value;
     if(modalInform[modal]) {
-        ({ name, type, list, value } = modalInform[modal]);
+        ({ name, type, list, range, unit, value } = modalInform[modal]);
     }
     
     const onPressSubmit = useCallback(() => {
         let selectedValue = value;
         if(selectedValue === '') {
-            selectedValue = modalInform[modal].list[0];
+            if(list) {
+                selectedValue = list[0];
+            }
+            if(range) {
+                selectedValue = range.s;
+            }
         }
         dispatch(setProfileValue({
             key: modal,
@@ -37,7 +42,7 @@ const ModalContainer = () => {
             key: modal,
         }));
         dispatch(clearModal());
-    }, [dispatch, modal, value, modalInform]);
+    }, [dispatch, modal, value, list]);
 
     const onPressCancel = useCallback(() => {
         dispatch(clearModalValue({
@@ -65,6 +70,8 @@ const ModalContainer = () => {
             name={name}
             type={type}
             list={list}
+            range={range}
+            unit={unit}
             value={value}
             onPressSubmit={onPressSubmit}
             onPressCancel={onPressCancel}

@@ -112,6 +112,8 @@ const Profile = ({
     job,
     work,
     region,
+    birth,
+    tall,
     validation,
     onChangeText,
     onFocus,
@@ -251,21 +253,37 @@ const Profile = ({
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
-                {/* <InputTouchFrameBlock onPress={() => onPressPicker('region', region, 6)}>
+                <InputTouchFrameBlock onPress={() => onPressPicker('birth', birth, 7)}>
                     <InputOuterFrameBlock
                         marginTop={1}
-                        focused={focused[6]}
-                        onLayout={e => onLayout(e, 6)}
+                        focused={focused[7]}
+                        onLayout={e => onLayout(e, 7)}
                     >
                         <TextBlock>
-                            성격
+                            생년월일
                         </TextBlock>
                         <PickerForm
-                            validation={validation.region}
-                            value={region}
+                            validation={validation.birth}
+                            value={birth}
                         />
                     </InputOuterFrameBlock>
-                </InputTouchFrameBlock> */}
+                </InputTouchFrameBlock>
+                <InputTouchFrameBlock onPress={() => onPressPicker('tall', tall, 8)}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[8]}
+                        onLayout={e => onLayout(e, 8)}
+                    >
+                        <TextBlock>
+                            키
+                        </TextBlock>
+                        <PickerForm
+                            validation={validation.tall}
+                            value={tall}
+                        />
+                    </InputOuterFrameBlock>
+                </InputTouchFrameBlock>
+                
             </ProfileBlock>
         </ProfileTouchBlock>
     );

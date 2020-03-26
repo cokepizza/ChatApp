@@ -18,17 +18,19 @@ const modalInform = {
     },
     'birth': {
         name: '생년월일',
-        type: 'birth_picker',
-        value: [],
+        type: 'picker',
+        value: '',
+        unit: ['', '', ''],
         range: [{ s: 1976, e: 2001 }, { s: 1, e: 12 }, { s: 1, e: 31 }],
     },
     'tall': {
         name: '키',
         type: 'picker',
         value: '',
-        range: { s: 150, e: 190 },
+        unit: ['cm'],
+        range: [{ s: 150, e: 190 }],
     },
-    
+
 }
 
 const initialState = {

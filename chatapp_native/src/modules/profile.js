@@ -12,7 +12,8 @@ const initialState = {
     job: '',
     work: '',
     region: '',
-    tags: '',
+    birth: '',
+    tall: '',
     validation: {
         introduction: false,
         nickname: false,
@@ -21,7 +22,8 @@ const initialState = {
         job: false,
         work: false,
         region: false,
-        tags: false,
+        birth: false,
+        tall: false,
     },
 };
 
