@@ -89,6 +89,7 @@ const Modal = ({
     list,
     range,
     unit,
+    join,
     value,
     onPressSubmit,
     onPressCancel,
@@ -98,14 +99,21 @@ const Modal = ({
 
     if(range) {
         if(Array.isArray(range)) {
+            // const dashValueList = value.trim().split('-');
+            // const commaValueList = value.trim().split(',');
+            // valueList = dashValueList.length > commaValueList ? dashValueList : commaValueList;
+
             range.forEach((obj, index) => {
                 let rangeItem = [];
                 for(let i=obj.s; i<=obj.e; ++i) {
-                    rangeItem.push(`${i}${unit[index]}`);
+                    let iStr = `${i}`;
+                    if(i < 10) {
+                        iStr = '0' + iStr;
+                    }
+                    rangeItem.push(`${iStr}${unit[index]}`);
                 }
                 rangeList.push(rangeItem);
             })
-            console.log(rangeList);
         }
     };
 
@@ -136,8 +144,12 @@ const Modal = ({
                     )}
                     {type === 'picker' && range && (
                         <PickerFrameBlock>
-                            {rangeList.map((rangeItem, index) => (
-                                <ModalPickerBlock key={`modal_${index}`}>
+                            {rangeList.map((rangeItem, modalIndex) => (
+                                <ModalPickerBlock
+                                    key={`modal_${modalIndex}`}
+                                    selectedValue={value[modalIndex]}
+                                    onValueChange={(selectedValue, itemIndex) => onValueChange(selectedValue, itemIndex, modalIndex)}
+                                >
                                     {rangeItem.map(item => (
                                         <PickerItem
                                             key={item}

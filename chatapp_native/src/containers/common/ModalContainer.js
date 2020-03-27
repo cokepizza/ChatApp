@@ -19,9 +19,9 @@ const ModalContainer = () => {
 
     const dispatch = useDispatch();
 
-    let  name, type, list, range, unit, value;
+    let  name, type, list, range, unit, join, value;
     if(modalInform[modal]) {
-        ({ name, type, list, range, unit, value } = modalInform[modal]);
+        ({ name, type, list, range, unit, join, value } = modalInform[modal]);
     }
     
     const onPressSubmit = useCallback(() => {
@@ -51,10 +51,18 @@ const ModalContainer = () => {
         dispatch(clearModal());
     }, [dispatch, modal]);
 
-    const onValueChange = useCallback((value, index) => {
+    const onValueChange = useCallback((selectedValue, itemIndex, modalIndex) => {
+        // let revisedValue = selectedValue;
+        // if(join) {
+        //     const valueList = value.trim().split(`${join}`);
+        //     valueList[modalIndex] = selectedValue;
+        //     revisedValue = valueList.join(`${join}`);
+        // }
+
         dispatch(setModalValue({
             key: modal,
-            value,
+            index: modalIndex,
+            value: selectedValue,
         }));
     }, [dispatch, modal]);
 
@@ -72,6 +80,7 @@ const ModalContainer = () => {
             list={list}
             range={range}
             unit={unit}
+            join={join}
             value={value}
             onPressSubmit={onPressSubmit}
             onPressCancel={onPressCancel}
