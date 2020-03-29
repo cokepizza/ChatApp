@@ -24,7 +24,7 @@ const Header = ({ modal }) => {
         <HeaderSafeBlock modal={modal}>
             <HeaderBlock>
                 <HeaderText>
-                    {'hahaha'}
+                    
                 </HeaderText>
             </HeaderBlock>
         </HeaderSafeBlock>

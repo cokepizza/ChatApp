@@ -25,6 +25,14 @@ app.set('port', process.env.PORT || 4000);
 passportConfig();
 sequelizeConfig.sequelize.sync();
 
+app.get("/tableEditor", (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../spa/TableEditor/build', 'index.html'));
+});
+
+app.get("/layoutEditor", (req, res) => {
+    res.sendFile(path.join(__dirname, '../../../spa/LayoutEditor_Boilerplate/layout_frontend/build', 'index.html'));
+});
+
 const server = app.listen(app.get('port'), () => {
     console.dir(`Port ${app.get('port')} => listening`);
 });

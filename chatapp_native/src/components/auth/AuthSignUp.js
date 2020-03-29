@@ -12,7 +12,7 @@ const AuthSignUpBlock = styled.SafeAreaView`
 `;
 
 const HeaderViewBlock = styled.View`
-    flex: 3;
+    flex: 2;
     width: 100%;
     align-items: center;
     background: white;

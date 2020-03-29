@@ -1,9 +1,8 @@
-import React from 'react';
-import { useSelector, useDispatch } from 'react-redux';
+import React, { useCallback } from 'react';
+import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import Selection from '../../components/common/Selection';
 import { setValue } from '../../modules/modal';
-// import { setValue } from '../../modules/profile';
 
 const countLimit = 3;
 
@@ -12,11 +11,11 @@ const SelectionContainer = () => {
         modal: modal.modal,
         value: modal.value,
         inform: modal.inform,
-    }));
+    }), shallowEqual);
 
     const dispatch = useDispatch();
 
-    const onPressItem = index => {
+    const onPressItem = useCallback(index => {
         const count = value[modal].reduce((acc, cur) => {
             if(cur) return acc+1;
             return acc;
@@ -31,7 +30,7 @@ const SelectionContainer = () => {
             index,
             value: !value[modal][index],
         }))
-    };
+    }, [dispatch, value]);
 
     return (
         <Selection
