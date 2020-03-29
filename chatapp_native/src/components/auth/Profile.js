@@ -300,7 +300,7 @@ const Profile = ({
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
-                <InputTouchFrameBlock onPress={() => onPressPicker('character', character, 9)}>
+                <InputTouchFrameBlock onPress={() => onPressPicker('character', character, 10)}>
                     <InputOuterFrameBlock
                         marginTop={1}
                         focused={focused[10]}

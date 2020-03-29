@@ -5,6 +5,8 @@ import Selection from '../../components/common/Selection';
 import { setValue } from '../../modules/modal';
 // import { setValue } from '../../modules/profile';
 
+const countLimit = 3;
+
 const SelectionContainer = () => {
     const { modal, value, inform } = useSelector(({ modal }) => ({
         modal: modal.modal,
@@ -15,6 +17,15 @@ const SelectionContainer = () => {
     const dispatch = useDispatch();
 
     const onPressItem = index => {
+        const count = value[modal].reduce((acc, cur) => {
+            if(cur) return acc+1;
+            return acc;
+        }, 0);
+        
+        if(count+1 > countLimit && !value[modal][index]) {
+            return;
+        }
+
         dispatch(setValue({
             key: modal,
             index,

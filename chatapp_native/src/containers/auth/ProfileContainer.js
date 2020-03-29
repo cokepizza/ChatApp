@@ -94,13 +94,27 @@ const ProfileContainer = ({ scrollRef }) => {
         
         const join = inform[key].join;
         const values = value.trim().split(`${join}`);
-        values.forEach((itemValue, itemIndex) => {
-            dispatch(setModalValue({
-                key,
-                index: itemIndex,
-                value: itemValue,
-            }));
-        })
+        if(inform[key].type === 'picker') {
+            values.forEach((itemValue, itemIndex) => {
+                dispatch(setModalValue({
+                    key,
+                    index: itemIndex,
+                    value: itemValue,
+                }));
+            });
+        } else if(inform[key].type === 'selection') {
+            const valueSet = new Set(values);
+            inform[key].list.forEach((val, itemIndex) => {
+                if(valueSet.has(val)) {
+                    dispatch(setModalValue({
+                        key,
+                        index: itemIndex,
+                        value: true,
+                    }));
+                }
+            });
+        }
+        
 
         clearFocus();
         onFocus(index);

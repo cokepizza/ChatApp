@@ -26,34 +26,45 @@ const ModalContainer = () => {
     }
     
     const onPressSubmit = useCallback(() => {
-        const revisedValue = value[modal].map((val, index) => {
-            if(val === '') {
-                if(list) {
-                    let str = `${list[0]}`;
-                    if(typeof list[0] === 'number' && list[0] < 10) {
-                        str = '0' + str;
+        let revisedValue = [];
+        if(inform[modal].type === 'picker') {
+            revisedValue = value[modal].map((val, index) => {
+                if(val === '') {
+                    if(list) {
+                        let str = `${list[0]}`;
+                        if(typeof list[0] === 'number' && list[0] < 10) {
+                            str = '0' + str;
+                        }
+                        if(unit) {
+                            str = str + `${unit[0]}`;
+                        }
+    
+                        //  다중 리스트 처리 필요
+                        return str;
                     }
-                    if(unit) {
-                        str = str + `${unit[0]}`;
+                    if(range) {
+                        let str = `${range[index].s}`;
+                        if(typeof range[index].s === 'number' && range[index].s < 10) {
+                            str = '0' + str;
+                        }
+                        if(unit) {
+                            str = str + `${unit[0]}`;
+                        }
+                        return str;
                     }
-
-                    //  다중 리스트 처리 필요
-                    return str;
                 }
-                if(range) {
-                    let str = `${range[index].s}`;
-                    if(typeof range[index].s === 'number' && range[index].s < 10) {
-                        str = '0' + str;
+    
+                return val;
+            });
+        } else if(inform[modal].type === 'selection') {
+            revisedValue = value[modal]
+                .reduce((acc, cur, index) => {
+                    if(cur) {
+                        acc.push(inform[modal].list[index]);
                     }
-                    if(unit) {
-                        str = str + `${unit[0]}`;
-                    }
-                    return str;
-                }
-            }
-
-            return val;
-        });
+                    return acc;
+                }, []);
+        }
 
         const valueStr = revisedValue.join(`${join}`);
         
@@ -65,7 +76,7 @@ const ModalContainer = () => {
             key: modal,
         }));
         dispatch(clearModal());
-    }, [dispatch, modal, value, list, range]);
+    }, [dispatch, modal, inform, value, list, range]);
 
     const onPressCancel = useCallback(() => {
         dispatch(clearModalValue({

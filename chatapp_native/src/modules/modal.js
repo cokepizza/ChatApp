@@ -36,6 +36,7 @@ const inform = {
     'character': {
         name: '성격',
         type: 'selection',
+        join: ', ',
         list: ['지적인', '차분한', '유머있는', '낙천적인', '내향적인', '외향적인', '감성적인', '상냥한', '귀여운', '열정적인', '듬직한', '개성있는'],
     },
     'bloodType': {

@@ -13,6 +13,7 @@ const RowBlock = styled.View`
 
 const ItemBlock = styled.View`
     flex: 1;
+    
     ${props => props.borderRight && css`
         border-right-width: 1px;
         border-right-color: rgba(0, 0, 0, 0.1);
