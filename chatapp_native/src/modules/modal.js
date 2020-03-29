@@ -62,7 +62,7 @@ const initialState = {
         birth: ['', '', ''],
         tall: [''],
         shape: [''],
-        character: [''],
+        character: [false, false, false, false, false, false, false, false, false, false, false, false],
         bloodType: [''],
         smoking: [''],
         drinking: [''],

@@ -96,7 +96,6 @@ const ModalContainer = () => {
             list={list}
             range={range}
             unit={unit}
-            join={join}
             value={value[modal]}
             onPressSubmit={onPressSubmit}
             onPressCancel={onPressCancel}

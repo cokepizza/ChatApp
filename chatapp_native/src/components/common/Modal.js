@@ -19,6 +19,7 @@ const ModalBackgroundBlock = styled.View`
 const ModalBlock = styled.View`
     height: 60%;
     width: ${Dimensions.get('window').width / 3 * 2}px;
+    margin-bottom: 45px;
     background: white;
     border-radius: 10px;
 `;
@@ -38,13 +39,13 @@ const ModalTitleTextBlock = styled.Text`
 `;
 
 const ModalBodyBlock = styled.View`
-    height: 65%;
+    height: 68%;
     width: 100%;
     justify-content: center;
 `;
 
 const ModalFooterBlock = styled.View`
-    height: 15%;
+    height: 12%;
     width: 100%;
     border-top-width: 1px;
     border-top-color: rgba(0, 0, 0, 0.1);
@@ -60,8 +61,8 @@ const ButtonTouchBlock = styled.TouchableOpacity`
 `;
 
 const ButtonFrameBlock = styled.View`
-    width: 50%;
-    ${props => props.marginRight && css`
+    flex: 1;
+    ${props => props.borderRight && css`
         border-right-width: 1px;
         border-right-color: rgba(0, 0, 0, 0.1);
     `}
@@ -91,7 +92,6 @@ const Modal = ({
     list,
     range,
     unit,
-    join,
     value,
     onPressSubmit,
     onPressCancel,
@@ -160,12 +160,12 @@ const Modal = ({
                             ))}
                         </PickerFrameBlock>
                     )}
-                    {type === 'selection' && list && (
-                        <SelectionContainer list={list} />
+                    {type === 'selection' && (
+                        <SelectionContainer />
                     )}
                 </ModalBodyBlock>
                 <ModalFooterBlock>
-                    <ButtonFrameBlock marginRight={1}>
+                    <ButtonFrameBlock borderRight={1}>
                         <ButtonTouchBlock onPress={onPressSubmit}>
                             <ButtonTextBlock>
                                 확인
