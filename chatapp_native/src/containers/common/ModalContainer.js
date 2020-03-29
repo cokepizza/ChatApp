@@ -29,13 +29,29 @@ const ModalContainer = () => {
         const revisedValue = value[modal].map((val, index) => {
             if(val === '') {
                 if(list) {
+                    let str = `${list[0]}`;
+                    if(typeof list[0] === 'number' && list[0] < 10) {
+                        str = '0' + str;
+                    }
+                    if(unit) {
+                        str = str + `${unit[0]}`;
+                    }
+
                     //  다중 리스트 처리 필요
-                    return list[0];
+                    return str;
                 }
                 if(range) {
-                    return range[index][0];
+                    let str = `${range[index].s}`;
+                    if(typeof range[index].s === 'number' && range[index].s < 10) {
+                        str = '0' + str;
+                    }
+                    if(unit) {
+                        str = str + `${unit[0]}`;
+                    }
+                    return str;
                 }
             }
+
             return val;
         });
 
@@ -59,14 +75,6 @@ const ModalContainer = () => {
     }, [dispatch, modal]);
 
     const onValueChange = useCallback((selectedValue, itemIndex, modalIndex) => {
-        // let revisedValue = selectedValue;
-        // if(join) {
-        //     const valueList = value.trim().split(`${join}`);
-        //     valueList[modalIndex] = selectedValue;
-        //     revisedValue = valueList.join(`${join}`);
-        // }
-        console.log('onValueChangr');
-
         dispatch(setModalValue({
             key: modal,
             index: modalIndex,

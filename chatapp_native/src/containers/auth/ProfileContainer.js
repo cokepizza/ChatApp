@@ -21,6 +21,8 @@ const ProfileContainer = ({ scrollRef }) => {
         region,
         birth,
         tall,
+        shape,
+        character,
         validation,
         inform,
     } = useSelector(({ profile, modal }) => ({
@@ -34,6 +36,8 @@ const ProfileContainer = ({ scrollRef }) => {
         region: profile.region,
         birth: profile.birth,
         tall: profile.tall,
+        shape: profile.shape,
+        character: profile.character,
         validation: profile.validation,
         inform: modal.inform,
     }));
@@ -84,10 +88,6 @@ const ProfileContainer = ({ scrollRef }) => {
     }, []);
 
     const onPressPicker = useCallback((key, value, index) => {
-        console.log(key);
-        console.log(value);
-        console.log(index);
-
         dispatch(setModal({
             modal: key,
         }));
@@ -139,6 +139,8 @@ const ProfileContainer = ({ scrollRef }) => {
             region={region}
             birth={birth}
             tall={tall}
+            shape={shape}
+            character={character}
             validation={validation}
             onChangeText={onChangeText}
             onFocus={onFocus}

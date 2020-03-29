@@ -14,6 +14,8 @@ const initialState = {
     region: '',
     birth: '',
     tall: '',
+    shape: '',
+    character: '',
     validation: {
         introduction: false,
         nickname: false,
@@ -24,6 +26,8 @@ const initialState = {
         region: false,
         birth: false,
         tall: false,
+        shape: false,
+        character: false,
     },
 };
 

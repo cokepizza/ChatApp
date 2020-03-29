@@ -114,6 +114,8 @@ const Profile = ({
     region,
     birth,
     tall,
+    shape,
+    character,
     validation,
     onChangeText,
     onFocus,
@@ -283,7 +285,36 @@ const Profile = ({
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
-                
+                <InputTouchFrameBlock onPress={() => onPressPicker('shape', shape, 9)}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[9]}
+                        onLayout={e => onLayout(e, 9)}
+                    >
+                        <TextBlock>
+                            체형
+                        </TextBlock>
+                        <PickerForm
+                            validation={validation.shape}
+                            value={shape}
+                        />
+                    </InputOuterFrameBlock>
+                </InputTouchFrameBlock>
+                <InputTouchFrameBlock onPress={() => onPressPicker('character', character, 9)}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[10]}
+                        onLayout={e => onLayout(e, 10)}
+                    >
+                        <TextBlock>
+                            성격
+                        </TextBlock>
+                        <PickerForm
+                            validation={validation.character}
+                            value={character}
+                        />
+                    </InputOuterFrameBlock>
+                </InputTouchFrameBlock>
             </ProfileBlock>
         </ProfileTouchBlock>
     );

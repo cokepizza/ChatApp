@@ -1,6 +1,8 @@
 import React from 'react';
 import { Dimensions } from 'react-native';
+
 import styled, { css } from 'styled-components/native';
+import SelectionContainer from '../../containers/common/SelectionContainer';
 
 const ModalBackgroundBlock = styled.View`
     position: absolute;
@@ -15,7 +17,7 @@ const ModalBackgroundBlock = styled.View`
 `;
 
 const ModalBlock = styled.View`
-    height: 50%;
+    height: 60%;
     width: ${Dimensions.get('window').width / 3 * 2}px;
     background: white;
     border-radius: 10px;
@@ -98,23 +100,20 @@ const Modal = ({
     const rangeList = [];
 
     if(range) {
-        if(Array.isArray(range)) {
-            // const dashValueList = value.trim().split('-');
-            // const commaValueList = value.trim().split(',');
-            // valueList = dashValueList.length > commaValueList ? dashValueList : commaValueList;
-
-            range.forEach((obj, index) => {
-                let rangeItem = [];
-                for(let i=obj.s; i<=obj.e; ++i) {
-                    let iStr = `${i}`;
-                    if(i < 10) {
-                        iStr = '0' + iStr;
-                    }
-                    rangeItem.push(`${iStr}${unit[index]}`);
+        range.forEach((obj, index) => {
+            let rangeItem = [];
+            for(let i=obj.s; i<=obj.e; ++i) {
+                let iStr = `${i}`;
+                if(i < 10) {
+                    iStr = '0' + iStr;
                 }
-                rangeList.push(rangeItem);
-            })
-        }
+                if(unit) {
+                    iStr = iStr + `${unit[index]}`;
+                }
+                rangeItem.push(iStr);
+            }
+            rangeList.push(rangeItem);
+        })
     };
 
     return (
@@ -160,6 +159,9 @@ const Modal = ({
                                 </ModalPickerBlock>
                             ))}
                         </PickerFrameBlock>
+                    )}
+                    {type === 'selection' && list && (
+                        <SelectionContainer list={list} />
                     )}
                 </ModalBodyBlock>
                 <ModalFooterBlock>

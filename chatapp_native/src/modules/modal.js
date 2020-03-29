@@ -28,7 +28,31 @@ const inform = {
         unit: ['cm'],
         range: [{ s: 150, e: 190 }],
     },
-
+    'shape': {
+        name: '체형',
+        type: 'picker',
+        list: ['마른', '슬림탄탄', '보통', '건장한', '근육질', '통통한'],
+    },
+    'character': {
+        name: '성격',
+        type: 'selection',
+        list: ['지적인', '차분한', '유머있는', '낙천적인', '내향적인', '외향적인', '감성적인', '상냥한', '귀여운', '열정적인', '듬직한', '개성있는'],
+    },
+    'bloodType': {
+        name: '혈액형',
+        type: 'picker',
+        list: ['A', 'B', 'O', 'AB'],
+    },
+    'smoking': {
+        name: '흡연여부',
+        type: 'picker',
+        list: ['흡연', '비흡연'],
+    },
+    'drinking': {
+        name: '음주여부',
+        type: 'picker',
+        list: ['마시지 않음', '가끔 마심', '어느 정도 즐김', '술자리를 즐김'],
+    }
 }
 
 const initialState = {
@@ -37,6 +61,11 @@ const initialState = {
         region: [''],
         birth: ['', '', ''],
         tall: [''],
+        shape: [''],
+        character: [''],
+        bloodType: [''],
+        smoking: [''],
+        drinking: [''],
     },
     inform,
 };
