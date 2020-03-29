@@ -12,37 +12,44 @@ import { setValue as setProfileValue } from '../../modules/profile';
 //  상위에서 modal이 변경되면 한번, useSelector 내부의 profile이 변경되면서 다시 한번 변경되서 두번의 렌더링이 일어남
 //  React.memo로 막는 방법도 있지만 useSelector에서 profile 가져오지 않고 리듀서를 분리함으로써 이 문제를 해결할 수 있음
 const ModalContainer = () => {
-    const { modal, modalInform } = useSelector(({ modal }) => ({
+    const { modal, inform, value } = useSelector(({ modal }) => ({
         modal: modal.modal,
-        modalInform: modal.modalInform,
+        inform: modal.inform,
+        value: modal.value,
     }), shallowEqual);
 
     const dispatch = useDispatch();
 
-    let  name, type, list, range, unit, join, value;
-    if(modalInform[modal]) {
-        ({ name, type, list, range, unit, join, value } = modalInform[modal]);
+    let  name, type, list, range, unit, join;
+    if(inform[modal]) {
+        ({ name, type, list, range, unit, join } = inform[modal]);
     }
     
     const onPressSubmit = useCallback(() => {
-        let selectedValue = value;
-        if(selectedValue === '') {
-            if(list) {
-                selectedValue = list[0];
+        const revisedValue = value[modal].map((val, index) => {
+            if(val === '') {
+                if(list) {
+                    //  다중 리스트 처리 필요
+                    return list[0];
+                }
+                if(range) {
+                    return range[index][0];
+                }
             }
-            if(range) {
-                selectedValue = range.s;
-            }
-        }
+            return val;
+        });
+
+        const valueStr = revisedValue.join(`${join}`);
+        
         dispatch(setProfileValue({
             key: modal,
-            value: selectedValue,
+            value: valueStr,
         }));
         dispatch(clearModalValue({
             key: modal,
         }));
         dispatch(clearModal());
-    }, [dispatch, modal, value, list]);
+    }, [dispatch, modal, value, list, range]);
 
     const onPressCancel = useCallback(() => {
         dispatch(clearModalValue({
@@ -58,6 +65,7 @@ const ModalContainer = () => {
         //     valueList[modalIndex] = selectedValue;
         //     revisedValue = valueList.join(`${join}`);
         // }
+        console.log('onValueChangr');
 
         dispatch(setModalValue({
             key: modal,
@@ -81,7 +89,7 @@ const ModalContainer = () => {
             range={range}
             unit={unit}
             join={join}
-            value={value}
+            value={value[modal]}
             onPressSubmit={onPressSubmit}
             onPressCancel={onPressCancel}
             onValueChange={onValueChange}

@@ -22,7 +22,8 @@ const ProfileContainer = ({ scrollRef }) => {
         birth,
         tall,
         validation,
-    } = useSelector(({ profile }) => ({
+        inform,
+    } = useSelector(({ profile, modal }) => ({
         introduction: profile.introduction,
         introductionWordLimit: profile.introductionWordLimit,
         nickname: profile.nickname,
@@ -34,6 +35,7 @@ const ProfileContainer = ({ scrollRef }) => {
         birth: profile.birth,
         tall: profile.tall,
         validation: profile.validation,
+        inform: modal.inform,
     }));
 
     const dispatch = useDispatch();
@@ -89,14 +91,20 @@ const ProfileContainer = ({ scrollRef }) => {
         dispatch(setModal({
             modal: key,
         }));
-        dispatch(setModalValue({
-            key,
-            value,
-        }))
+        
+        const join = inform[key].join;
+        const values = value.trim().split(`${join}`);
+        values.forEach((itemValue, itemIndex) => {
+            dispatch(setModalValue({
+                key,
+                index: itemIndex,
+                value: itemValue,
+            }));
+        })
 
         clearFocus();
         onFocus(index);
-    }, [dispatch, clearFocus, onFocus]);
+    }, [dispatch, clearFocus, onFocus, inform]);
 
     const onChangeText = useCallback((key, value) => {
         dispatch(setProfileValue({
