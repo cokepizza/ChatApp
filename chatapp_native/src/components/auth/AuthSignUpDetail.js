@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components/native';
 
+import SubHeaderContainer from '../../containers/common/SubHeaderContainer';
 import AuthImageContainer from '../../containers/auth/AuthImageContainer';
 import ProfileContainer from '../../containers/auth/ProfileContainer';
 import ModalContainer from '../../containers/common/ModalContainer';
@@ -48,6 +49,11 @@ const AuthSignUpDetail = ({ onPressSubmit, scrollRef }) => {
                 // scrollEnabled={!modal}
                 keyboardShouldPersistTaps='always'
             >
+                <SubHeaderContainer
+                    title='Profile'
+                    index={3}
+                    total={3}
+                />
                 <AuthImageContainer />
                 <MarginBlock />
                 <ProfileContainer scrollRef={scrollRef} />

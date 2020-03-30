@@ -63,7 +63,7 @@ const PickerBlock = styled.View`
 
 const PickerTextBlock = styled.Text``;
 
-const TextInputForm = ({ validation, value, index, inputRef, ...rest }) => {
+const TextInputForm = React.memo(({ validation, value, index, inputRef, ...rest }) => {
     return (
         <InputInnerFrameBlock>
             {validation ? (
@@ -82,9 +82,9 @@ const TextInputForm = ({ validation, value, index, inputRef, ...rest }) => {
             />
         </InputInnerFrameBlock>
     )
-}
+});
 
-const PickerForm = ({ validation, value }) => {
+const PickerForm = React.memo(({ validation, value }) => {
     return (
         <InputInnerFrameBlock>
             {validation ? (
@@ -99,7 +99,7 @@ const PickerForm = ({ validation, value }) => {
             </PickerBlock>
         </InputInnerFrameBlock>
     );
-}
+});
 
 const Profile = ({
     inputRef,
