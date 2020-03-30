@@ -36,6 +36,7 @@ const inform = {
     'character': {
         name: '성격',
         type: 'selection',
+        detail: '자신의 성격 3가지를 선택해주세요',
         join: ', ',
         list: ['지적인', '차분한', '유머있는', '낙천적인', '내향적인', '외향적인', '감성적인', '상냥한', '귀여운', '열정적인', '듬직한', '개성있는'],
     },
@@ -45,12 +46,12 @@ const inform = {
         list: ['A', 'B', 'O', 'AB'],
     },
     'smoking': {
-        name: '흡연여부',
+        name: '흡연',
         type: 'picker',
         list: ['흡연', '비흡연'],
     },
     'drinking': {
-        name: '음주여부',
+        name: '음주',
         type: 'picker',
         list: ['마시지 않음', '가끔 마심', '어느 정도 즐김', '술자리를 즐김'],
     }

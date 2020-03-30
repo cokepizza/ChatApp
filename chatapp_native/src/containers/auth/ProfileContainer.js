@@ -5,7 +5,7 @@ import Profile from '../../components/auth/Profile';
 import { setValue as setProfileValue } from '../../modules/profile';
 import { setModal, setValue as setModalValue } from '../../modules/modal';
 
-const componentNum = 7;
+const componentNum = 14;
 const inputComponentNum = 6;
 
 const ProfileContainer = ({ scrollRef }) => {
@@ -23,6 +23,9 @@ const ProfileContainer = ({ scrollRef }) => {
         tall,
         shape,
         character,
+        bloodType,
+        smoking,
+        drinking,
         validation,
         inform,
     } = useSelector(({ profile, modal }) => ({
@@ -38,6 +41,9 @@ const ProfileContainer = ({ scrollRef }) => {
         tall: profile.tall,
         shape: profile.shape,
         character: profile.character,
+        bloodType: profile.bloodType,
+        smoking: profile.smoking,
+        drinking: profile.drinking,
         validation: profile.validation,
         inform: modal.inform,
     }));
@@ -155,6 +161,9 @@ const ProfileContainer = ({ scrollRef }) => {
             tall={tall}
             shape={shape}
             character={character}
+            bloodType={bloodType}
+            smoking={smoking}
+            drinking={drinking}
             validation={validation}
             onChangeText={onChangeText}
             onFocus={onFocus}

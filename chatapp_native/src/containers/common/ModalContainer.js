@@ -20,9 +20,9 @@ const ModalContainer = () => {
 
     const dispatch = useDispatch();
 
-    let  name, type, list, range, unit, join;
+    let  name, type, list, range, unit, join, detail;
     if(inform[modal]) {
-        ({ name, type, list, range, unit, join } = inform[modal]);
+        ({ name, type, list, range, unit, join, detail } = inform[modal]);
     }
     
     const onPressSubmit = useCallback(() => {
@@ -107,6 +107,7 @@ const ModalContainer = () => {
             list={list}
             range={range}
             unit={unit}
+            detail={detail}
             value={value[modal]}
             onPressSubmit={onPressSubmit}
             onPressCancel={onPressCancel}

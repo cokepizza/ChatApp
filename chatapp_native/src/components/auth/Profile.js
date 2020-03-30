@@ -116,6 +116,9 @@ const Profile = ({
     tall,
     shape,
     character,
+    bloodType,
+    smoking,
+    drinking,
     validation,
     onChangeText,
     onFocus,
@@ -312,6 +315,51 @@ const Profile = ({
                         <PickerForm
                             validation={validation.character}
                             value={character}
+                        />
+                    </InputOuterFrameBlock>
+                </InputTouchFrameBlock>
+                <InputTouchFrameBlock onPress={() => onPressPicker('bloodType', bloodType, 11)}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[11]}
+                        onLayout={e => onLayout(e, 11)}
+                    >
+                        <TextBlock>
+                            혈액형
+                        </TextBlock>
+                        <PickerForm
+                            validation={validation.bloodType}
+                            value={bloodType}
+                        />
+                    </InputOuterFrameBlock>
+                </InputTouchFrameBlock>
+                <InputTouchFrameBlock onPress={() => onPressPicker('smoking', smoking, 12)}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[12]}
+                        onLayout={e => onLayout(e, 12)}
+                    >
+                        <TextBlock>
+                            흡연
+                        </TextBlock>
+                        <PickerForm
+                            validation={validation.smoking}
+                            value={smoking}
+                        />
+                    </InputOuterFrameBlock>
+                </InputTouchFrameBlock>
+                <InputTouchFrameBlock onPress={() => onPressPicker('drinking', drinking, 13)}>
+                    <InputOuterFrameBlock
+                        marginTop={1}
+                        focused={focused[13]}
+                        onLayout={e => onLayout(e, 13)}
+                    >
+                        <TextBlock>
+                            음주
+                        </TextBlock>
+                        <PickerForm
+                            validation={validation.drinking}
+                            value={drinking}
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>

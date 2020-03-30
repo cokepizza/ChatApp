@@ -21,11 +21,11 @@ const ModalBlock = styled.View`
     width: ${Dimensions.get('window').width / 3 * 2}px;
     margin-bottom: 45px;
     background: white;
-    border-radius: 10px;
+    border-radius: 20px;
 `;
 
 const ModalHeaderBlock = styled.View`
-    height: 20%;
+    height: 26%;
     width: 100%;
     padding-left: 10%;
     justify-content: center;
@@ -33,19 +33,31 @@ const ModalHeaderBlock = styled.View`
     border-bottom-color: rgba(0, 0, 0, 0.1);
 `;
 
+const ModalViewBlock = styled.View`
+    ${props => props.marginTop && css`
+        margin-top: 5px;
+    `}
+`;
+
 const ModalTitleTextBlock = styled.Text`
+    color: rgba(0, 0, 0, 0.7);
+    font-weight: bold;
+    font-size: 20px;
+`;
+
+const ModalSubTitleTextBlock = styled.Text`
     color: rgba(0, 0, 0, 0.3);
-    font-size: 30px;
+    font-size: 12px;
 `;
 
 const ModalBodyBlock = styled.View`
-    height: 68%;
+    height: 60%;
     width: 100%;
     justify-content: center;
 `;
 
 const ModalFooterBlock = styled.View`
-    height: 12%;
+    height: 14%;
     width: 100%;
     border-top-width: 1px;
     border-top-color: rgba(0, 0, 0, 0.1);
@@ -72,7 +84,7 @@ const ButtonTextBlock = styled.Text`
     border-top-color: rgba(0, 0, 0, 0.3);
     border-top-width: 1px;
     color: rgba(0, 0, 0, 0.3);
-    font-size: 20px;
+    font-size: 14px;
 `;
 
 const PickerFrameBlock = styled.View`
@@ -92,6 +104,7 @@ const Modal = ({
     list,
     range,
     unit,
+    detail,
     value,
     onPressSubmit,
     onPressCancel,
@@ -120,9 +133,18 @@ const Modal = ({
         <ModalBackgroundBlock>
             <ModalBlock>
                 <ModalHeaderBlock>
-                    <ModalTitleTextBlock>
-                        {name}
-                    </ModalTitleTextBlock>
+                    <ModalViewBlock>
+                        <ModalTitleTextBlock>
+                            {name}
+                        </ModalTitleTextBlock>
+                    </ModalViewBlock>
+                    {detail && (
+                        <ModalViewBlock marginTop={1}>
+                            <ModalSubTitleTextBlock>
+                                {detail}
+                            </ModalSubTitleTextBlock>
+                        </ModalViewBlock>
+                    )}
                 </ModalHeaderBlock>
                 <ModalBodyBlock>
                     {type === 'picker' && list && (
@@ -166,17 +188,17 @@ const Modal = ({
                 </ModalBodyBlock>
                 <ModalFooterBlock>
                     <ButtonFrameBlock borderRight={1}>
-                        <ButtonTouchBlock onPress={onPressSubmit}>
-                            <ButtonTextBlock>
-                                확인
-                            </ButtonTextBlock>
-                        </ButtonTouchBlock>
-                    </ButtonFrameBlock>
-                    <ButtonFrameBlock>
                         <ButtonTouchBlock onPress={onPressCancel}>
                             <ButtonTextBlock>
                                 취소
                             </ButtonTextBlock>                        
+                        </ButtonTouchBlock>
+                    </ButtonFrameBlock>
+                    <ButtonFrameBlock>
+                        <ButtonTouchBlock onPress={onPressSubmit}>
+                            <ButtonTextBlock>
+                                확인
+                            </ButtonTextBlock>
                         </ButtonTouchBlock>
                     </ButtonFrameBlock>
                 </ModalFooterBlock>

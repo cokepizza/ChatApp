@@ -16,6 +16,9 @@ const initialState = {
     tall: '',
     shape: '',
     character: '',
+    bloodType: '',
+    smoking: '',
+    drinking: '',
     validation: {
         introduction: false,
         nickname: false,
@@ -28,6 +31,9 @@ const initialState = {
         tall: false,
         shape: false,
         character: false,
+        bloodType: false,
+        smoking: false,
+        drinking: false,
     },
 };
 
