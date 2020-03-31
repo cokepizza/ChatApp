@@ -12,20 +12,75 @@ const HeaderSafeBlock = styled.SafeAreaView`
 
 
 const HeaderBlock = styled.View`
+    flex-direction: row;
+    justify-content: space-between;
     width: 100%;
     height: 45px;
+    padding-left: 20px;
+    padding-right: 20px;
 `;
 
-const HeaderText = styled.Text``;
+const HeaderViewBlock = styled.View`
+    flex: 1;
+    align-items: center;
+    justify-content: center;
 
-const Header = ({ modal }) => {
+    ${props => props.left && css`
+        align-items: flex-start;
+    `}
+
+    ${props => props.right && css`
+        align-items: flex-end;
+    `}
+`;
+
+const HeaderTextBlock = styled.Text`
+    font-size: 15px;
+    
+    ${props => props.left && css`
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.3);
+    `}
+
+    ${props => props.right && css`
+        font-size: 12px;
+        color: rgba(0, 0, 0, 0.3);
+    `}
+`;
+
+const HeaderTouchBlock = styled.TouchableOpacity`
+    height: 100%;
+    justify-content: center;
+`;
+
+const Header = ({ modal, left, center, right, onPressLeft, onPressRight }) => {
 
     return (
         <HeaderSafeBlock modal={modal}>
             <HeaderBlock>
-                <HeaderText>
-                    
-                </HeaderText>
+                <HeaderViewBlock left={1}>
+                    {left &&(
+                        <HeaderTouchBlock onPress={onPressLeft}>
+                            <HeaderTextBlock left={1}>
+                                {left}
+                            </HeaderTextBlock>
+                        </HeaderTouchBlock>
+                    )}
+                </HeaderViewBlock>
+                <HeaderViewBlock>
+                    <HeaderTextBlock>
+                        {center}
+                    </HeaderTextBlock>
+                </HeaderViewBlock>
+                <HeaderViewBlock right={1}>
+                    {right && (
+                        <HeaderTouchBlock onPress={onPressRight}>
+                            <HeaderTextBlock right={1}>
+                                {right}
+                            </HeaderTextBlock>
+                        </HeaderTouchBlock>
+                    )}
+                </HeaderViewBlock>
             </HeaderBlock>
         </HeaderSafeBlock>
     );

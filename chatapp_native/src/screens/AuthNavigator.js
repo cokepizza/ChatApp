@@ -55,7 +55,12 @@ const AuthNavigator = () => {
             component={AuthSignUpDetailContainer}
             options={{
               header: props => (
-                <HeaderContainer {...props} />
+                <HeaderContainer
+                  left='가입취소'
+                  center='회원가입'
+                  leftNav='AuthSignIn'
+                  {...props}
+                />
               )
             }}
             // options={{

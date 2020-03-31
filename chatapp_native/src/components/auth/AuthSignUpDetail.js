@@ -43,17 +43,17 @@ const AuthSignUpScrollViewBlock = styled.ScrollView`
 const AuthSignUpDetail = ({ onPressSubmit, scrollRef }) => {
     return (
         <AuthSignUpDetailBlock>
+            <SubHeaderContainer
+                title='프로필 작성'
+                index={3}
+                total={3}
+            />
             <AuthSignUpScrollViewBlock
                 ref={scrollRef}
                 horizontal={false}
                 // scrollEnabled={!modal}
                 keyboardShouldPersistTaps='always'
             >
-                <SubHeaderContainer
-                    title='Profile'
-                    index={3}
-                    total={3}
-                />
                 <AuthImageContainer />
                 <MarginBlock />
                 <ProfileContainer scrollRef={scrollRef} />
