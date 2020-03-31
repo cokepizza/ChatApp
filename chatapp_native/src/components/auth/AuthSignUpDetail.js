@@ -6,6 +6,17 @@ import AuthImageContainer from '../../containers/auth/AuthImageContainer';
 import ProfileContainer from '../../containers/auth/ProfileContainer';
 import ModalContainer from '../../containers/common/ModalContainer';
 
+const AuthSignUpDetailBlock = styled.SafeAreaView`
+    flex: 1;
+    /* position: relative; */
+    background: white;
+    align-items: center;
+`;
+
+const AuthSignUpScrollViewBlock = styled.ScrollView`
+    width: 100%;
+`;
+
 const MarginBlock = styled.View`
     height: 30px;
 `;
@@ -28,17 +39,6 @@ const SubmitTouchBlock = styled.TouchableOpacity`
 `;
 
 const SubmitTextBlock = styled.Text``;
-
-const AuthSignUpDetailBlock = styled.SafeAreaView`
-    flex: 1;
-    position: relative;
-    background: white;
-    align-items: center;
-`;
-
-const AuthSignUpScrollViewBlock = styled.ScrollView`
-    width: 100%;
-`;
 
 const AuthSignUpDetail = ({ onPressSubmit, scrollRef }) => {
     return (

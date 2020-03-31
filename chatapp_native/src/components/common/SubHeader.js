@@ -45,6 +45,7 @@ const SubHeader = ({ title, index, total }) => {
     for(let i=0; i<total; ++i) {
         circleRow.push(
             <CircleBlock
+                key={`Circle_${i}`}
                 marginNone={i === total-1}
                 checked={i+1 === index}
             />

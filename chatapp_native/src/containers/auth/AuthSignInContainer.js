@@ -56,7 +56,8 @@ const AuthSignInContainer = ({ navigation }) => {
         
         clearFocus();
         // navigation.navigate('AuthSignUp');
-        navigation.navigate('AuthSignUpDetail');
+        // navigation.navigate('AuthSignUpDetail');
+        navigation.navigate('AuthSignUpVerify');
     }, [navigation]);
 
     return (
