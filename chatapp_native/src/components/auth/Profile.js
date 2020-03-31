@@ -22,7 +22,7 @@ const ImageBlock = styled.Image`
 const InputInnerFrameBlock = styled.View`
     flex-direction: row;
     width: 100%;
-    height: 30px;
+    height: 40px;
     border-bottom-width: 1px;
     border-bottom-color: rgba(0, 0, 0, 0.5);
     align-items: center;
@@ -50,7 +50,7 @@ const TextBlock = styled.Text`
 
 const InputBlock = styled.TextInput`
     flex: 1;
-    height: 30px;
+    height: 40px;
     margin-left: 10px;
 `;
 
