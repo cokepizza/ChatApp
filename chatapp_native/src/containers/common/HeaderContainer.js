@@ -3,19 +3,18 @@ import { useSelector } from 'react-redux';
 
 import Header from '../../components/common/Header';
 
-const HeaderContainer = ({ left, center, right, leftNav, rightNav, navigation }) => {
+const HeaderContainer = ({ left, center, right, leftNav, rightNav, navigation, ...rest }) => {
     const { modal } = useSelector(({ modal }) => ({
         modal: modal.modal,
     }));
 
-    console.log(navigation);
-    const onPressLeft = () => {
+    const onPressLeft = useCallback(() => {
         navigation.navigate(leftNav);
-    };
+    }, [navigation, leftNav]);
 
-    const onPressRight = () => {
+    const onPressRight = useCallback(() => {
         navigation.navigate(rightNav);
-    }
+    }, [navigation, rightNav]);
     
     return (
         <Header

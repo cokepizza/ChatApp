@@ -10,12 +10,14 @@ const SET_IMAGE = 'image/SET_IMAGE';
 const CLEAR_IMAGE = 'image/CLEAR_IMAGE';
 const SET_LOADING = 'image/SET_LOADING';
 const CLEAR_LOADING = 'image/CLEAR_LOADING';
+const CLEAR_VALUE = 'image/CLEAR_VALUE';
 export const setFile = createAction(SET_FILE, payload => payload);
 export const clearFile = createAction(CLEAR_FILE, payload => payload);
 export const setImage = createAction(SET_IMAGE, payload => payload);
 export const clearImage = createAction(CLEAR_IMAGE, payload => payload);
 export const setLoading = createAction(SET_LOADING, payload => payload);
 export const clearLoading = createAction(CLEAR_LOADING, payload => payload);
+export const clearValue = createAction(CLEAR_VALUE);
 
 const [ CREATE_AUTH_IMAGE, CREATE_AUTH_IMAGE_SUCCESS, CREATE_AUTH_IMAGE_FAILURE ] = createRequestActionTypes('image/CREATE_AUTH_IMAGE');
 export const createAuthImage = createRequestThunk(CREATE_AUTH_IMAGE, imageCtrl.createAuthImage);
@@ -24,7 +26,6 @@ const initialState = {
     loadings: [ null, null, null, null, null, null ],
     files: [ null, null, null, null, null, null ],
     images: [ null, null, null, null, null, null ],
-    authImage: null,
 };
 
 export default handleActions({
@@ -76,8 +77,6 @@ export default handleActions({
             ...state.loadings.slice(index+1, state.loadings.length),  
         ]
     }),
-    [CREATE_AUTH_IMAGE_SUCCESS]: (state, { payload: { authImage } }) => ({
-        ...state,
-        authImage,
-    }),
+    [CLEAR_VALUE]: state => initialState,
+    [CREATE_AUTH_IMAGE_SUCCESS]: state => state,
 }, initialState);

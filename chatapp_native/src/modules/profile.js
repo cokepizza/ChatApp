@@ -1,7 +1,9 @@
 import { createAction, handleActions } from 'redux-actions';
 
 const SET_VALUE = 'profile/SET_VALUE';
+const CLEAR_VALUE = 'profile/CLEAR_VALUE';
 export const setValue = createAction(SET_VALUE, payload => payload);
+export const clearValue = createAction(CLEAR_VALUE);
 
 const initialState = {
     introduction: '',
@@ -42,4 +44,5 @@ export default handleActions({
         ...state,
         [key]: value,
     }),
+    [CLEAR_VALUE]: state => initialState,
 }, initialState);

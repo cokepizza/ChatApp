@@ -6,7 +6,7 @@ import AuthCheckContainer from '../containers/auth/AuthCheckContainer';
 import AuthSignInContainer from '../containers/auth/AuthSignInContainer';
 import AuthSignUpContainer from '../containers/auth/AuthSignUpContainer';
 import AuthSignUpDetailContainer from '../containers/auth/AuthSignUpDetailContainer';
-import HeaderContainer from '../containers/common/HeaderContainer';
+import AuthHeaderContainer from '../containers/auth/AuthHeaderContainer';
 
 const Stack = createStackNavigator();
 const AuthNavigator = () => {
@@ -55,7 +55,7 @@ const AuthNavigator = () => {
             component={AuthSignUpDetailContainer}
             options={{
               header: props => (
-                <HeaderContainer
+                <AuthHeaderContainer
                   left='가입취소'
                   center='회원가입'
                   leftNav='AuthSignIn'
