@@ -15,8 +15,8 @@ const ProfileBlock = styled.View`
 `;
 
 const ImageBlock = styled.Image`
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
 `;
 
 const InputInnerFrameBlock = styled.View`
@@ -46,6 +46,10 @@ const TextBlock = styled.Text`
     font-size: 13px;
     color: rgba(0, 0, 0, 0.5);
     margin-bottom: 10px;
+
+    ${props => props.title && css`
+        font-size: 15px;
+    `}
 `;
 
 const InputBlock = styled.TextInput`
@@ -135,7 +139,7 @@ const Profile = ({
                         focused={focused[0]}
                         onLayout={e => onLayout(e, 0)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             자기소개
                         </TextBlock>
                         <TextAreaContainer
@@ -154,7 +158,7 @@ const Profile = ({
                         focused={focused[1]}
                         onLayout={e => onLayout(e, 1)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             닉네임
                         </TextBlock>
                         <TextInputForm
@@ -173,7 +177,7 @@ const Profile = ({
                         focused={focused[2]}
                         onLayout={e => onLayout(e, 2)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             학교
                         </TextBlock>
                         <TextInputForm
@@ -192,7 +196,7 @@ const Profile = ({
                         focused={focused[3]}
                         onLayout={e => onLayout(e, 3)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             전공
                         </TextBlock>
                         <TextInputForm
@@ -211,7 +215,7 @@ const Profile = ({
                         focused={focused[4]}
                         onLayout={e => onLayout(e, 4)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             직업
                         </TextBlock>
                         <TextInputForm
@@ -230,7 +234,7 @@ const Profile = ({
                         focused={focused[5]}
                         onLayout={e => onLayout(e, 5)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             직장
                         </TextBlock>
                         <TextInputForm
@@ -249,7 +253,7 @@ const Profile = ({
                         focused={focused[6]}
                         onLayout={e => onLayout(e, 6)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             지역
                         </TextBlock>
                         <PickerForm
@@ -264,7 +268,7 @@ const Profile = ({
                         focused={focused[7]}
                         onLayout={e => onLayout(e, 7)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             생년월일
                         </TextBlock>
                         <PickerForm
@@ -279,7 +283,7 @@ const Profile = ({
                         focused={focused[8]}
                         onLayout={e => onLayout(e, 8)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             키
                         </TextBlock>
                         <PickerForm
@@ -294,7 +298,7 @@ const Profile = ({
                         focused={focused[9]}
                         onLayout={e => onLayout(e, 9)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             체형
                         </TextBlock>
                         <PickerForm
@@ -309,7 +313,7 @@ const Profile = ({
                         focused={focused[10]}
                         onLayout={e => onLayout(e, 10)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             성격
                         </TextBlock>
                         <PickerForm
@@ -324,7 +328,7 @@ const Profile = ({
                         focused={focused[11]}
                         onLayout={e => onLayout(e, 11)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             혈액형
                         </TextBlock>
                         <PickerForm
@@ -339,7 +343,7 @@ const Profile = ({
                         focused={focused[12]}
                         onLayout={e => onLayout(e, 12)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             흡연
                         </TextBlock>
                         <PickerForm
@@ -354,7 +358,7 @@ const Profile = ({
                         focused={focused[13]}
                         onLayout={e => onLayout(e, 13)}
                     >
-                        <TextBlock>
+                        <TextBlock title={1}>
                             음주
                         </TextBlock>
                         <PickerForm

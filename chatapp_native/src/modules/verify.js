@@ -11,6 +11,10 @@ export const createSMS = createRequestThunk(CREATE_SMS, verifyCtrl.createSMS);
 
 const initialState = {
     phone: '',
+    sendSMS: false,
+    sendSMSError: false,
+    verificationNumber: '',
+    verificationError: false,
 };
 
 export default handleActions({
@@ -18,4 +22,14 @@ export default handleActions({
         ...state,
         [key]: value,
     }),
+    [CREATE_SMS_SUCCESS]: state => ({
+        ...state,
+        sendSMS: true,
+        sendSMSError: false,
+    }),
+    [CREATE_SMS_FAILURE]: (state, { payload: { error } }) => ({
+        ...state,
+        sendSMS: true,
+        sendSMSError: error,
+    })
 }, initialState);

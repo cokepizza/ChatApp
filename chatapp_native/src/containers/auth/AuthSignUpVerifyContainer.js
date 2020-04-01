@@ -1,34 +1,45 @@
-import React from 'react';
+import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpVerify from '../../components/auth/AuthSignUpVerify';
 import { setValue, createSMS } from '../../modules/verify';
 
 const AuthSignUpVerifyContainer = () => {
-    const { phone } = useSelector(({ verify }) => ({
+    const { phone, sendSMS, sendSMSError, verificationNumber } = useSelector(({ verify }) => ({
         phone: verify.phone,
+        sendSMS: verify.sendSMS,
+        sendSMSError: verify.sendSMSError,
+        verificationNumber: verify.verificationNumber,
     }));
 
     const dispatch = useDispatch();
 
-    const onChangeText = value => {
+    const onChangeText = useCallback((key, value) => {
         dispatch(setValue({
-            key: 'phone',
+            key,
             value,
-        }))
-    };
+        }));
+    }, [dispatch]);
     
-    const onPressSubmit = () => {
+    const onPressSubmit = useCallback(() => {
         dispatch(createSMS({
             phone,
-        }))
-    }
+        }));
+    }, [dispatch]);
+
+    const onPressVerify = useCallback(() => {
+        // dispatch();
+    }, []);
 
     return (
         <AuthSignUpVerify
-            value={phone}
+            phone={phone}
+            verificationNumber={verificationNumber}
+            sendSMS={sendSMS}
+            sendSMSError={sendSMSError}
             onChangeText={onChangeText}
             onPressSubmit={onPressSubmit}
+            onPressVerify={onPressVerify}
         />
     );
 };

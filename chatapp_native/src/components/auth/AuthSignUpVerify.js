@@ -1,9 +1,10 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 import SubHeaderContainer from '../../containers/common/SubHeaderContainer';
 import CheckBeforeIcon from '../../assets/images/check_before.png';
 import CheckAfterIcon from '../../assets/images/check_after.png';
+import ErrorIcon from '../../assets/images/error.png';
 
 const AuthSignUpVerifyBlock = styled.SafeAreaView`
     flex: 1;
@@ -13,9 +14,10 @@ const AuthSignUpVerifyBlock = styled.SafeAreaView`
 
 const WarningBlock = styled.View`
     width: 100%;
-    height: 80px;
+    height: 60px;
     padding-left: 20px;
     padding-right: 20px;
+    /* background:red; */
 `;
 
 // const TextBlock = styled.Text`
@@ -24,14 +26,18 @@ const WarningBlock = styled.View`
 // `;
 
 const ImageBlock = styled.Image`
-    width: 20px;
-    height: 20px;
+    width: 18px;
+    height: 18px;
+    opacity: 0.6;
 `;
 
 const InputOuterFrameBlock = styled.View`
-    flex: 1;
-    padding-left: 20px;
-    padding-right: 20px;
+    padding-left: 24px;
+    padding-right: 24px;
+
+    ${props => props.marginTop && css`
+        margin-top: 30px;
+    `}
 `;
 
 const InputInnerFrameBlock = styled.View`
@@ -39,7 +45,7 @@ const InputInnerFrameBlock = styled.View`
     width: 100%;
     height: 40px;
     border-bottom-width: 1px;
-    border-bottom-color: rgba(0, 0, 0, 0.5);
+    border-bottom-color: rgba(0, 0, 0, 0.2);
     align-items: center;
 `;
 
@@ -47,11 +53,30 @@ const InputBlock = styled.TextInput`
     flex: 1;
     height: 40px;
     margin-left: 10px;
+    color: rgba(0, 0, 0, 0.7);
 `;
 
 const TextBlock = styled.Text`
     font-size: 13px;
     color: rgba(0, 0, 0, 0.5);
+    margin-bottom: 5px;
+
+    ${props => props.title && css`
+        font-size: 15px;
+    `}
+`;
+
+const RedWarningBlock = styled.View`
+    width: 100%;
+    height: 40px;
+    padding-left: 54px;
+    padding-right: 54px;
+    margin-top: 5px;
+`;
+
+const RedTextBlock = styled.Text`
+    font-size: 13px;
+    color: rgba(220, 20, 60, 0.8);
     margin-bottom: 10px;
 `;
 
@@ -62,21 +87,43 @@ const SubmitTouchBlock = styled.TouchableOpacity`
     align-items: center;
     border-radius: 5px;
     justify-content: center;
-    background:  rgba(123, 104, 238, 0.8);
+    background: rgba(123, 104, 238, 0.8);
+
+    ${props => props.flag && css`
+        border: 1px solid rgba(123, 104, 238, 0.8);
+        background: white;
+    `}
 `;
 
 const SubmitTextBlock = styled.Text`
     font-size: 13px;
     color: white;
+
+    ${props => props.flag && css`
+        color: rgba(123, 104, 238, 0.8);
+    `}
 `;
 
-const TextInputForm = React.memo(({ validation, value, onPressSubmit, ...rest }) => {
+const TextInputForm = React.memo(({
+    validation,
+    value,
+    flag,
+    error,
+    mention,
+    nextMention,
+    onPressSubmit,
+    ...rest
+}) => {
     return (
         <InputInnerFrameBlock>
-            {validation ? (
-                <ImageBlock source={CheckAfterIcon} />
+            {error ? (
+                <ImageBlock source={ErrorIcon} />
             ) : (
-                <ImageBlock source={CheckBeforeIcon} />
+                validation ? (
+                    <ImageBlock source={CheckAfterIcon} />
+                ) : (
+                    <ImageBlock source={CheckBeforeIcon} />
+                )
             )}
             <InputBlock
                  autoCapitalize='none'
@@ -86,16 +133,26 @@ const TextInputForm = React.memo(({ validation, value, onPressSubmit, ...rest })
                  value={value}
                  {...rest}
             />
-            <SubmitTouchBlock onPress={onPressSubmit}>
-                <SubmitTextBlock>
-                    인증번호 전송
+            <SubmitTouchBlock
+                onPress={onPressSubmit}
+                flag={flag}
+            >
+                <SubmitTextBlock flag={flag}>
+                    {flag ? nextMention : mention}
                 </SubmitTextBlock>
             </SubmitTouchBlock>
         </InputInnerFrameBlock>
     )
 });
 
-const AuthSignUpVerify = ({ value, onChangeText, onPressSubmit }) => {
+const AuthSignUpVerify = ({
+    phone,
+    verificationNumber,
+    sendSMS,
+    sendSMSError,
+    onChangeText,
+    onPressSubmit
+}) => {
     return (
         <AuthSignUpVerifyBlock>
             <SubHeaderContainer
@@ -112,16 +169,42 @@ const AuthSignUpVerify = ({ value, onChangeText, onPressSubmit }) => {
                 </TextBlock>
             </WarningBlock>
             <InputOuterFrameBlock>
-                <TextBlock>
+                <TextBlock title={1}>
                     휴대폰 번호
                 </TextBlock>
                 <TextInputForm
-                    validation={false}
-                    value={value}
-                    onChangeText={text => onChangeText(text)}
+                    validation={sendSMS}
+                    flag={sendSMS && !sendSMSError}
+                    error={sendSMSError}
+                    mention='인증번호 전송'
+                    nextMention='재전송'
+                    value={phone}
+                    onChangeText={text => onChangeText('phone', text)}
                     onPressSubmit={onPressSubmit}
                 />
             </InputOuterFrameBlock>
+            {sendSMS && sendSMSError && (
+                <RedWarningBlock>
+                    <RedTextBlock>
+                        {sendSMSError}
+                    </RedTextBlock>
+                </RedWarningBlock>
+            )}
+            {sendSMS && !sendSMSError && (
+                <InputOuterFrameBlock marginTop={1}>
+                    <TextBlock title={1}>
+                        인증번호
+                    </TextBlock>
+                    <TextInputForm
+                        validation={false}
+                        mention='인증하기'
+                        nextMention='인증하기'
+                        value={verificationNumber}
+                        onChangeText={text => onChangeText('verificationNumber', text)}
+                        onPressSubmit={onPressSubmit}
+                    />
+                </InputOuterFrameBlock>
+            )}
         </AuthSignUpVerifyBlock>
     );
 };
