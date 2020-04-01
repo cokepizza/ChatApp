@@ -2,7 +2,7 @@ import React from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpVerify from '../../components/auth/AuthSignUpVerify';
-import { setValue } from '../../modules/verify';
+import { setValue, createSMS } from '../../modules/verify';
 
 const AuthSignUpVerifyContainer = () => {
     const { phone } = useSelector(({ verify }) => ({
@@ -19,7 +19,9 @@ const AuthSignUpVerifyContainer = () => {
     };
     
     const onPressSubmit = () => {
-        
+        dispatch(createSMS({
+            phone,
+        }))
     }
 
     return (
