@@ -23,5 +23,5 @@ export const createAuthImage = async (req, res, next) => {
 
     await Promise.all(promiseArr);
 
-    res.status(200).end();
+    return res.status(200).end();
 };
