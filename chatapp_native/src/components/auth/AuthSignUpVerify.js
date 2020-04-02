@@ -151,7 +151,8 @@ const AuthSignUpVerify = ({
     sendSMS,
     sendSMSError,
     onChangeText,
-    onPressSubmit
+    onPressSubmit,
+    onPressVerify,
 }) => {
     return (
         <AuthSignUpVerifyBlock>
@@ -183,7 +184,7 @@ const AuthSignUpVerify = ({
                     onPressSubmit={onPressSubmit}
                 />
             </InputOuterFrameBlock>
-            {sendSMS && sendSMSError && (
+            {sendSMSError && (
                 <RedWarningBlock>
                     <RedTextBlock>
                         {sendSMSError}
@@ -201,7 +202,7 @@ const AuthSignUpVerify = ({
                         nextMention='인증하기'
                         value={verificationNumber}
                         onChangeText={text => onChangeText('verificationNumber', text)}
-                        onPressSubmit={onPressSubmit}
+                        onPressSubmit={onPressVerify}
                     />
                 </InputOuterFrameBlock>
             )}

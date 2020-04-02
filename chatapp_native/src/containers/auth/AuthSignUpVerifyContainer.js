@@ -2,11 +2,12 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpVerify from '../../components/auth/AuthSignUpVerify';
-import { setValue, createSMS } from '../../modules/verify';
+import { setValue, createSMS, verifyToken } from '../../modules/verify';
 
 const AuthSignUpVerifyContainer = () => {
-    const { phone, sendSMS, sendSMSError, verificationNumber } = useSelector(({ verify }) => ({
+    const { phone, token, sendSMS, sendSMSError, verificationNumber } = useSelector(({ verify }) => ({
         phone: verify.phone,
+        token: verify.token,
         sendSMS: verify.sendSMS,
         sendSMSError: verify.sendSMSError,
         verificationNumber: verify.verificationNumber,
@@ -28,8 +29,10 @@ const AuthSignUpVerifyContainer = () => {
     }, [dispatch]);
 
     const onPressVerify = useCallback(() => {
-        // dispatch();
-    }, []);
+        dispatch(verifyToken({
+            token,
+        }))
+    }, [token]);
 
     return (
         <AuthSignUpVerify
