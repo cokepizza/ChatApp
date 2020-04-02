@@ -1,6 +1,7 @@
 import SocketIo from 'socket.io';
 import socketIoRedis from 'socket.io-redis';
 import redis from 'redis';
+import jwt from 'jsonwebtoken';
 
 const client = redis.createClient();
 
@@ -29,13 +30,35 @@ export default (server, app) => {
 
     verify.on('connect', socket => {
         console.dir('-------------socket(verify)--------------');
-        socket.emit('message', {
-            type: 'initialize',
-            timeLimit: 3000,
-        });
+        const token = socket.handshake.query['token'];
+        const { exp, iat } = jwt.verify(token, process.env.JWT_SECRET);
+
+        let timeLimit = exp - iat;
+        let timer;
+        
+        const timeReducer = () => {
+            clearTimeout(timer);
+            timer = setTimeout(() => {
+                socket.emit('message', {
+                    type: 'initialize',
+                    timeLimit,
+                });
+                
+                timeLimit -= 1000;
+                if(timeLimit >= 0) {
+                    timeReducer();
+                } else {
+                    clearTimeout(timer);
+                    socket.disconnect();
+                }
+            }, 1000);
+        }
+
+        timeReducer();
 
         socket.on('disconnect', () => {
             console.dir('-------------socketDis(verify)--------------');
+            clearTimeout(timer);
         });
     });
 

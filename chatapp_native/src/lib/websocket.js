@@ -48,6 +48,7 @@ export function* connectNamespace(params) {
             secure: true,
         });
         
+        console.log(url);
         channel = yield call(createEventChannel, io);
     
         while(true) {

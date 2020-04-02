@@ -6,7 +6,7 @@ import chat, { chatSaga } from './chat';
 import image from './image';
 import profile from './profile';
 import modal from './modal';
-import verify from './verify';
+import verify, { verifySaga } from './verify';
 
 const rootReducer = combineReducers({
     auth,
@@ -20,6 +20,7 @@ const rootReducer = combineReducers({
 export function* rootSaga() {
     yield all([
         chatSaga(),
+        verifySaga(),
     ]);
 };
 

@@ -37,10 +37,16 @@ const AuthSignUpVerifyContainer = () => {
     }, [token, verificationCode]);
 
     useEffect(() => {
+        console.dir('token change');
         if(token !== '') {
+            console.dir('token change inner');
+            console.dir(token);
             dispatch(disconnectWebsocket());
             Promise.resolve().then(() => {
-                dispatch(connectWebsocket());
+                console.log('connectWebsocket');
+                dispatch(connectWebsocket({
+                    token,
+                }));
             });
         }
     }, [dispatch, token]);

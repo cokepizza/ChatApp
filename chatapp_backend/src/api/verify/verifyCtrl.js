@@ -69,6 +69,7 @@ export const createSMS = (req, res, next) => {
 export const verifyToken = (req, res, next) => {
     const { code, token } = req.body;
     const { verificationCode, iat, exp } = jwt.verify(token, process.env.JWT_SECRET);
+    
     if(verificationCode === code) {
         return res.status(200).end();
     } else {
