@@ -31,31 +31,43 @@ export default (server, app) => {
     verify.on('connect', socket => {
         console.dir('-------------socket(verify)--------------');
         const token = socket.handshake.query['token'];
-        const { exp, iat } = jwt.verify(token, process.env.JWT_SECRET);
-
-        let timeLimit = exp - iat;
         let timer;
-        
-        const timeReducer = () => {
-            clearTimeout(timer);
-            timer = setTimeout(() => {
-                socket.emit('message', {
-                    type: 'initialize',
-                    timeLimit,
-                });
+
+        jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
+            if(error) {
+                console.log('유효하지 않은 토큰');
+                return;
+            }
+
+            const { exp } =  decoded;
+            const timeNow = parseInt(new Date().getTime() / 1000);
+            let timeLimit = exp - timeNow;
                 
-                timeLimit -= 1000;
-                if(timeLimit >= 0) {
-                    timeReducer();
-                } else {
-                    clearTimeout(timer);
-                    socket.disconnect();
-                }
-            }, 1000);
-        }
-
-        timeReducer();
-
+            const timeReducer = () => {
+                clearTimeout(timer);
+                timer = setTimeout(() => {
+                    socket.emit('message', {
+                        type: 'initialize',
+                        timeLimit,
+                    });
+                    
+                    timeLimit -= 1;
+                    if(timeLimit >= 0) {
+                        timeReducer();
+                    } else {
+                        clearTimeout(timer);
+                        socket.disconnect();
+                    }
+                }, 1000);
+            }
+    
+            if(timeLimit >= 0) {
+                timeReducer();
+            } else {
+                socket.disconnect();
+            }    
+        });
+        
         socket.on('disconnect', () => {
             console.dir('-------------socketDis(verify)--------------');
             clearTimeout(timer);

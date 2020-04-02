@@ -5,13 +5,25 @@ import AuthSignUpVerify from '../../components/auth/AuthSignUpVerify';
 import { setValue, createSMS, verifyToken, connectWebsocket, disconnectWebsocket } from '../../modules/verify';
 
 const AuthSignUpVerifyContainer = () => {
-    const { phone, token, timeLimit, sendSMS, sendSMSError, verificationCode } = useSelector(({ verify }) => ({
+    const {
+        phone,
+        token,
+        timeLimit,
+        sendSMS,
+        sendSMSError,
+        verificationCode,
+        verificationToken,
+        verificationTokenError,
+    } = useSelector(({ verify }) => ({
         phone: verify.phone,
         token: verify.token,
         timeLimit: verify.timeLimit,
         sendSMS: verify.sendSMS,
         sendSMSError: verify.sendSMSError,
         verificationCode: verify.verificationCode,
+        verificationToken: verify.verificationToken,
+        verificationTokenError: verify.verificationTokenError,
+
     }));
 
     const dispatch = useDispatch();
@@ -43,13 +55,20 @@ const AuthSignUpVerifyContainer = () => {
             console.dir(token);
             dispatch(disconnectWebsocket());
             Promise.resolve().then(() => {
-                console.log('connectWebsocket');
+                alert('connect');
                 dispatch(connectWebsocket({
                     token,
                 }));
             });
         }
     }, [dispatch, token]);
+
+    useEffect(() => {
+        if(verificationToken && !verificationTokenError) {
+            dispatch(disconnectWebsocket());
+            console.log('end verify');
+        }
+    }, [verificationToken, verificationTokenError])
 
     return (
         <AuthSignUpVerify
@@ -61,6 +80,7 @@ const AuthSignUpVerifyContainer = () => {
             onChangeText={onChangeText}
             onPressSubmit={onPressSubmit}
             onPressVerify={onPressVerify}
+            verificationTokenError={verificationTokenError}
         />
     );
 };

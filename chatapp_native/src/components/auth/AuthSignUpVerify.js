@@ -154,7 +154,19 @@ const AuthSignUpVerify = ({
     onChangeText,
     onPressSubmit,
     onPressVerify,
+    verificationTokenError,
 }) => {
+    let minute = parseInt(timeLimit / 60);
+    let second = parseInt(timeLimit % 60);
+    if(minute < 10) {
+        minute = '0' + minute;
+    }
+    if(second < 10) {
+        second = '0' + second;
+    }
+    const time = minute + ":" + second;
+
+    
     return (
         <AuthSignUpVerifyBlock>
             <SubHeaderContainer
@@ -183,6 +195,7 @@ const AuthSignUpVerify = ({
                     value={phone}
                     onChangeText={text => onChangeText('phone', text)}
                     onPressSubmit={onPressSubmit}
+                    keyboardType='number-pad'
                 />
             </InputOuterFrameBlock>
             {sendSMSError && (
@@ -205,11 +218,20 @@ const AuthSignUpVerify = ({
                         value={verificationCode}
                         onChangeText={text => onChangeText('verificationCode', text)}
                         onPressSubmit={onPressVerify}
+                        keyboardType='number-pad'
                     />
                 </InputOuterFrameBlock>
+                {verificationTokenError && (
+                    <RedWarningBlock>
+                        <RedTextBlock>
+                            {verificationTokenError}
+                        </RedTextBlock>
+                    </RedWarningBlock>
+                )}
                 <TextBlock>
-                    {timeLimit}
+                    {time}
                 </TextBlock>
+                    
                 </>
             )}
         </AuthSignUpVerifyBlock>

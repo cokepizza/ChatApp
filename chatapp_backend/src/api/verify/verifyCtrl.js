@@ -45,11 +45,15 @@ export const createSMS = (req, res, next) => {
         // });
     })
     .catch(e => {
-        console.dir('network error');
         // return res.status(404).send({
         //     error: '네트워크 에러가 발생했습니다. 잠시 후 다시 시도해주세요.',
         // });
-        const tokenTimeLimit = Number(3000);
+        console.dir('verificationCode');
+        console.dir(verificationCode);
+
+        //  3분
+        // const tokenTimeLimit = Number(60 * 3);
+        const tokenTimeLimit = Number(10 * 3);
         const verify = {
             verificationCode,
         }
@@ -68,12 +72,32 @@ export const createSMS = (req, res, next) => {
 
 export const verifyToken = (req, res, next) => {
     const { code, token } = req.body;
-    const { verificationCode, iat, exp } = jwt.verify(token, process.env.JWT_SECRET);
-    
-    if(verificationCode === code) {
-        return res.status(200).end();
-    } else {
-        return res.status(400).end();
-    }
-    
+    jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
+        if(error) {
+            return res.status(400).send({
+                error: '인증 시간이 만료되었습니다',
+            })
+        }
+
+        const { verificationCode, exp } = decoded;
+        const timeNow = parseInt(new Date().getTime() / 1000);
+        
+        console.dir(`timeLeft : ${exp-timeNow}`);
+        if(exp < timeNow) {
+            console.dir('인증 시간이 만료되었습니다');
+            return res.status(400).send({
+                error: '인증 시간이 만료되었습니다',
+            });
+        } else {
+            if(parseInt(verificationCode) !== parseInt(code)) {
+                console.dir('인증 코드가 유효하지 않습니다');
+                return res.status(400).send({
+                    error: '인증 코드가 유효하지 않습니다',
+                });
+            } else {
+                console.dir('인증 성공');
+                return res.status(200).end();
+            }
+        }
+    });  
 };

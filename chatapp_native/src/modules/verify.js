@@ -8,10 +8,8 @@ import * as verifyCtrl from '../lib/api/verify';
 const CONNECT_WEBSOCKET = 'verify/CONNECT_WEBSOCKET';
 const DISCONNECT_WEBSOCKET = 'verify/DISCONNECT_WEBSOCKET';
 const INITIALIZE_VALUE = 'verify/INITIALIZE_VALUE';
-const CHANGE_VALUE = 'verify/CHANGE_VALUE';
 
 export const initializeValue = createAction(INITIALIZE_VALUE, payload => payload);
-export const changeValue = createAction(CHANGE_VALUE, payload => payload);
 export const connectWebsocket = createAction(CONNECT_WEBSOCKET, payload => payload);
 export const disconnectWebsocket = createAction(DISCONNECT_WEBSOCKET);
 
@@ -35,7 +33,6 @@ function* connectWebsocketSaga (action) {
         // url: 'http://52.79.100.5:4000/chat',
         // url: 'http://172.20.10.3:5000/chat',
         initializeValue,
-        changeValue,
         query,
     });
 
@@ -50,11 +47,12 @@ export function* verifySaga() {
 const initialState = {
     phone: '',
     token: '',
-    timeLimit: '',
+    timeLimit: 0,
     sendSMS: false,
     sendSMSError: false,
     verificationCode: '',
-    verificationError: false,
+    verificationToken: false,
+    verificationTokenError: false,
 };
 
 export default handleActions({
@@ -78,8 +76,14 @@ export default handleActions({
         ...state,
         timeLimit,
     }),
-    [CHANGE_VALUE]: (state, { payload: { timeLimit } }) => ({
+    [VERIFY_TOKEN_SUCCESS]: state => ({
         ...state,
-        timeLimit,
+        verificationToken: true,
+        verificationTokenError: false,
     }),
+    [VERIFY_TOKEN_FAILURE]: (state, { payload: { error } } ) => ({
+        ...state,
+        verificationToken: true,
+        verificationTokenError: error,
+    })
 }, initialState);
