@@ -1,16 +1,17 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpVerify from '../../components/auth/AuthSignUpVerify';
-import { setValue, createSMS, verifyToken } from '../../modules/verify';
+import { setValue, createSMS, verifyToken, connectWebsocket, disconnectWebsocket } from '../../modules/verify';
 
 const AuthSignUpVerifyContainer = () => {
-    const { phone, token, sendSMS, sendSMSError, verificationNumber } = useSelector(({ verify }) => ({
+    const { phone, token, timeLimit, sendSMS, sendSMSError, verificationCode } = useSelector(({ verify }) => ({
         phone: verify.phone,
         token: verify.token,
+        timeLimit: verify.timeLimit,
         sendSMS: verify.sendSMS,
         sendSMSError: verify.sendSMSError,
-        verificationNumber: verify.verificationNumber,
+        verificationCode: verify.verificationCode,
     }));
 
     const dispatch = useDispatch();
@@ -30,14 +31,25 @@ const AuthSignUpVerifyContainer = () => {
 
     const onPressVerify = useCallback(() => {
         dispatch(verifyToken({
+            code: verificationCode,
             token,
-        }))
-    }, [token]);
+        }));
+    }, [token, verificationCode]);
+
+    useEffect(() => {
+        if(token !== '') {
+            dispatch(disconnectWebsocket());
+            Promise.resolve().then(() => {
+                dispatch(connectWebsocket());
+            });
+        }
+    }, [dispatch, token]);
 
     return (
         <AuthSignUpVerify
             phone={phone}
-            verificationNumber={verificationNumber}
+            verificationCode={verificationCode}
+            timeLimit={timeLimit}
             sendSMS={sendSMS}
             sendSMSError={sendSMSError}
             onChangeText={onChangeText}

@@ -14,15 +14,15 @@ export const createSMS = (req, res, next) => {
 
     const s = 100000;
     const e = 1000000;
-    const verificationNumber = Math.floor(s + (e - s) * Math.random());
+    const verificationCode = Math.floor(s + (e - s) * Math.random());
 
     client.messages.create({
-        body: `hixxx service. Code: ${verificationNumber}`,
+        body: `hixxx service. Code: ${verificationCode}`,
         from: originNumber,
-        // to: '+82-1026699539',
+        to: '+82-1026699539',
         // to: '+82-1077486664',
         // to: '+82-1036324836',
-        to: '+82-1025734800',
+        // to: '+82-1025734800',
     })
     .then(message => {
         //  임시 토큰 발급이 필요 verifyToken으로 asyncStorage에는 저장하지 말 것
@@ -45,16 +45,20 @@ export const createSMS = (req, res, next) => {
         // });
     })
     .catch(e => {
-        console.dir(e);
+        console.dir('network error');
         // return res.status(404).send({
         //     error: '네트워크 에러가 발생했습니다. 잠시 후 다시 시도해주세요.',
         // });
         const tokenTimeLimit = Number(3000);
-        const token = jwt.sign(user, process.env.JWT_SECRET, {
+        const verify = {
+            verificationCode,
+        }
+        const token = jwt.sign(verify, process.env.JWT_SECRET, {
             issuer: 'cokepizza',
-            verificationNumber,
             expiresIn: tokenTimeLimit,
         });
+
+        console.dir(token);
 
         return res.status(200).send({
             token,
@@ -63,9 +67,12 @@ export const createSMS = (req, res, next) => {
 };
 
 export const verifyToken = (req, res, next) => {
-    const { token } = req.body;
-    const decoded = jwt.verify(token, process.env.JWT_SECRET);
-    console.dir(decoded);
-
-    return res.status(200).end();
+    const { code, token } = req.body;
+    const { verificationCode, iat, exp } = jwt.verify(token, process.env.JWT_SECRET);
+    if(verificationCode === code) {
+        return res.status(200).end();
+    } else {
+        return res.status(400).end();
+    }
+    
 };

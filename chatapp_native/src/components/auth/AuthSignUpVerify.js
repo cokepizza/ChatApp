@@ -147,7 +147,8 @@ const TextInputForm = React.memo(({
 
 const AuthSignUpVerify = ({
     phone,
-    verificationNumber,
+    verificationCode,
+    timeLimit,
     sendSMS,
     sendSMSError,
     onChangeText,
@@ -192,6 +193,7 @@ const AuthSignUpVerify = ({
                 </RedWarningBlock>
             )}
             {sendSMS && !sendSMSError && (
+                <>
                 <InputOuterFrameBlock marginTop={1}>
                     <TextBlock title={1}>
                         인증번호
@@ -200,11 +202,15 @@ const AuthSignUpVerify = ({
                         validation={false}
                         mention='인증하기'
                         nextMention='인증하기'
-                        value={verificationNumber}
-                        onChangeText={text => onChangeText('verificationNumber', text)}
+                        value={verificationCode}
+                        onChangeText={text => onChangeText('verificationCode', text)}
                         onPressSubmit={onPressVerify}
                     />
                 </InputOuterFrameBlock>
+                <TextBlock>
+                    {timeLimit}
+                </TextBlock>
+                </>
             )}
         </AuthSignUpVerifyBlock>
     );

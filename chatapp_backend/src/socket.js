@@ -25,4 +25,18 @@ export default (server, app) => {
         });
     });
 
+    const verify = io.of('/verify');
+
+    verify.on('connect', socket => {
+        console.dir('-------------socket(verify)--------------');
+        socket.emit('message', {
+            type: 'initialize',
+            timeLimit: 3000,
+        });
+
+        socket.on('disconnect', () => {
+            console.dir('-------------socketDis(verify)--------------');
+        });
+    });
+
 }
