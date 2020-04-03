@@ -80,6 +80,12 @@ const RedTextBlock = styled.Text`
     margin-bottom: 10px;
 `;
 
+const PurpleTextBlock = styled.Text`
+    font-size: 13px;
+    color: rgba(123, 104, 238, 0.8);
+    margin-bottom: 10px;
+`;
+
 const SubmitTouchBlock = styled.TouchableOpacity`
     height: 30px;
     width: 90px;
@@ -154,7 +160,7 @@ const AuthSignUpVerify = ({
     onChangeText,
     onPressSubmit,
     onPressVerify,
-    verificationTokenError,
+    tokenError,
 }) => {
     let minute = parseInt(timeLimit / 60);
     let second = parseInt(timeLimit % 60);
@@ -165,7 +171,6 @@ const AuthSignUpVerify = ({
         second = '0' + second;
     }
     const time = minute + ":" + second;
-
     
     return (
         <AuthSignUpVerifyBlock>
@@ -207,31 +212,36 @@ const AuthSignUpVerify = ({
             )}
             {sendSMS && !sendSMSError && (
                 <>
-                <InputOuterFrameBlock marginTop={1}>
-                    <TextBlock title={1}>
-                        인증번호
-                    </TextBlock>
-                    <TextInputForm
-                        validation={false}
-                        mention='인증하기'
-                        nextMention='인증하기'
-                        value={verificationCode}
-                        onChangeText={text => onChangeText('verificationCode', text)}
-                        onPressSubmit={onPressVerify}
-                        keyboardType='number-pad'
-                    />
-                </InputOuterFrameBlock>
-                {verificationTokenError && (
+                    <InputOuterFrameBlock marginTop={1}>
+                        <TextBlock title={1}>
+                            인증번호
+                        </TextBlock>
+                        <TextInputForm
+                            validation={false}
+                            mention='인증하기'
+                            nextMention='인증하기'
+                            value={verificationCode}
+                            onChangeText={text => onChangeText('verificationCode', text)}
+                            onPressSubmit={onPressVerify}
+                            keyboardType='number-pad'
+                        />
+                    </InputOuterFrameBlock>
                     <RedWarningBlock>
                         <RedTextBlock>
-                            {verificationTokenError}
+                            {tokenError
+                                ? tokenError
+                                : (
+                                    timeLimit
+                                        ? '인증번호 유효시간 ' + time
+                                        : null
+                            )}
                         </RedTextBlock>
+                        {/* {!!timeLimit && (
+                            <PurpleTextBlock>
+                                인증번호 유효시간 {time}
+                            </PurpleTextBlock>
+                        )} */}
                     </RedWarningBlock>
-                )}
-                <TextBlock>
-                    {time}
-                </TextBlock>
-                    
                 </>
             )}
         </AuthSignUpVerifyBlock>

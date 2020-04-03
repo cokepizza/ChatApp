@@ -35,7 +35,7 @@ export default (server, app) => {
 
         jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
             if(error) {
-                console.log('유효하지 않은 토큰');
+                console.dir('유효하지 않은 토큰');
                 return;
             }
 
@@ -49,6 +49,7 @@ export default (server, app) => {
                     socket.emit('message', {
                         type: 'initialize',
                         timeLimit,
+                        timeFlag: true,
                     });
                     
                     timeLimit -= 1;

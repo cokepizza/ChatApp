@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpVerify from '../../components/auth/AuthSignUpVerify';
@@ -9,6 +9,7 @@ const AuthSignUpVerifyContainer = () => {
         phone,
         token,
         timeLimit,
+        timeFlag,
         sendSMS,
         sendSMSError,
         verificationCode,
@@ -18,6 +19,7 @@ const AuthSignUpVerifyContainer = () => {
         phone: verify.phone,
         token: verify.token,
         timeLimit: verify.timeLimit,
+        timeFlag: verify.timeFlag,
         sendSMS: verify.sendSMS,
         sendSMSError: verify.sendSMSError,
         verificationCode: verify.verificationCode,
@@ -27,6 +29,8 @@ const AuthSignUpVerifyContainer = () => {
     }));
 
     const dispatch = useDispatch();
+
+    const [tokenError, setTokenError] = useState(verificationTokenError);
 
     const onChangeText = useCallback((key, value) => {
         dispatch(setValue({
@@ -55,7 +59,6 @@ const AuthSignUpVerifyContainer = () => {
             console.dir(token);
             dispatch(disconnectWebsocket());
             Promise.resolve().then(() => {
-                alert('connect');
                 dispatch(connectWebsocket({
                     token,
                 }));
@@ -70,6 +73,18 @@ const AuthSignUpVerifyContainer = () => {
         }
     }, [verificationToken, verificationTokenError])
 
+    useEffect(() => {
+        console.log(verificationToken);
+        console.log(timeLimit);
+        if(timeFlag && timeLimit === 0) {
+            setTokenError('인증 시간이 만료되었습니다');
+        }
+    }, [timeFlag, timeLimit]);
+
+    useEffect(() => {
+        setTokenError(verificationTokenError);
+    }, [verificationTokenError]);
+
     return (
         <AuthSignUpVerify
             phone={phone}
@@ -80,7 +95,7 @@ const AuthSignUpVerifyContainer = () => {
             onChangeText={onChangeText}
             onPressSubmit={onPressSubmit}
             onPressVerify={onPressVerify}
-            verificationTokenError={verificationTokenError}
+            tokenError={tokenError}
         />
     );
 };

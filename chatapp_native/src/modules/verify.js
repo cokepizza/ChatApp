@@ -26,8 +26,8 @@ function* connectWebsocketSaga (action) {
 
     const socketTask = yield fork(connectNamespace, {
         // url: 'https://hixxx.me/chat',
-        url: 'http://192.168.0.11:5000/verify',
-        // url: 'http://172.20.10.3:5000/verify',
+        // url: 'http://192.168.0.11:5000/verify',
+        url: 'http://172.20.10.3:5000/verify',
         // url: 'http://192.168.0.16:5000/chat',
         // url: 'http://192.168.0.58:5000/chat',
         // url: 'http://52.79.100.5:4000/chat',
@@ -48,6 +48,7 @@ const initialState = {
     phone: '',
     token: '',
     timeLimit: 0,
+    timeFlag: false,
     sendSMS: false,
     sendSMSError: false,
     verificationCode: '',
@@ -72,9 +73,10 @@ export default handleActions({
         sendSMS: true,
         sendSMSError: error,
     }),
-    [INITIALIZE_VALUE]: (state, { payload: { timeLimit } }) => ({
+    [INITIALIZE_VALUE]: (state, { payload: { timeLimit, timeFlag } }) => ({
         ...state,
         timeLimit,
+        timeFlag,
     }),
     [VERIFY_TOKEN_SUCCESS]: state => ({
         ...state,
