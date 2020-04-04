@@ -35,6 +35,11 @@ export default (server, app) => {
 
         jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
             if(error) {
+                socket.emit('message', {
+                    type: 'initialize',
+                    timeLimit: 0,
+                    timeFlag: true,
+                });
                 console.dir('유효하지 않은 토큰');
                 return;
             }

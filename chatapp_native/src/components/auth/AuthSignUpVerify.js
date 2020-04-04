@@ -227,20 +227,16 @@ const AuthSignUpVerify = ({
                         />
                     </InputOuterFrameBlock>
                     <RedWarningBlock>
-                        <RedTextBlock>
-                            {tokenError
-                                ? tokenError
-                                : (
-                                    timeLimit
-                                        ? '인증번호 유효시간 ' + time
-                                        : null
-                            )}
-                        </RedTextBlock>
-                        {/* {!!timeLimit && (
+                        {tokenError && (
+                            <RedTextBlock>
+                                {tokenError}
+                            </RedTextBlock>     
+                        )}
+                        {!!timeLimit && (
                             <PurpleTextBlock>
                                 인증번호 유효시간 {time}
                             </PurpleTextBlock>
-                        )} */}
+                        )}
                     </RedWarningBlock>
                 </>
             )}
