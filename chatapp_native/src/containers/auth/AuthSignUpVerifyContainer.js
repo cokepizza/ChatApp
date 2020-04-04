@@ -2,28 +2,38 @@ import React, { useCallback, useEffect, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpVerify from '../../components/auth/AuthSignUpVerify';
-import { setValue, createSMS, verifyToken, connectWebsocket, disconnectWebsocket } from '../../modules/verify';
+import {
+    setValue,
+    clearValue,
+    clearAll,
+    createSMS,
+    verifyToken,
+    connectWebsocket,
+    disconnectWebsocket
+} from '../../modules/verify';
 
 const AuthSignUpVerifyContainer = () => {
     const {
-        phone,
         token,
         timeLimit,
         timeFlag,
-        sendSMS,
-        sendSMSError,
-        verificationCode,
-        verificationToken,
+        createSMSInput,
+        createSMSFlag,
+        createSMSLoading,
+        createSMSError,
+        verificationTokenInput,
+        verificationTokenFlag,
         verificationTokenError,
     } = useSelector(({ verify }) => ({
-        phone: verify.phone,
         token: verify.token,
         timeLimit: verify.timeLimit,
         timeFlag: verify.timeFlag,
-        sendSMS: verify.sendSMS,
-        sendSMSError: verify.sendSMSError,
-        verificationCode: verify.verificationCode,
-        verificationToken: verify.verificationToken,
+        createSMSInput: verify.createSMSInput,
+        createSMSFlag: verify.createSMSFlag,
+        createSMSLoading: verify.createSMSLoading,
+        createSMSError: verify.createSMSError,
+        verificationTokenInput: verify.verificationTokenInput,
+        verificationTokenFlag: verify.verificationTokenFlag,
         verificationTokenError: verify.verificationTokenError,
 
     }));
@@ -41,22 +51,26 @@ const AuthSignUpVerifyContainer = () => {
     
     const onPressSubmit = useCallback(() => {
         dispatch(createSMS({
-            phone,
+            createSMSInput,
         }));
-    }, [dispatch]);
+        // dispatch(clearAll());
+    }, [dispatch, createSMSInput]);
 
     const onPressVerify = useCallback(() => {
         dispatch(verifyToken({
-            code: verificationCode,
+            code: verificationTokenInput,
             token,
         }));
-    }, [token, verificationCode]);
+    }, [token, verificationTokenInput]);
+
+    const onFocusVerify = () => {
+        dispatch(clearValue({
+            key: 'verificationTokenError',
+        }))
+    }
 
     useEffect(() => {
-        console.dir('token change');
         if(token !== '') {
-            console.dir('token change inner');
-            console.dir(token);
             dispatch(disconnectWebsocket());
             Promise.resolve().then(() => {
                 dispatch(connectWebsocket({
@@ -66,36 +80,40 @@ const AuthSignUpVerifyContainer = () => {
         }
     }, [dispatch, token]);
 
+    //  verification success
     useEffect(() => {
-        if(verificationToken && !verificationTokenError) {
+        if(verificationTokenFlag && !verificationTokenError) {
             dispatch(disconnectWebsocket());
-            console.log('end verify');
         }
-    }, [verificationToken, verificationTokenError])
+    }, [verificationTokenFlag, verificationTokenError]);
 
     useEffect(() => {
-        console.log(verificationToken);
         console.log(timeLimit);
         if(timeFlag && timeLimit === 0) {
-            setTokenError('인증 시간이 만료되었습니다');
+            dispatch(setValue({
+                key: 'verificationTokenError',
+                value: '인증 시간이 만료되었습니다'
+            }))
         }
     }, [timeFlag, timeLimit]);
 
-    useEffect(() => {
-        setTokenError(verificationTokenError);
-    }, [verificationTokenError]);
+    // useEffect(() => {
+    //     setTokenError(verificationTokenError);
+    // }, [verificationTokenError]);
 
     return (
         <AuthSignUpVerify
-            phone={phone}
-            verificationCode={verificationCode}
             timeLimit={timeLimit}
-            sendSMS={sendSMS}
-            sendSMSError={sendSMSError}
+            createSMSInput={createSMSInput}
+            createSMSFlag={createSMSFlag}
+            createSMSLoading={createSMSLoading}
+            createSMSError={createSMSError}
+            verificationTokenInput={verificationTokenInput}
+            verificationTokenError={verificationTokenError}
             onChangeText={onChangeText}
             onPressSubmit={onPressSubmit}
             onPressVerify={onPressVerify}
-            tokenError={tokenError}
+            onFocusVerify={onFocusVerify}
         />
     );
 };

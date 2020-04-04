@@ -12,6 +12,8 @@ const AuthSignUpVerifyBlock = styled.SafeAreaView`
     align-items: center;
 `;
 
+const LoadingBlock = styled.ActivityIndicator``;
+
 const WarningBlock = styled.View`
     width: 100%;
     height: 60px;
@@ -114,10 +116,11 @@ const TextInputForm = React.memo(({
     validation,
     value,
     flag,
+    loading,
     error,
     mention,
     nextMention,
-    onPressSubmit,
+    onPress,
     ...rest
 }) => {
     return (
@@ -140,27 +143,33 @@ const TextInputForm = React.memo(({
                  {...rest}
             />
             <SubmitTouchBlock
-                onPress={onPressSubmit}
-                flag={flag}
+                onPress={onPress}
+                flag={loading || flag}
             >
-                <SubmitTextBlock flag={flag}>
-                    {flag ? nextMention : mention}
-                </SubmitTextBlock>
+                {loading ? (
+                    <LoadingBlock />
+                ) : (
+                    <SubmitTextBlock flag={flag}>  
+                        {flag ? nextMention : mention}
+                    </SubmitTextBlock>
+                )}
             </SubmitTouchBlock>
         </InputInnerFrameBlock>
     )
 });
 
 const AuthSignUpVerify = ({
-    phone,
-    verificationCode,
     timeLimit,
-    sendSMS,
-    sendSMSError,
+    createSMSInput,
+    createSMSFlag,
+    createSMSLoading,
+    createSMSError,
+    verificationTokenInput,
+    verificationTokenError,
     onChangeText,
     onPressSubmit,
     onPressVerify,
-    tokenError,
+    onFocusVerify,
 }) => {
     let minute = parseInt(timeLimit / 60);
     let second = parseInt(timeLimit % 60);
@@ -192,25 +201,26 @@ const AuthSignUpVerify = ({
                     휴대폰 번호
                 </TextBlock>
                 <TextInputForm
-                    validation={sendSMS}
-                    flag={sendSMS && !sendSMSError}
-                    error={sendSMSError}
+                    validation={createSMSFlag}
+                    flag={createSMSFlag && !createSMSError}
+                    error={createSMSError}
+                    loading={createSMSLoading}
                     mention='인증번호 전송'
                     nextMention='재전송'
-                    value={phone}
-                    onChangeText={text => onChangeText('phone', text)}
-                    onPressSubmit={onPressSubmit}
+                    value={createSMSInput}
+                    onChangeText={text => onChangeText('createSMSInput', text)}
+                    onPress={onPressSubmit}
                     keyboardType='number-pad'
                 />
             </InputOuterFrameBlock>
-            {sendSMSError && (
+            {createSMSError && (
                 <RedWarningBlock>
                     <RedTextBlock>
-                        {sendSMSError}
+                        {createSMSError}
                     </RedTextBlock>
                 </RedWarningBlock>
             )}
-            {sendSMS && !sendSMSError && (
+            {createSMSFlag && !createSMSError && (
                 <>
                     <InputOuterFrameBlock marginTop={1}>
                         <TextBlock title={1}>
@@ -220,16 +230,17 @@ const AuthSignUpVerify = ({
                             validation={false}
                             mention='인증하기'
                             nextMention='인증하기'
-                            value={verificationCode}
-                            onChangeText={text => onChangeText('verificationCode', text)}
-                            onPressSubmit={onPressVerify}
+                            value={verificationTokenInput}
+                            onChangeText={text => onChangeText('verificationTokenInput', text)}
+                            onPress={onPressVerify}
+                            onFocus={onFocusVerify}
                             keyboardType='number-pad'
                         />
                     </InputOuterFrameBlock>
                     <RedWarningBlock>
-                        {tokenError && (
+                        {verificationTokenError && (
                             <RedTextBlock>
-                                {tokenError}
+                                {verificationTokenError}
                             </RedTextBlock>     
                         )}
                         {!!timeLimit && (

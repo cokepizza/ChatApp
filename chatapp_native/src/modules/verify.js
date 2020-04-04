@@ -14,10 +14,16 @@ export const connectWebsocket = createAction(CONNECT_WEBSOCKET, payload => paylo
 export const disconnectWebsocket = createAction(DISCONNECT_WEBSOCKET);
 
 const SET_VALUE = 'verify/SET_VALUE';
+const CLEAR_VALUE = 'verify/CLEAR_VALUE';
+const CLEAR_ALL = 'verify/CLEAR_ALL';
+const CLEAR_VERIFY_TOKEN = 'verify/VERIFY_TOKEN';
 export const setValue = createAction(SET_VALUE, payload => payload);
+export const clearValue = createAction(CLEAR_VALUE, payload => payload);
+export const clearAll = createAction(CLEAR_ALL);
+export const clearVerifyToken = createAction(CLEAR_VERIFY_TOKEN);
 
-const [ CREATE_SMS, CREATE_SMS_SUCCESS, CREATE_SMS_FAILURE ] = createRequestActionTypes('verify/CREATE_SMS');
-const [ VERIFY_TOKEN, VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAILURE ] = createRequestActionTypes('verify/VERIFY_TOKEN');
+const [ CREATE_SMS, CREATE_SMS_SUCCESS, CREATE_SMS_FAILURE, CREATE_SMS_LOADING ] = createRequestActionTypes('verify/CREATE_SMS');
+const [ VERIFY_TOKEN, VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAILURE, VERIFY_TOKEN_LOADING ] = createRequestActionTypes('verify/VERIFY_TOKEN');
 export const createSMS = createRequestThunk(CREATE_SMS, verifyCtrl.createSMS);
 export const verifyToken = createRequestThunk(VERIFY_TOKEN, verifyCtrl.verifyToken);
 
@@ -26,8 +32,8 @@ function* connectWebsocketSaga (action) {
 
     const socketTask = yield fork(connectNamespace, {
         // url: 'https://hixxx.me/chat',
-        // url: 'http://192.168.0.11:5000/verify',
-        url: 'http://172.20.10.3:5000/verify',
+        url: 'http://192.168.0.11:5000/verify',
+        // url: 'http://172.20.10.3:5000/verify',
         // url: 'http://192.168.0.16:5000/chat',
         // url: 'http://192.168.0.58:5000/chat',
         // url: 'http://52.79.100.5:4000/chat',
@@ -45,14 +51,16 @@ export function* verifySaga() {
 }
 
 const initialState = {
-    phone: '',
     token: '',
-    timeLimit: 0,
     timeFlag: false,
-    sendSMS: false,
-    sendSMSError: false,
-    verificationCode: '',
-    verificationToken: false,
+    timeLimit: 0,  
+    createSMSInput: '',
+    createSMSFlag: false,
+    createSMSLoading: false,
+    createSMSError: false,
+    verificationTokenInput: '',
+    verificationTokenFlag: false,
+    verificationTokenLoading: false,
     verificationTokenError: false,
 };
 
@@ -61,31 +69,54 @@ export default handleActions({
         ...state,
         [key]: value,
     }),
-    [CREATE_SMS_SUCCESS]: (state, { payload: { token } }) => ({
+    [CLEAR_VALUE]: (state, { payload: { key } }) => ({
         ...state,
-        token,
-        sendSMS: true,
-        sendSMSError: false,
+        [key]: initialState[key],
     }),
-    [CREATE_SMS_FAILURE]: (state, { payload: { error } }) => ({
+    [CLEAR_VERIFY_TOKEN]: state => ({
         ...state,
-        token: initialState.token,
-        sendSMS: true,
-        sendSMSError: error,
+        createSMSFlag: initialState.createSMSFlag,
+        createSMSError: initialState.createSMSError,
+        timeFlag: initialState.timeFlag,
+        timeLimit: initialState.timeLimit,
+        verificationTokenInput: initialState.verificationTokenInput,
+        verificationTokenFlag: initialState.verificationTokenFlag,
+        verificationTokenError: initialState.verificationTokenError,
+    }),
+    [CLEAR_ALL]: state => initialState,
+    [CREATE_SMS_LOADING]: (state, { payload: loading }) => ({
+        ...state,
+        createSMSLoading: loading,
+    }),
+    [VERIFY_TOKEN_LOADING]: (state, { payload: loading }) => ({
+        ...state,
+        verificationTokenLoading: loading,
     }),
     [INITIALIZE_VALUE]: (state, { payload: { timeLimit, timeFlag } }) => ({
         ...state,
         timeLimit,
         timeFlag,
     }),
+    [CREATE_SMS_SUCCESS]: (state, { payload: { token } }) => ({
+        ...state,
+        token,
+        createSMSFlag: true,
+        createSMSError: false,
+    }),
+    [CREATE_SMS_FAILURE]: (state, { payload: { error } }) => ({
+        ...state,
+        token: initialState.token,
+        createSMSFlag: true,
+        createSMSError: error,
+    }),
     [VERIFY_TOKEN_SUCCESS]: state => ({
         ...state,
-        verificationToken: true,
+        verificationTokenFlag: true,
         verificationTokenError: false,
     }),
     [VERIFY_TOKEN_FAILURE]: (state, { payload: { error } } ) => ({
         ...state,
-        verificationToken: true,
+        verificationTokenFlag: true,
         verificationTokenError: error,
     })
 }, initialState);

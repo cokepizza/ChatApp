@@ -75,7 +75,7 @@ export const verifyToken = (req, res, next) => {
     jwt.verify(token, process.env.JWT_SECRET, (error, decoded) => {
         if(error) {
             return res.status(400).send({
-                error: '인증 시간이 만료되었습니다',
+                error: '시간이 만료된 인증코드입니다',
             })
         }
 
@@ -84,20 +84,20 @@ export const verifyToken = (req, res, next) => {
         
         console.dir(`timeLeft : ${exp-timeNow}`);
         if(exp < timeNow) {
-            console.dir('인증 시간이 만료되었습니다');
+            console.dir('시간이 만료된 인증코드입니다');
             return res.status(400).send({
-                error: '인증 시간이 만료되었습니다',
+                error: '시간이 만료된 인증코드입니다',
             });
         } else {
             if(parseInt(verificationCode) !== parseInt(code)) {
-                console.dir('인증 코드가 유효하지 않습니다');
+                console.dir('유효하지 않은 인증코드입니다');
                 return res.status(400).send({
-                    error: '인증 코드가 유효하지 않습니다',
+                    error: '유효하지 않은 인증코드입니다',
                 });
             } else {
                 console.dir('인증 성공');
                 return res.status(200).end();
             }
         }
-    });  
+    });
 };
