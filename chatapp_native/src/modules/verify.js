@@ -15,12 +15,13 @@ export const disconnectWebsocket = createAction(DISCONNECT_WEBSOCKET);
 
 const SET_VALUE = 'verify/SET_VALUE';
 const CLEAR_VALUE = 'verify/CLEAR_VALUE';
+const CLEAR_PRESS_SUBMIT = 'verify/CLEAR_PRESS_SUBMIT';
 const CLEAR_ALL = 'verify/CLEAR_ALL';
-const CLEAR_VERIFY_TOKEN = 'verify/VERIFY_TOKEN';
 export const setValue = createAction(SET_VALUE, payload => payload);
 export const clearValue = createAction(CLEAR_VALUE, payload => payload);
+export const clearPressSubmit = createAction(CLEAR_PRESS_SUBMIT);
 export const clearAll = createAction(CLEAR_ALL);
-export const clearVerifyToken = createAction(CLEAR_VERIFY_TOKEN);
+
 
 const [ CREATE_SMS, CREATE_SMS_SUCCESS, CREATE_SMS_FAILURE, CREATE_SMS_LOADING ] = createRequestActionTypes('verify/CREATE_SMS');
 const [ VERIFY_TOKEN, VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAILURE, VERIFY_TOKEN_LOADING ] = createRequestActionTypes('verify/VERIFY_TOKEN');
@@ -73,15 +74,10 @@ export default handleActions({
         ...state,
         [key]: initialState[key],
     }),
-    [CLEAR_VERIFY_TOKEN]: state => ({
-        ...state,
-        createSMSFlag: initialState.createSMSFlag,
-        createSMSError: initialState.createSMSError,
-        timeFlag: initialState.timeFlag,
-        timeLimit: initialState.timeLimit,
-        verificationTokenInput: initialState.verificationTokenInput,
-        verificationTokenFlag: initialState.verificationTokenFlag,
-        verificationTokenError: initialState.verificationTokenError,
+    [CLEAR_PRESS_SUBMIT]: state => ({
+        ...initialState,
+        createSMSInput: state.createSMSInput,
+        createSMSLoading: state.createSMSLoading,
     }),
     [CLEAR_ALL]: state => initialState,
     [CREATE_SMS_LOADING]: (state, { payload: loading }) => ({
@@ -106,7 +102,7 @@ export default handleActions({
     [CREATE_SMS_FAILURE]: (state, { payload: { error } }) => ({
         ...state,
         token: initialState.token,
-        createSMSFlag: true,
+        createSMSFlag: false,
         createSMSError: error,
     }),
     [VERIFY_TOKEN_SUCCESS]: state => ({
@@ -116,7 +112,7 @@ export default handleActions({
     }),
     [VERIFY_TOKEN_FAILURE]: (state, { payload: { error } } ) => ({
         ...state,
-        verificationTokenFlag: true,
+        verificationTokenFlag: false,
         verificationTokenError: error,
     })
 }, initialState);

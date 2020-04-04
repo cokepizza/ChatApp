@@ -1,4 +1,5 @@
 import React from 'react';
+import { ActivityIndicator } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
 import SubHeaderContainer from '../../containers/common/SubHeaderContainer';
@@ -12,20 +13,12 @@ const AuthSignUpVerifyBlock = styled.SafeAreaView`
     align-items: center;
 `;
 
-const LoadingBlock = styled.ActivityIndicator``;
-
 const WarningBlock = styled.View`
     width: 100%;
     height: 60px;
     padding-left: 20px;
     padding-right: 20px;
-    /* background:red; */
 `;
-
-// const TextBlock = styled.Text`
-//     font-size: 13px;
-//     color: rgba(0, 0, 0, 0.5);
-// `;
 
 const ImageBlock = styled.Image`
     width: 18px;
@@ -113,6 +106,8 @@ const SubmitTextBlock = styled.Text`
 `;
 
 const TextInputForm = React.memo(({
+    inputRef,
+    index,
     validation,
     value,
     flag,
@@ -135,19 +130,20 @@ const TextInputForm = React.memo(({
                 )
             )}
             <InputBlock
-                 autoCapitalize='none'
-                 autoCorrect={false}
-                 allowFontScaling={false}
-                 placeholderTextColor='rgba(0, 0, 0, 0.5)'
-                 value={value}
-                 {...rest}
+                ref={ref => inputRef.current[index] = ref}
+                autoCapitalize='none'
+                autoCorrect={false}
+                allowFontScaling={false}
+                placeholderTextColor='rgba(0, 0, 0, 0.5)'
+                value={value}
+                {...rest}
             />
             <SubmitTouchBlock
                 onPress={onPress}
                 flag={loading || flag}
             >
                 {loading ? (
-                    <LoadingBlock />
+                    <ActivityIndicator color='rgba(123, 104, 238, 0.8)'/>
                 ) : (
                     <SubmitTextBlock flag={flag}>  
                         {flag ? nextMention : mention}
@@ -159,18 +155,21 @@ const TextInputForm = React.memo(({
 });
 
 const AuthSignUpVerify = ({
+    inputRef,
     timeLimit,
     createSMSInput,
     createSMSFlag,
     createSMSLoading,
     createSMSError,
     verificationTokenInput,
+    verificationTokenLoading,
     verificationTokenError,
     onChangeText,
     onPressSubmit,
     onPressVerify,
     onFocusVerify,
 }) => {
+    console.log(timeLimit);
     let minute = parseInt(timeLimit / 60);
     let second = parseInt(timeLimit % 60);
     if(minute < 10) {
@@ -180,7 +179,8 @@ const AuthSignUpVerify = ({
         second = '0' + second;
     }
     const time = minute + ":" + second;
-    
+    console.log(time);
+
     return (
         <AuthSignUpVerifyBlock>
             <SubHeaderContainer
@@ -201,6 +201,8 @@ const AuthSignUpVerify = ({
                     휴대폰 번호
                 </TextBlock>
                 <TextInputForm
+                    inputRef={inputRef}
+                    index={0}
                     validation={createSMSFlag}
                     flag={createSMSFlag && !createSMSError}
                     error={createSMSError}
@@ -227,7 +229,10 @@ const AuthSignUpVerify = ({
                             인증번호
                         </TextBlock>
                         <TextInputForm
+                            inputRef={inputRef}
+                            index={1}
                             validation={false}
+                            loading={verificationTokenLoading}
                             mention='인증하기'
                             nextMention='인증하기'
                             value={verificationTokenInput}
@@ -238,15 +243,16 @@ const AuthSignUpVerify = ({
                         />
                     </InputOuterFrameBlock>
                     <RedWarningBlock>
-                        {verificationTokenError && (
+                        {verificationTokenError ? (
                             <RedTextBlock>
                                 {verificationTokenError}
-                            </RedTextBlock>     
-                        )}
-                        {!!timeLimit && (
-                            <PurpleTextBlock>
-                                인증번호 유효시간 {time}
-                            </PurpleTextBlock>
+                            </RedTextBlock>
+                        ) : (
+                                !!timeLimit && (
+                                    <PurpleTextBlock>
+                                        인증번호 유효시간 {time}
+                                    </PurpleTextBlock>
+                                )
                         )}
                     </RedWarningBlock>
                 </>

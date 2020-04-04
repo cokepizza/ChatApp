@@ -1,11 +1,11 @@
-import React, { useCallback, useEffect, useState } from 'react';
+import React, { useCallback, useEffect, useRef, createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpVerify from '../../components/auth/AuthSignUpVerify';
 import {
     setValue,
     clearValue,
-    clearAll,
+    clearPressSubmit,
     createSMS,
     verifyToken,
     connectWebsocket,
@@ -23,6 +23,7 @@ const AuthSignUpVerifyContainer = () => {
         createSMSError,
         verificationTokenInput,
         verificationTokenFlag,
+        verificationTokenLoading,
         verificationTokenError,
     } = useSelector(({ verify }) => ({
         token: verify.token,
@@ -34,13 +35,21 @@ const AuthSignUpVerifyContainer = () => {
         createSMSError: verify.createSMSError,
         verificationTokenInput: verify.verificationTokenInput,
         verificationTokenFlag: verify.verificationTokenFlag,
+        verificationTokenLoading: verify.verificationTokenLoading,
         verificationTokenError: verify.verificationTokenError,
-
     }));
 
     const dispatch = useDispatch();
 
-    const [tokenError, setTokenError] = useState(verificationTokenError);
+    const inputRef = useRef([ createRef(), createRef() ]);
+
+    const clearFocus = useCallback(() => {
+        inputRef.current.forEach(ref => {
+            if(ref.blur) {
+                ref.blur();
+            }
+        })
+    }, []);
 
     const onChangeText = useCallback((key, value) => {
         dispatch(setValue({
@@ -53,15 +62,18 @@ const AuthSignUpVerifyContainer = () => {
         dispatch(createSMS({
             createSMSInput,
         }));
-        // dispatch(clearAll());
-    }, [dispatch, createSMSInput]);
+        dispatch(disconnectWebsocket());
+        dispatch(clearPressSubmit());
+        clearFocus();
+    }, [dispatch, createSMSInput, clearFocus]);
 
     const onPressVerify = useCallback(() => {
         dispatch(verifyToken({
             code: verificationTokenInput,
             token,
         }));
-    }, [token, verificationTokenInput]);
+        clearFocus();
+    }, [token, verificationTokenInput, clearFocus]);
 
     const onFocusVerify = () => {
         dispatch(clearValue({
@@ -82,10 +94,10 @@ const AuthSignUpVerifyContainer = () => {
 
     //  verification success
     useEffect(() => {
-        if(verificationTokenFlag && !verificationTokenError) {
+        if(verificationTokenFlag) {
             dispatch(disconnectWebsocket());
         }
-    }, [verificationTokenFlag, verificationTokenError]);
+    }, [verificationTokenFlag]);
 
     useEffect(() => {
         console.log(timeLimit);
@@ -97,18 +109,16 @@ const AuthSignUpVerifyContainer = () => {
         }
     }, [timeFlag, timeLimit]);
 
-    // useEffect(() => {
-    //     setTokenError(verificationTokenError);
-    // }, [verificationTokenError]);
-
     return (
         <AuthSignUpVerify
+            inputRef={inputRef}
             timeLimit={timeLimit}
             createSMSInput={createSMSInput}
             createSMSFlag={createSMSFlag}
             createSMSLoading={createSMSLoading}
             createSMSError={createSMSError}
             verificationTokenInput={verificationTokenInput}
+            verificationTokenLoading={verificationTokenLoading}
             verificationTokenError={verificationTokenError}
             onChangeText={onChangeText}
             onPressSubmit={onPressSubmit}
