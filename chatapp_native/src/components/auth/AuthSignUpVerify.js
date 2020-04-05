@@ -23,7 +23,7 @@ const WarningBlock = styled.View`
 const ImageBlock = styled.Image`
     width: 18px;
     height: 18px;
-    opacity: 0.6;
+    opacity: 0.8;
 `;
 
 const InputOuterFrameBlock = styled.View`
@@ -164,12 +164,12 @@ const AuthSignUpVerify = ({
     verificationTokenInput,
     verificationTokenLoading,
     verificationTokenError,
+    validation,
     onChangeText,
     onPressSubmit,
     onPressVerify,
     onFocusVerify,
 }) => {
-    console.log(timeLimit);
     let minute = parseInt(timeLimit / 60);
     let second = parseInt(timeLimit % 60);
     if(minute < 10) {
@@ -179,7 +179,6 @@ const AuthSignUpVerify = ({
         second = '0' + second;
     }
     const time = minute + ":" + second;
-    console.log(time);
 
     return (
         <AuthSignUpVerifyBlock>
@@ -203,7 +202,7 @@ const AuthSignUpVerify = ({
                 <TextInputForm
                     inputRef={inputRef}
                     index={0}
-                    validation={createSMSFlag}
+                    validation={validation.createSMSInput}
                     flag={createSMSFlag && !createSMSError}
                     error={createSMSError}
                     loading={createSMSLoading}
@@ -231,8 +230,9 @@ const AuthSignUpVerify = ({
                         <TextInputForm
                             inputRef={inputRef}
                             index={1}
-                            validation={false}
+                            validation={validation.verificationTokenInput}
                             loading={verificationTokenLoading}
+                            error={verificationTokenError}
                             mention='인증하기'
                             nextMention='인증하기'
                             value={verificationTokenInput}

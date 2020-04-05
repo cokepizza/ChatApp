@@ -63,6 +63,10 @@ const initialState = {
     verificationTokenFlag: false,
     verificationTokenLoading: false,
     verificationTokenError: false,
+    validation: {
+        createSMSInput: false,
+        verificationTokenInput: false,
+    }
 };
 
 export default handleActions({
@@ -76,6 +80,10 @@ export default handleActions({
     }),
     [CLEAR_PRESS_SUBMIT]: state => ({
         ...initialState,
+        validation: {
+            ...initialState.verificationTokenInput,
+            createSMSInput: state.validation.createSMSInput,
+        },
         createSMSInput: state.createSMSInput,
         createSMSLoading: state.createSMSLoading,
     }),

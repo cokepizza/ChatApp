@@ -6,7 +6,7 @@ import BackIcon from '../../assets/images/back.png';
 import CheckBeforeIcon from '../../assets/images/check_before.png';
 import CheckAfterIcon from '../../assets/images/check_after.png';
 
-const AuthSignUpBlock = styled.SafeAreaView`
+const AuthSignUpBaseBlock = styled.SafeAreaView`
     flex: 1;
     background: white;
 `;
@@ -105,7 +105,7 @@ const CheckBoxTextBlock = styled.Text`
     `}
 `;
 
-const AuthSignUp = ({
+const AuthSignUpBase = ({
     username,
     nickname,
     password,
@@ -126,7 +126,7 @@ const AuthSignUp = ({
     })
 
     return (
-        <AuthSignUpBlock>
+        <AuthSignUpBaseBlock>
             <HeaderViewBlock>
 
             </HeaderViewBlock>
@@ -239,8 +239,8 @@ const AuthSignUp = ({
                     </NavigationTextBlock>
                 </NavigationTouchBlock>
             </BodyViewBlock>
-        </AuthSignUpBlock>
+        </AuthSignUpBaseBlock>
     );
 };
 
-export default AuthSignUp;
+export default AuthSignUpBase;

@@ -2,10 +2,10 @@ import React, { useCallback, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Joi from 'react-native-joi';
 
-import AuthSignUp from '../../components/auth/AuthSignUp';
+import AuthSignUpBase from '../../components/auth/AuthSignUpBase';
 import { setValue } from '../../modules/auth';
 
-const AuthSignUpContainer = ({ navigation }) => {
+const AuthSignUpBaseContainer = ({ navigation }) => {
     const {
         signUp,
         username,
@@ -92,7 +92,7 @@ const AuthSignUpContainer = ({ navigation }) => {
     }, [dispatch])
 
     return (
-        <AuthSignUp
+        <AuthSignUpBase
             username={username}
             nickname={nickname}
             password={password}
@@ -107,4 +107,4 @@ const AuthSignUpContainer = ({ navigation }) => {
     )
 };
 
-export default AuthSignUpContainer;
+export default AuthSignUpBaseContainer;

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useRef, createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Joi from 'react-native-joi';
 
 import AuthSignUpVerify from '../../components/auth/AuthSignUpVerify';
 import {
@@ -12,7 +13,7 @@ import {
     disconnectWebsocket
 } from '../../modules/verify';
 
-const AuthSignUpVerifyContainer = () => {
+const AuthSignUpVerifyContainer = ({ navigation }) => {
     const {
         token,
         timeLimit,
@@ -25,6 +26,7 @@ const AuthSignUpVerifyContainer = () => {
         verificationTokenFlag,
         verificationTokenLoading,
         verificationTokenError,
+        validation,
     } = useSelector(({ verify }) => ({
         token: verify.token,
         timeLimit: verify.timeLimit,
@@ -37,6 +39,7 @@ const AuthSignUpVerifyContainer = () => {
         verificationTokenFlag: verify.verificationTokenFlag,
         verificationTokenLoading: verify.verificationTokenLoading,
         verificationTokenError: verify.verificationTokenError,
+        validation: verify.validation,
     }));
 
     const dispatch = useDispatch();
@@ -75,11 +78,44 @@ const AuthSignUpVerifyContainer = () => {
         clearFocus();
     }, [token, verificationTokenInput, clearFocus]);
 
-    const onFocusVerify = () => {
+    const onFocusVerify = useCallback(() => {
         dispatch(clearValue({
             key: 'verificationTokenError',
         }))
-    }
+    }, [dispatch]);
+
+    useEffect(() => {
+        const schema = Joi.object().keys({
+            createSMSInput: Joi.string().min(10).max(11).required(),
+            verificationTokenInput: Joi.string().min(6).max(6).required(),
+        });
+
+        const verify = {
+            createSMSInput,
+            verificationTokenInput,
+        }
+
+        const revisedValidation =
+            Object.keys(verify)
+                .reduce((acc, cur) =>
+                    ({
+                        ...acc,
+                        [cur]: true,
+                    }), {});
+
+        const result = Joi.validate(verify, schema, { abortEarly: false });
+
+        if(result.error) {
+            result.error.details.forEach(detail => {
+                revisedValidation[detail.path] = false;
+            });
+        };
+
+        dispatch(setValue({
+            key: 'validation',
+            value: revisedValidation,
+        }));
+    }, [dispatch, createSMSInput, verificationTokenInput]);
 
     useEffect(() => {
         if(token !== '') {
@@ -95,6 +131,7 @@ const AuthSignUpVerifyContainer = () => {
     //  verification success
     useEffect(() => {
         if(verificationTokenFlag) {
+            navigation.navigate('AuthSignUpDetail');
             dispatch(disconnectWebsocket());
         }
     }, [verificationTokenFlag]);
@@ -120,6 +157,7 @@ const AuthSignUpVerifyContainer = () => {
             verificationTokenInput={verificationTokenInput}
             verificationTokenLoading={verificationTokenLoading}
             verificationTokenError={verificationTokenError}
+            validation={validation}
             onChangeText={onChangeText}
             onPressSubmit={onPressSubmit}
             onPressVerify={onPressVerify}

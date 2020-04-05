@@ -4,8 +4,8 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import AuthCheckContainer from '../containers/auth/AuthCheckContainer';
 import AuthSignInContainer from '../containers/auth/AuthSignInContainer';
-import AuthSignUpContainer from '../containers/auth/AuthSignUpContainer';
 import AuthHeaderContainer from '../containers/auth/AuthHeaderContainer';
+import AuthSignUpBaseContainer from '../containers/auth/AuthSignUpBaseContainer';
 import AuthSignUpDetailContainer from '../containers/auth/AuthSignUpDetailContainer';
 import AuthSignUpVerifyContainer from '../containers/auth/AuthSignUpVerifyContainer';
 
@@ -45,9 +45,10 @@ const AuthNavigator = () => {
             }}
           />
           <Stack.Screen
-            name='AuthSignUp'
-            component={AuthSignUpContainer}
+            name='AuthSignUpBase'
+            component={AuthSignUpBaseContainer}
             options={{
+              gestureEnabled: false,
               headerShown: false,
             }}
           />
@@ -55,6 +56,7 @@ const AuthNavigator = () => {
             name='AuthSignUpVerify'
             component={AuthSignUpVerifyContainer}
             options={{
+              gestureEnabled: false,
               header: props => (
                 <AuthHeaderContainer
                   left='가입취소'
@@ -69,6 +71,7 @@ const AuthNavigator = () => {
             name='AuthSignUpDetail'
             component={AuthSignUpDetailContainer}
             options={{
+              gestureEnabled: false,
               header: props => (
                 <AuthHeaderContainer
                   left='가입취소'
