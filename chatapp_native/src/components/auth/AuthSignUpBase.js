@@ -61,8 +61,8 @@ const ImageBlock = styled.Image`
 const ButtonViewBlock = styled.View`
     padding-left: 24px;
     padding-right: 24px;
-    /* margin-top: 130px; */
-    margin-top: 500px;
+    margin-top: 130px;
+    /* margin-top: 500px; */
     /* flex:1; */
     /* height:40%;
     justify-content: flex-end; */
@@ -192,8 +192,7 @@ const AuthSignUpBaseScrollViewBlock = styled.ScrollView`
 `;
 
 const KeyboardAvoidingView = styled.KeyboardAvoidingView`
-    padding: 20px;
-    background: red;
+    flex: 1;
 `
 
 const TextInputForm = React.memo(({
@@ -288,11 +287,25 @@ const AuthSignUpBase = ({
                 index={1}
                 total={3}
             />
-            <AuthSignUpBaseScrollViewBlock ref={scrollRef}>
+             <KeyboardAvoidingView
+                behavior={Platform.select({android: undefined, ios: 'padding'})}
+            >
+            <AuthSignUpBaseScrollViewBlock
+                ref={scrollRef}
+                // contentContainerStyle={{flexGrow: 1}}
+                horizontal={false}
+                keyboardShouldPersistTaps='always'
+            >
             {/* <KeyboardAvoidingView
                 behavior={Platform.select({android: undefined, ios: 'padding'})}
-                keyboardVerticalOffset = {500}
-                style={{ flex: 1 }}
+                // keyboardVerticalOffset={
+                //     Platform.select({
+                //        ios: () => 0,
+                //        android: () => 200
+                //     })()
+                // }
+                // keyboardVerticalOffset={200}
+                // keyboardVerticalOffset = {500}
             > */}
                 <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 0)}>
                     <TextBlock title={1}>
@@ -403,6 +416,7 @@ const AuthSignUpBase = ({
                 </ButtonViewBlock>
             {/* </KeyboardAvoidingView>   */}
             </AuthSignUpBaseScrollViewBlock>
+            </KeyboardAvoidingView>
         </AuthSignUpBaseBlock>
         
     );
