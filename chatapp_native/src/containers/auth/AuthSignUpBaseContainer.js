@@ -28,6 +28,8 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
 
     const dispatch = useDispatch();
 
+    const scrollRef = useRef();
+    const componentHeight = useRef([ null, null, null ]);
     const inputRef = useRef([ createRef(), createRef(), createRef() ]);
         
     useEffect(() => {
@@ -99,13 +101,24 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         }))
     }, [dispatch]);
 
-    const onPressSubmit = useCallback(() => {
+    const onFocus = useCallback(index => {
+        if(scrollRef.current) {
+            scrollRef.current.scrollTo({ y: componentHeight.current[index], animated: true });
+        }
+    }, []);
 
+    const onLayout = useCallback(({ nativeEvent: { layout: { x, y, width, height }}}, index) => {
+        componentHeight.current[index] = y-30;
+    }, []);
+
+    const onPressSubmit = useCallback(() => {
+        navigation.navigate('AuthSignUpVerify');
     }, [navigation]);
 
     return (
         <AuthSignUpBase
             inputRef={inputRef}
+            scrollRef={scrollRef}
             username={username}
             password={password}
             passwordConfirm={passwordConfirm}
@@ -119,6 +132,8 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
             onFocusUsername={onFocusUsername}
             onPressCheckBox={onPressCheckBox}
             onPressSubmit={onPressSubmit}
+            onLayout={onLayout}
+            onFocus={onFocus}
         />
     )
 };

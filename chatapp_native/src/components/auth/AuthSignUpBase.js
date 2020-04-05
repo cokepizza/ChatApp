@@ -1,5 +1,5 @@
 import React from 'react';
-import { Dimensions, ActivityIndicator } from 'react-native';
+import { Dimensions, ActivityIndicator, Platform } from 'react-native';
 import styled, { css } from 'styled-components/native';
 
 import SubHeaderContainer from '../../containers/common/SubHeaderContainer';
@@ -23,7 +23,6 @@ const AuthSignUpBaseBlock = styled.SafeAreaView`
 const InputOuterFrameBlock = styled.View`
     padding-left: 24px;
     padding-right: 24px;
-
     ${props => props.marginTop && css`
         margin-top: 30px;
     `}
@@ -32,9 +31,9 @@ const InputOuterFrameBlock = styled.View`
 const InputFrameBlock = styled.View`
     flex-direction: row;
     width: 100%;
-    height: 30px;
+    height: 40px;
     border-bottom-width: 1px;
-    opacity: 0.5;
+    border-bottom-color: rgba(0, 0, 0, 0.2);
     align-items: center;
 
     ${props => props.margin && css`
@@ -59,16 +58,26 @@ const ImageBlock = styled.Image`
     opacity: 0.8;
 `;
 
+const ButtonViewBlock = styled.View`
+    padding-left: 24px;
+    padding-right: 24px;
+    /* margin-top: 130px; */
+    margin-top: 500px;
+    /* flex:1; */
+    /* height:40%;
+    justify-content: flex-end; */
+    /* background: red; */
+    /* margin-top: 100px; */
+`;
+
 const ButtonTouchBlock = styled.TouchableOpacity`
-    width: 90%;
-    height: 30px;
+    width: 100%;
+    height: 50px;
     justify-content: center;
     align-items: center;
     border-radius: 5px;
     /* background: rgba(176, 196, 222, 0.5); */
     background: rgba(123, 104, 238, 0.8);
-    margin-top: 20px;
-
     ${props => props.disabled && css`
         background: rgba(0, 0, 0, 0.05);
         /* background: rgba(176, 196, 222, 0.2); */
@@ -85,8 +94,6 @@ const ButtonTextBlock = styled.Text`
 `;
 
 const CheckBoxFrameBlock = styled.View`
-    align-items: center;
-    justify-content: center;
     width: ${(parseInt(Dimensions.get('window').width * 0.9) - 30) / 2}px;
 
     ${props => props.margin && css`
@@ -94,7 +101,12 @@ const CheckBoxFrameBlock = styled.View`
     `}
 `;
 
-const CheckBoxTouchBlock = styled.TouchableOpacity``;
+const CheckBoxTouchBlock = styled.TouchableOpacity`
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+`;
 
 const CheckBoxTextBlock = styled.Text`
     font-size: 12px;
@@ -170,6 +182,20 @@ const RedTextBlock = styled.Text`
     margin-bottom: 10px;
 `;
 
+const MarginBlock = styled.View`
+    width: 100%;
+    height: 20px;
+`;
+
+const AuthSignUpBaseScrollViewBlock = styled.ScrollView`
+    width: 100%;
+`;
+
+const KeyboardAvoidingView = styled.KeyboardAvoidingView`
+    padding: 20px;
+    background: red;
+`
+
 const TextInputForm = React.memo(({
     inputRef,
     index,
@@ -229,6 +255,7 @@ const TextInputForm = React.memo(({
 
 const AuthSignUpBase = ({
     inputRef,
+    scrollRef,
     username,
     password,
     passwordConfirm,
@@ -242,6 +269,8 @@ const AuthSignUpBase = ({
     onFocusUsername,
     onPressCheckBox,
     onPressSubmit,
+    onLayout,
+    onFocus,
 }) => {
     
     let inValidSignUp = false;
@@ -252,133 +281,130 @@ const AuthSignUpBase = ({
     })
 
     return (
+        
         <AuthSignUpBaseBlock>
             <SubHeaderContainer
                 title='계정 생성'
                 index={1}
                 total={3}
             />
-            <InputOuterFrameBlock marginTop={1}>
-                <TextBlock title={1}>
-                    이메일
-                </TextBlock>
-                <TextInputForm
-                    inputRef={inputRef}
-                    index={0}
-                    validation={validation.username}
-                    flag={duplicateCheckFlag && !duplicateCheckError}
-                    error={duplicateCheckError}
-                    loading={duplicateCheckLoading}
-                    mention='중복검사'
-                    nextMention='재검사'
-                    onPress={onPressUsername}
-                    onFocus={onFocusUsername}
-                    value={username}
-                    onChangeText={text => onChangeText('username', text)}
-                    keyboardType='email-address'
-                />
-            </InputOuterFrameBlock>
-            {duplicateCheckError && (
-                <RedWarningBlock>
-                    <RedTextBlock>
-                        {duplicateCheckError}
-                    </RedTextBlock>
-                </RedWarningBlock>
-            )}
-            <InputOuterFrameBlock marginTop={1}>
-                <TextBlock title={1}>
-                    비밀번호
-                </TextBlock>
-                <TextInputForm
-                    inputRef={inputRef}
-                    index={1}
-                    validation={validation.password}
-                    plainForm={true}
-                    error={false}
-                    // onFocus={onFocusUsername}
-                    value={password}
-                    onChangeText={text => onChangeText('password', text)}
-                    secureTextEntry
-                    textContentType='newPassword'
-                    keyboardType='default'
-                />
-            </InputOuterFrameBlock>
-            <InputOuterFrameBlock marginTop={1}>
-                <TextBlock title={1}>
-                    비밀번호 확인
-                </TextBlock>
-                <TextInputForm
-                    inputRef={inputRef}
-                    index={1}
-                    validation={validation.passwordConfirm}
-                    plainForm={true}
-                    error={false}
-                    // onFocus={onFocusUsername}
-                    value={passwordConfirm}
-                    onChangeText={text => onChangeText('passwordConfirm', text)}
-                    secureTextEntry
-                    textContentType='newPassword'
-                    keyboardType='default'
-                />
-            </InputOuterFrameBlock>
-            <InputOuterFrameBlock marginTop={1}>
-                <TextBlock title={1}>
-                    성별
-                </TextBlock>
-                <InputFrameBlock>
-                    {validation.gender ? (
-                        <ImageBlock source={CheckAfterIcon} />
-                    ) : (
-                        <ImageBlock source={CheckBeforeIcon} />
-                    )}
-                    <CheckBoxFrameBlock margin={1}>
-                        <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'male')}>
-                            <CheckBoxTextBlock gender={gender === 'male'}>
-                                Male
-                            </CheckBoxTextBlock>
-                        </CheckBoxTouchBlock>
-                    </CheckBoxFrameBlock>
-                    <CheckBoxFrameBlock>
-                        <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'female')}>
-                            <CheckBoxTextBlock gender={gender === 'female'}>
-                                Female
-                            </CheckBoxTextBlock>
-                        </CheckBoxTouchBlock>
-                    </CheckBoxFrameBlock>
-                </InputFrameBlock>
-            </InputOuterFrameBlock>
-            {/* <InputFrameBlock margin={1}>
-                {validation.gender ? (
-                    <ImageBlock source={CheckAfterIcon} />
-                ) : (
-                    <ImageBlock source={CheckBeforeIcon} />
+            <AuthSignUpBaseScrollViewBlock ref={scrollRef}>
+            {/* <KeyboardAvoidingView
+                behavior={Platform.select({android: undefined, ios: 'padding'})}
+                keyboardVerticalOffset = {500}
+                style={{ flex: 1 }}
+            > */}
+                <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 0)}>
+                    <TextBlock title={1}>
+                        이메일
+                    </TextBlock>
+                    <TextInputForm
+                        inputRef={inputRef}
+                        index={0}
+                        validation={validation.username}
+                        flag={duplicateCheckFlag && !duplicateCheckError}
+                        error={duplicateCheckError}
+                        loading={duplicateCheckLoading}
+                        mention='중복검사'
+                        nextMention='재검사'
+                        onPress={onPressUsername}
+                        onFocus={() => onFocus(0)}
+                        // onFocus={onFocusUsername}
+                        value={username}
+                        onChangeText={text => onChangeText('username', text)}
+                        keyboardType='email-address'
+                    />
+                </InputOuterFrameBlock>
+                {duplicateCheckError ? (
+                    <RedWarningBlock>
+                        <RedTextBlock>
+                            {duplicateCheckError}
+                        </RedTextBlock>
+                    </RedWarningBlock>
+                ): (
+                    <MarginBlock />
                 )}
-                <CheckBoxFrameBlock margin={1}>
-                    <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'male')}>
-                        <CheckBoxTextBlock gender={gender === 'male'}>
-                            Male
-                        </CheckBoxTextBlock>
-                    </CheckBoxTouchBlock>
-                </CheckBoxFrameBlock>
-                <CheckBoxFrameBlock>
-                    <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'female')}>
-                        <CheckBoxTextBlock gender={gender === 'female'}>
-                            Female
-                        </CheckBoxTextBlock>
-                    </CheckBoxTouchBlock>
-                </CheckBoxFrameBlock>
-            </InputFrameBlock> */}
-            <ButtonTouchBlock
-                disabled={inValidSignUp}
-                onPress={onPressSubmit}
-            >
-                <ButtonTextBlock
-                    disabled={inValidSignUp}
-                >
-                    계정 생성하기
-                </ButtonTextBlock>
-            </ButtonTouchBlock>
+                <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 1)}>
+                    <TextBlock title={1}>
+                        비밀번호
+                    </TextBlock>
+                    <TextInputForm
+                        inputRef={inputRef}
+                        index={1}
+                        validation={validation.password}
+                        plainForm={true}
+                        error={false}
+                        // onFocus={onFocusUsername}
+                        onFocus={() => onFocus(1)}
+                        value={password}
+                        onChangeText={text => onChangeText('password', text)}
+                        secureTextEntry
+                        textContentType='newPassword'
+                        keyboardType='default'
+                    />
+                </InputOuterFrameBlock>
+                <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 2)}>
+                    <TextBlock title={1}>
+                        비밀번호 확인
+                    </TextBlock>
+                    <TextInputForm
+                        inputRef={inputRef}
+                        index={1}
+                        validation={validation.passwordConfirm}
+                        plainForm={true}
+                        error={false}
+                        // onFocus={onFocusUsername}
+                        onFocus={() => onFocus(2)}
+                        value={passwordConfirm}
+                        onChangeText={text => onChangeText('passwordConfirm', text)}
+                        secureTextEntry
+                        textContentType='newPassword'
+                        keyboardType='default'
+                    />
+                </InputOuterFrameBlock>
+                <MarginBlock />
+                <InputOuterFrameBlock marginTop={1}>
+                    <TextBlock title={1}>
+                        성별
+                    </TextBlock>
+                    <InputFrameBlock>
+                        {validation.gender ? (
+                            <ImageBlock source={CheckAfterIcon} />
+                        ) : (
+                            <ImageBlock source={CheckBeforeIcon} />
+                        )}
+                        <CheckBoxFrameBlock margin={1}>
+                            <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'male')}>
+                                <CheckBoxTextBlock gender={gender === 'male'}>
+                                    남자
+                                </CheckBoxTextBlock>
+                            </CheckBoxTouchBlock>
+                        </CheckBoxFrameBlock>
+                        <CheckBoxFrameBlock>
+                            <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'female')}>
+                                <CheckBoxTextBlock gender={gender === 'female'}>
+                                    여자
+                                </CheckBoxTextBlock>
+                            </CheckBoxTouchBlock>
+                        </CheckBoxFrameBlock>
+                    </InputFrameBlock>
+                </InputOuterFrameBlock>
+                <ButtonViewBlock>
+                    <ButtonTouchBlock
+                        disabled={inValidSignUp}
+                        onPress={onPressSubmit}
+                    >
+                        <ButtonTextBlock
+                            disabled={inValidSignUp}
+                        >
+                            계정 생성하기
+                        </ButtonTextBlock>
+                    </ButtonTouchBlock>
+                </ButtonViewBlock>
+            {/* </KeyboardAvoidingView>   */}
+            </AuthSignUpBaseScrollViewBlock>
         </AuthSignUpBaseBlock>
+        
     );
 };
 
