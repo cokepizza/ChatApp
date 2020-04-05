@@ -1,8 +1,15 @@
 import { createAction, handleActions } from 'redux-actions';
+
 import createRequestThunk, { createRequestActionTypes } from '../lib/createRequestThunk';
+import * as baseCtrl from '../lib/api/base';
 
 const SET_VALUE = 'base/SET_VALUE';
+const CLEAR_VALUE = 'base/CLEAR_VALUE';
 export const setValue = createAction(SET_VALUE, payload => payload);
+export const clearValue = createAction(CLEAR_VALUE, payload => payload);
+
+const [ DUPLICATE_CHECK, DUPLICATE_CHECK_SUCCESS, DUPLICATE_CHECK_FAILURE, DUPLICATE_CHECK_LOADING ] = createRequestActionTypes('base/DUPLICATE_CHECK')
+export const duplicateCheck = createRequestThunk(DUPLICATE_CHECK, baseCtrl.duplicateCheck);
 
 const initialState = {
     username: '',
@@ -10,11 +17,14 @@ const initialState = {
     passwordConfirm: '',
     gender: '',
     validation: {
-        username: '',
-        password: '',
-        passwordConfirm: '',
-        gender: '',
-    }
+        username: false,
+        password: false,
+        passwordConfirm: false,
+        gender: false,
+    },
+    duplicateCheckFlag: false,
+    duplicateCheckLoading: false,
+    duplicateCheckError: false,
 };
 
 export default handleActions({
@@ -22,4 +32,24 @@ export default handleActions({
         ...state,
         [key]: value,
     }),
+    [CLEAR_VALUE]: (state, { payload: { key } }) => ({
+        ...state,
+        [key]: initialState[key],
+    }),
+    [DUPLICATE_CHECK_SUCCESS]: state => ({
+        ...state,
+        duplicateCheckFlag: true,
+        duplicateCheckError: false,
+    }),
+    [DUPLICATE_CHECK_FAILURE]: (state, { payload: { error } }) => ({
+        ...state,
+        duplicateCheckFlag: false,
+        duplicateCheckError: error,
+    }),
+    [DUPLICATE_CHECK_LOADING]: (state, { payload: loading }) => ({
+        ...state,
+        duplicateCheckLoading: loading,
+    }),
+
+
 }, initialState);

@@ -3,7 +3,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import Joi from 'react-native-joi';
 
 import AuthSignUpBase from '../../components/auth/AuthSignUpBase';
-import { setValue } from '../../modules/base';
+import { setValue, clearValue, duplicateCheck } from '../../modules/base';
 
 const AuthSignUpBaseContainer = ({ navigation }) => {
     const {
@@ -11,13 +11,19 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         password,
         passwordConfirm,
         gender,
-        validation
+        validation,
+        duplicateCheckFlag,
+        duplicateCheckLoading,
+        duplicateCheckError,
     } = useSelector(({ base }) => ({
         username: base.username,
         password: base.password,
         passwordConfirm: base.passwordConfirm,
         gender: base.gender,
         validation: base.validation,
+        duplicateCheckFlag: base.duplicateCheckFlag,
+        duplicateCheckLoading: base.duplicateCheckLoading,
+        duplicateCheckError: base.duplicateCheckError,
     }));
 
     const dispatch = useDispatch();
@@ -81,12 +87,21 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         }))
     }, [dispatch]);
 
-    //  고쳐야 함
+    const onPressUsername = useCallback(() => {
+        dispatch(duplicateCheck({
+            username,
+        }))
+    }, [dispatch, username]);
+
+    const onFocusUsername = useCallback(() => {
+        dispatch(clearValue({
+            key: 'duplicateCheckError'
+        }))
+    }, [dispatch]);
+
     const onPressSubmit = useCallback(() => {
-        if(password === passwordConfirm) {
-            navigation.navigate('AuthSignUpDetail');
-        }
-    }, [dispatch, password, passwordConfirm]);
+
+    }, [navigation]);
 
     return (
         <AuthSignUpBase
@@ -96,9 +111,14 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
             passwordConfirm={passwordConfirm}
             gender={gender}
             validation={validation}
+            duplicateCheckFlag={duplicateCheckFlag}
+            duplicateCheckLoading={duplicateCheckLoading}
+            duplicateCheckError={duplicateCheckError}
             onChangeText={onChangeText}
-            onPressSubmit={onPressSubmit}
+            onPressUsername={onPressUsername}
+            onFocusUsername={onFocusUsername}
             onPressCheckBox={onPressCheckBox}
+            onPressSubmit={onPressSubmit}
         />
     )
 };

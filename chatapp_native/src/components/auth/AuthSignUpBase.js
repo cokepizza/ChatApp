@@ -5,6 +5,7 @@ import styled, { css } from 'styled-components/native';
 import SubHeaderContainer from '../../containers/common/SubHeaderContainer';
 import CheckBeforeIcon from '../../assets/images/check_before.png';
 import CheckAfterIcon from '../../assets/images/check_after.png';
+import ErrorIcon from '../../assets/images/error.png';
 
 const AuthSignUpBaseBlock = styled.SafeAreaView`
     flex: 1;
@@ -155,6 +156,20 @@ const SubmitTextBlock = styled.Text`
     `}
 `;
 
+const RedWarningBlock = styled.View`
+    width: 100%;
+    height: 40px;
+    padding-left: 54px;
+    padding-right: 54px;
+    margin-top: 5px;
+`;
+
+const RedTextBlock = styled.Text`
+    font-size: 13px;
+    color: rgba(220, 20, 60, 0.8);
+    margin-bottom: 10px;
+`;
+
 const TextInputForm = React.memo(({
     inputRef,
     index,
@@ -166,6 +181,7 @@ const TextInputForm = React.memo(({
     mention,
     nextMention,
     onPress,
+    plainForm,
     ...rest
 }) => {
     return (
@@ -188,23 +204,25 @@ const TextInputForm = React.memo(({
                 value={value}
                 {...rest}
             />
-            <SubmitTouchBlock
-                onPress={onPress}
-                disabled={!validation}
-                invalid={!validation}
-                flag={loading || flag}
-            >
-                {loading ? (
-                    <ActivityIndicator color='rgba(123, 104, 238, 0.8)'/>
-                ) : (
-                    <SubmitTextBlock
-                        flag={flag}
-                        invalid={!validation}
-                    >
-                        {flag ? nextMention : mention}
-                    </SubmitTextBlock>
-                )}
-            </SubmitTouchBlock>
+            {!plainForm && (
+                <SubmitTouchBlock
+                    onPress={onPress}
+                    disabled={!validation}
+                    invalid={!validation}
+                    flag={loading || flag}
+                >
+                    {loading ? (
+                        <ActivityIndicator color='rgba(123, 104, 238, 0.8)'/>
+                    ) : (
+                        <SubmitTextBlock
+                            flag={flag}
+                            invalid={!validation}
+                        >
+                            {flag ? nextMention : mention}
+                        </SubmitTextBlock>
+                    )}
+                </SubmitTouchBlock>
+            )}
         </InputInnerFrameBlock>
     )
 });
@@ -216,9 +234,14 @@ const AuthSignUpBase = ({
     passwordConfirm,
     gender,
     validation,
-    onPressSubmit,
+    duplicateCheckFlag,
+    duplicateCheckLoading,
+    duplicateCheckError,
+    onChangeText,
+    onPressUsername,
+    onFocusUsername,
     onPressCheckBox,
-    onChangeText
+    onPressSubmit,
 }) => {
     
     let inValidSignUp = false;
@@ -243,94 +266,88 @@ const AuthSignUpBase = ({
                     inputRef={inputRef}
                     index={0}
                     validation={validation.username}
-                    // flag={createSMSFlag && !createSMSError}
-                    // error={createSMSError}
-                    // loading={createSMSLoading}
-                    flag={true}
-                    error={false}
-                    loading={false}
+                    flag={duplicateCheckFlag && !duplicateCheckError}
+                    error={duplicateCheckError}
+                    loading={duplicateCheckLoading}
                     mention='중복검사'
                     nextMention='재검사'
-                    
-                    onPress={onPressSubmit}
+                    onPress={onPressUsername}
+                    onFocus={onFocusUsername}
                     value={username}
                     onChangeText={text => onChangeText('username', text)}
                     keyboardType='email-address'
                 />
-                {/* <InputFrameBlock>
-                    {validation.username ? (
-                        <ImageBlock source={CheckAfterIcon} />
-                    ) : (
-                        <ImageBlock source={CheckBeforeIcon} />
-                    )}
-                    <InputBlock
-                        autoCapitalize='none'
-                        autoCorrect={false}
-                        allowFontScaling={false}
-                        placeholderTextColor="rgba(33, 87, 142, 0.5)"
-                        placeholder='Username'
-                        value={username}
-                        onChangeText={text => onChangeText('username', text)}
-                        keyboardType='email-address'
-                    />
-                </InputFrameBlock> */}
             </InputOuterFrameBlock>
-            {/* <InputFrameBlock margin={1}>
-                {validation.nickname ? (
-                    <ImageBlock source={CheckAfterIcon} />
-                ) : (
-                    <ImageBlock source={CheckBeforeIcon} />
-                )}
-                <InputBlock
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    allowFontScaling={false}
-                    placeholderTextColor='rgba(33, 87, 142, 0.5)'
-                    placeholder='Nickname'
-                    value={nickname}
-                    onChangeText={text => onChangeText('nickname', text)}
-                    keyboardType='default'
-                />
-            </InputFrameBlock> */}
-            <InputFrameBlock margin={1}>
-                {validation.password ? (
-                    <ImageBlock source={CheckAfterIcon} />
-                ) : (
-                    <ImageBlock source={CheckBeforeIcon} />
-                )}
-                <InputBlock
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    allowFontScaling={false}
-                    placeholderTextColor='rgba(33, 87, 142, 0.5)'
-                    placeholder='Password'
+            {duplicateCheckError && (
+                <RedWarningBlock>
+                    <RedTextBlock>
+                        {duplicateCheckError}
+                    </RedTextBlock>
+                </RedWarningBlock>
+            )}
+            <InputOuterFrameBlock marginTop={1}>
+                <TextBlock title={1}>
+                    비밀번호
+                </TextBlock>
+                <TextInputForm
+                    inputRef={inputRef}
+                    index={1}
+                    validation={validation.password}
+                    plainForm={true}
+                    error={false}
+                    // onFocus={onFocusUsername}
                     value={password}
                     onChangeText={text => onChangeText('password', text)}
                     secureTextEntry
                     textContentType='newPassword'
                     keyboardType='default'
                 />
-            </InputFrameBlock>
-            <InputFrameBlock margin={1}>
-                {validation.passwordConfirm ? (
-                    <ImageBlock source={CheckAfterIcon} />
-                ) : (
-                    <ImageBlock source={CheckBeforeIcon} />
-                )}
-                <InputBlock
-                    autoCapitalize='none'
-                    autoCorrect={false}
-                    allowFontScaling={false}
-                    placeholderTextColor='rgba(33, 87, 142, 0.5)'
-                    placeholder='PasswordConfirm'
+            </InputOuterFrameBlock>
+            <InputOuterFrameBlock marginTop={1}>
+                <TextBlock title={1}>
+                    비밀번호 확인
+                </TextBlock>
+                <TextInputForm
+                    inputRef={inputRef}
+                    index={1}
+                    validation={validation.passwordConfirm}
+                    plainForm={true}
+                    error={false}
+                    // onFocus={onFocusUsername}
                     value={passwordConfirm}
                     onChangeText={text => onChangeText('passwordConfirm', text)}
                     secureTextEntry
                     textContentType='newPassword'
                     keyboardType='default'
                 />
-            </InputFrameBlock>
-            <InputFrameBlock margin={1}>
+            </InputOuterFrameBlock>
+            <InputOuterFrameBlock marginTop={1}>
+                <TextBlock title={1}>
+                    성별
+                </TextBlock>
+                <InputFrameBlock>
+                    {validation.gender ? (
+                        <ImageBlock source={CheckAfterIcon} />
+                    ) : (
+                        <ImageBlock source={CheckBeforeIcon} />
+                    )}
+                    <CheckBoxFrameBlock margin={1}>
+                        <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'male')}>
+                            <CheckBoxTextBlock gender={gender === 'male'}>
+                                Male
+                            </CheckBoxTextBlock>
+                        </CheckBoxTouchBlock>
+                    </CheckBoxFrameBlock>
+                    <CheckBoxFrameBlock>
+                        <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'female')}>
+                            <CheckBoxTextBlock gender={gender === 'female'}>
+                                Female
+                            </CheckBoxTextBlock>
+                        </CheckBoxTouchBlock>
+                    </CheckBoxFrameBlock>
+                </InputFrameBlock>
+            </InputOuterFrameBlock>
+            {/* <InputFrameBlock margin={1}>
                 {validation.gender ? (
                     <ImageBlock source={CheckAfterIcon} />
                 ) : (
@@ -350,7 +367,7 @@ const AuthSignUpBase = ({
                         </CheckBoxTextBlock>
                     </CheckBoxTouchBlock>
                 </CheckBoxFrameBlock>
-            </InputFrameBlock>
+            </InputFrameBlock> */}
             <ButtonTouchBlock
                 disabled={inValidSignUp}
                 onPress={onPressSubmit}

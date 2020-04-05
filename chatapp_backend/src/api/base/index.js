@@ -3,4 +3,6 @@ import * as baseCtrl from './baseCtrl';
 
 const base = express.Router();
 
-base.get('/', baseCtrl.duplicateCheck);
+base.get('/:username', baseCtrl.duplicateCheck);
+
+export default base;

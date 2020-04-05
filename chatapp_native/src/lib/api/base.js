@@ -1,4 +1,4 @@
 import client from './client';
 
-export const duplicateCheck = params =>
-    client.get(`/api/base/${params}`);
+export const duplicateCheck = ({ username }) =>
+    client.get(`/api/base/${username}`);
