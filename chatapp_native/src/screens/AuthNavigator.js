@@ -49,7 +49,14 @@ const AuthNavigator = () => {
             component={AuthSignUpBaseContainer}
             options={{
               gestureEnabled: false,
-              headerShown: false,
+              header: props => (
+                <AuthHeaderContainer
+                  left='가입취소'
+                  center='회원가입'
+                  leftNav='AuthSignIn'
+                  {...props}
+                />
+              )
             }}
           />
           <Stack.Screen

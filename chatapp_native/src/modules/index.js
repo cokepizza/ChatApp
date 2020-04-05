@@ -3,24 +3,30 @@ import { all } from 'redux-saga/effects';
 
 import auth from './auth';
 import chat, { chatSaga } from './chat';
-import image from './image';
+
+//  signUp
+import base from './base';
+import verify, { verifySaga } from './verify';
 import profile from './profile';
 import modal from './modal';
-import verify, { verifySaga } from './verify';
+import image from './image';
 
 const rootReducer = combineReducers({
     auth,
-    chat,
-    image,
+
+    base,
+    verify,
     profile,
     modal,
-    verify,
+    image,
+
+    chat,
 });
 
 export function* rootSaga() {
     yield all([
-        chatSaga(),
         verifySaga(),
+        chatSaga(),
     ]);
 };
 

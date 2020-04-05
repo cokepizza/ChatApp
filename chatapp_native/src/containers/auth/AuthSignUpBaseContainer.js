@@ -1,49 +1,53 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useRef, createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Joi from 'react-native-joi';
 
 import AuthSignUpBase from '../../components/auth/AuthSignUpBase';
-import { setValue } from '../../modules/auth';
+import { setValue } from '../../modules/base';
 
 const AuthSignUpBaseContainer = ({ navigation }) => {
     const {
-        signUp,
         username,
-        nickname,
         password,
         passwordConfirm,
         gender,
         validation
-    } = useSelector(({ auth }) => ({
-        signUp: auth.signUp,
-        username: auth.signUp.username,
-        nickname: auth.signUp.nickname,
-        password: auth.signUp.password,
-        passwordConfirm: auth.signUp.passwordConfirm,
-        gender: auth.signUp.gender,
-        validation: auth.validation.signUp,
+    } = useSelector(({ base }) => ({
+        username: base.username,
+        password: base.password,
+        passwordConfirm: base.passwordConfirm,
+        gender: base.gender,
+        validation: base.validation,
     }));
 
     const dispatch = useDispatch();
+
+    const inputRef = useRef([ createRef(), createRef(), createRef() ]);
         
     useEffect(() => {
         const schema = Joi.object().keys({
             username: Joi.string().email({ minDomainAtoms: 2 }).min(3).max(30).required(),
-            nickname: Joi.string().min(4).max(15).required(),
             password: Joi.string().min(4).max(15).required(),
             passwordConfirm: Joi.any().valid(Joi.ref('password')).required(),
             gender: Joi.string().min(2).required(),
         });
+
+        const base = {
+            username,
+            password,
+            passwordConfirm,
+            gender,
+        }
         
         const revisedValidation =
-            Object.keys(signUp)
+            Object.keys(base)
                 .reduce((acc, cur) =>
                     ({
                         ...acc,
                         [cur]: true,
                     }), {});
 
-        const result = Joi.validate(signUp, schema, { abortEarly: false });
+        const result = Joi.validate(base, schema, { abortEarly: false });
 
         if(result.error) {
             result.error.details.forEach(detail => {
@@ -52,56 +56,48 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         };
 
         //  exception
-        const confirm = signUp.passwordConfirm;
-        if(confirm === '' || confirm.length < 4 || confirm.length > 15) {
+        if(passwordConfirm === '' || passwordConfirm.length < 4 || passwordConfirm.length > 15) {
             revisedValidation.passwordConfirm = false;
         }
 
         dispatch(setValue({
-            kind: 'validation',
-            key: 'signUp',
+            key: 'validation',
             value: revisedValidation,
         }));
 
-    }, [dispatch, signUp]);
+    }, [dispatch, username, password, passwordConfirm, gender]);
 
     const onChangeText = useCallback((key, value) => {
         dispatch(setValue({
-            kind: 'signUp',
             key,
             value,
         }));
     }, [dispatch]);
 
+    const onPressCheckBox = useCallback((key, value) => {
+        dispatch(setValue({
+            key,
+            value,
+        }))
+    }, [dispatch]);
+
+    //  고쳐야 함
     const onPressSubmit = useCallback(() => {
         if(password === passwordConfirm) {
             navigation.navigate('AuthSignUpDetail');
         }
     }, [dispatch, password, passwordConfirm]);
 
-    const onPressNavigate = useCallback(() => {
-        navigation.goBack();
-    }, [navigation]);
-
-    const onPressCheckBox = useCallback((key, value) => {
-        dispatch(setValue({
-            kind: 'signUp',
-            key,
-            value,
-        }))
-    }, [dispatch])
-
     return (
         <AuthSignUpBase
+            inputRef={inputRef}
             username={username}
-            nickname={nickname}
             password={password}
             passwordConfirm={passwordConfirm}
             gender={gender}
             validation={validation}
             onChangeText={onChangeText}
             onPressSubmit={onPressSubmit}
-            onPressNavigate={onPressNavigate}
             onPressCheckBox={onPressCheckBox}
         />
     )

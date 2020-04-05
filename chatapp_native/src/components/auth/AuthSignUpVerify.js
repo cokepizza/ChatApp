@@ -94,6 +94,10 @@ const SubmitTouchBlock = styled.TouchableOpacity`
         border: 1px solid rgba(123, 104, 238, 0.8);
         background: white;
     `}
+
+    ${props => props.invalid && css`
+        background: rgba(0, 0, 0, 0.05);
+    `}
 `;
 
 const SubmitTextBlock = styled.Text`
@@ -102,6 +106,10 @@ const SubmitTextBlock = styled.Text`
 
     ${props => props.flag && css`
         color: rgba(123, 104, 238, 0.8);
+    `}
+
+    ${props => props.invalid && css`
+        color: rgba(0, 0, 0, 0.2);
     `}
 `;
 
@@ -140,12 +148,17 @@ const TextInputForm = React.memo(({
             />
             <SubmitTouchBlock
                 onPress={onPress}
+                disabled={!validation}
+                invalid={!validation}
                 flag={loading || flag}
             >
                 {loading ? (
                     <ActivityIndicator color='rgba(123, 104, 238, 0.8)'/>
                 ) : (
-                    <SubmitTextBlock flag={flag}>  
+                    <SubmitTextBlock
+                        flag={flag}
+                        invalid={!validation}
+                    >
                         {flag ? nextMention : mention}
                     </SubmitTextBlock>
                 )}
