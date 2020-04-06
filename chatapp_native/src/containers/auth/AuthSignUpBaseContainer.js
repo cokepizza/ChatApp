@@ -5,6 +5,8 @@ import Joi from 'react-native-joi';
 import AuthSignUpBase from '../../components/auth/AuthSignUpBase';
 import { setValue, clearValue, duplicateCheck } from '../../modules/base';
 
+const inputComponentNum = 3;
+
 const AuthSignUpBaseContainer = ({ navigation }) => {
     const {
         username,
@@ -15,7 +17,6 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         duplicateCheckFlag,
         duplicateCheckLoading,
         duplicateCheckError,
-        duplicateCheckErrorRecord,
     } = useSelector(({ base }) => ({
         username: base.username,
         password: base.password,
@@ -25,14 +26,13 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         duplicateCheckFlag: base.duplicateCheckFlag,
         duplicateCheckLoading: base.duplicateCheckLoading,
         duplicateCheckError: base.duplicateCheckError,
-        duplicateCheckErrorRecord: base.duplicateCheckErrorRecord,
     }));
 
     const dispatch = useDispatch();
 
     const [ focused, setFocused ] = useState([ false, false, false, false ]);
-    const componentHeight = useRef([ null, null, null ]);
-    const inputRef = useRef([ createRef(), createRef(), createRef() ]);
+    const componentHeight = useRef([ null, null, null, null ]);
+    const inputRef = useRef([ createRef(), createRef(), createRef(), createRef() ]);
     const scrollRef = useRef();
 
     useEffect(() => {
@@ -86,12 +86,13 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
     }, [dispatch]);
 
     const onPressCheckBox = useCallback((key, value) => {
+        clearFocus();
         onFocus(3);
         dispatch(setValue({
             key,
             value,
         }))
-    }, [dispatch, onFocus]);
+    }, [dispatch, onFocus, clearFocus]);
 
     const onPressUsername = useCallback(() => {
         dispatch(duplicateCheck({
@@ -106,17 +107,17 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
             }
         });
 
-        setFocused([ false, false, false, false]);
+        setFocused([ false, false, false, false ]);
     }, []);
 
     const onFocus = useCallback(index => {
         if(scrollRef.current) {
-            if(index < 3) {
-                // sugar
-                setTimeout(() => {
-                    scrollRef.current.scrollTo({ y: componentHeight.current[index], animated: true });
-                }, 100);
-            }
+            //  sugar
+            console.log(index);
+            console.log(componentHeight.current[index]);
+            setTimeout(() => {
+                scrollRef.current.scrollTo({ y: componentHeight.current[index], animated: true });
+            }, 100);
         }
 
         setFocused(prevState => {
@@ -134,23 +135,20 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
     }, [dispatch, onFocus]);
 
     const onLayout = useCallback(({ nativeEvent: { layout: { x, y, width, height }}}, index) => {
-        console.log('index: ' + index);
-        console.log('y :' + y);
         componentHeight.current[index] = y - 10;
     }, []);
 
-    const onPressFrame = useCallback(() => {
-        
-    });
+    const onPressFrame = useCallback(index => {
+        inputRef.current[index].focus();
+    }, []);
+
+    const onPressBackground = useCallback(() => {
+        clearFocus();
+    }, [clearFocus]);
 
     const onPressSubmit = useCallback(() => {
         navigation.navigate('AuthSignUpVerify');
     }, [navigation]);
-
-    const onContainerLayout = useCallback(({ nativeEvent: { layout: { x, y, width, height }}}) => {
-        console.log(y);
-        console.log(height);
-    }, [])
 
     return (
         <AuthSignUpBase
@@ -165,15 +163,15 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
             duplicateCheckFlag={duplicateCheckFlag}
             duplicateCheckLoading={duplicateCheckLoading}
             duplicateCheckError={duplicateCheckError}
-            duplicateCheckErrorRecord={duplicateCheckErrorRecord}
             onChangeText={onChangeText}
             onPressUsername={onPressUsername}
             onFocusUsername={onFocusUsername}
             onPressCheckBox={onPressCheckBox}
             onPressSubmit={onPressSubmit}
+            onPressFrame={onPressFrame}
+            onPressBackground={onPressBackground}
             onLayout={onLayout}
             onFocus={onFocus}
-            onContainerLayout={onContainerLayout}
         />
     )
 };

@@ -27,7 +27,6 @@ const initialState = {
     duplicateCheckFlag: false,
     duplicateCheckLoading: false,
     duplicateCheckError: false,
-    duplicateCheckErrorRecord: false,
 };
 
 export default handleActions({
@@ -44,13 +43,11 @@ export default handleActions({
         ...state,
         duplicateCheckFlag: true,
         duplicateCheckError: false,
-        duplicateCheckErrorRecord: false,
     }),
     [DUPLICATE_CHECK_FAILURE]: (state, { payload: { error } }) => ({
         ...state,
         duplicateCheckFlag: false,
         duplicateCheckError: error,
-        duplicateCheckErrorRecord: error,
     }),
     [DUPLICATE_CHECK_LOADING]: (state, { payload: loading }) => ({
         ...state,
