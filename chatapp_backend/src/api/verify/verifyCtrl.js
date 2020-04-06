@@ -19,8 +19,8 @@ export const createSMS = (req, res, next) => {
     client.messages.create({
         body: `hixxx service. Code: ${verificationCode}`,
         from: originNumber,
-        to: '+82-1026699539',
-        // to: '+82-1077486664',
+        // to: '+82-1026699539',
+        to: '+82-1077486664',
         // to: '+82-1036324836',
         // to: '+82-1025734800',
     })
@@ -43,6 +43,23 @@ export const createSMS = (req, res, next) => {
         // return res.status(200).send({
         //     token,
         // });
+        console.dir('verificationCode');
+        console.dir(verificationCode);
+
+        const tokenTimeLimit = Number(10 * 3);
+        const verify = {
+            verificationCode,
+        }
+        const token = jwt.sign(verify, process.env.JWT_SECRET, {
+            issuer: 'cokepizza',
+            expiresIn: tokenTimeLimit,
+        });
+
+        console.dir(token);
+
+        return res.status(200).send({
+            token,
+        });
     })
     .catch(e => {
         // return res.status(404).send({

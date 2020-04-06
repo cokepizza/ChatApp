@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, createRef } from 'react';
+import React, { useCallback, useEffect, useRef, createRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Joi from 'react-native-joi';
 
@@ -15,6 +15,7 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         duplicateCheckFlag,
         duplicateCheckLoading,
         duplicateCheckError,
+        duplicateCheckErrorRecord,
     } = useSelector(({ base }) => ({
         username: base.username,
         password: base.password,
@@ -24,14 +25,16 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         duplicateCheckFlag: base.duplicateCheckFlag,
         duplicateCheckLoading: base.duplicateCheckLoading,
         duplicateCheckError: base.duplicateCheckError,
+        duplicateCheckErrorRecord: base.duplicateCheckErrorRecord,
     }));
 
     const dispatch = useDispatch();
 
-    const scrollRef = useRef();
+    const [ focused, setFocused ] = useState([ false, false, false, false ]);
     const componentHeight = useRef([ null, null, null ]);
     const inputRef = useRef([ createRef(), createRef(), createRef() ]);
-        
+    const scrollRef = useRef();
+
     useEffect(() => {
         const schema = Joi.object().keys({
             username: Joi.string().email({ minDomainAtoms: 2 }).min(3).max(30).required(),
@@ -83,11 +86,12 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
     }, [dispatch]);
 
     const onPressCheckBox = useCallback((key, value) => {
+        onFocus(3);
         dispatch(setValue({
             key,
             value,
         }))
-    }, [dispatch]);
+    }, [dispatch, onFocus]);
 
     const onPressUsername = useCallback(() => {
         dispatch(duplicateCheck({
@@ -95,30 +99,64 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         }))
     }, [dispatch, username]);
 
-    const onFocusUsername = useCallback(() => {
-        dispatch(clearValue({
-            key: 'duplicateCheckError'
-        }))
-    }, [dispatch]);
+    const clearFocus = useCallback(() => {
+        inputRef.current.forEach((input, index) => {
+            if(index < inputComponentNum) {
+                input.blur();
+            }
+        });
+
+        setFocused([ false, false, false, false]);
+    }, []);
 
     const onFocus = useCallback(index => {
         if(scrollRef.current) {
-            scrollRef.current.scrollTo({ y: componentHeight.current[index], animated: true });
+            if(index < 3) {
+                // sugar
+                setTimeout(() => {
+                    scrollRef.current.scrollTo({ y: componentHeight.current[index], animated: true });
+                }, 100);
+            }
         }
+
+        setFocused(prevState => {
+            const nextFocused = [ false, false, false, false ];
+            nextFocused[index] = true;
+            return nextFocused;
+        });
     }, []);
 
+    const onFocusUsername = useCallback(() => {
+        onFocus(0);
+        dispatch(clearValue({
+            key: 'duplicateCheckError'
+        }))
+    }, [dispatch, onFocus]);
+
     const onLayout = useCallback(({ nativeEvent: { layout: { x, y, width, height }}}, index) => {
-        componentHeight.current[index] = y-30;
+        console.log('index: ' + index);
+        console.log('y :' + y);
+        componentHeight.current[index] = y - 10;
     }, []);
+
+    const onPressFrame = useCallback(() => {
+        
+    });
 
     const onPressSubmit = useCallback(() => {
         navigation.navigate('AuthSignUpVerify');
     }, [navigation]);
 
+    const onContainerLayout = useCallback(({ nativeEvent: { layout: { x, y, width, height }}}) => {
+        console.log(y);
+        console.log(height);
+    }, [])
+
     return (
         <AuthSignUpBase
             inputRef={inputRef}
             scrollRef={scrollRef}
+            focused={focused}
             username={username}
             password={password}
             passwordConfirm={passwordConfirm}
@@ -127,6 +165,7 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
             duplicateCheckFlag={duplicateCheckFlag}
             duplicateCheckLoading={duplicateCheckLoading}
             duplicateCheckError={duplicateCheckError}
+            duplicateCheckErrorRecord={duplicateCheckErrorRecord}
             onChangeText={onChangeText}
             onPressUsername={onPressUsername}
             onFocusUsername={onFocusUsername}
@@ -134,6 +173,7 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
             onPressSubmit={onPressSubmit}
             onLayout={onLayout}
             onFocus={onFocus}
+            onContainerLayout={onContainerLayout}
         />
     )
 };

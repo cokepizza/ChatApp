@@ -1,6 +1,8 @@
 import React from 'react';
 import { Dimensions, ActivityIndicator, Platform } from 'react-native';
 import styled, { css } from 'styled-components/native';
+import { getStatusBarHeight } from 'react-native-status-bar-height';
+import { getBottomSpace } from 'react-native-iphone-x-helper';
 
 import SubHeaderContainer from '../../containers/common/SubHeaderContainer';
 import CheckBeforeIcon from '../../assets/images/check_before.png';
@@ -12,13 +14,6 @@ const AuthSignUpBaseBlock = styled.SafeAreaView`
     background: white;
     align-items: center;
 `;
-
-// const BodyViewBlock = styled.View`
-//     flex: 2;
-//     width: 100%;
-//     align-items: center;
-//     background: white;
-// `;
 
 const InputOuterFrameBlock = styled.View`
     padding-left: 24px;
@@ -55,19 +50,20 @@ const InputBlock = styled.TextInput`
 const ImageBlock = styled.Image`
     width: 18px;
     height: 18px;
-    opacity: 0.8;
+    opacity: 0.3;
+
+    ${props => props.focused && css`
+        opacity: 0.8;
+    `}
 `;
 
-const ButtonViewBlock = styled.View`
+const BottomViewBlock = styled.View`
     padding-left: 24px;
     padding-right: 24px;
-    margin-top: 130px;
-    /* margin-top: 500px; */
-    /* flex:1; */
-    /* height:40%;
-    justify-content: flex-end; */
-    /* background: red; */
-    /* margin-top: 100px; */
+    /* 전체높이 - 상태표시줄 -아이폰X 바텀바 -navigation 헤더 -서브헤더 -바디컴포넌트 높이*/
+    height: ${Dimensions.get('window').height - getStatusBarHeight(true) - getBottomSpace()-45-60-404.5}px;
+    justify-content: flex-end;
+    padding-bottom: 30px;
 `;
 
 const ButtonTouchBlock = styled.TouchableOpacity`
@@ -76,11 +72,9 @@ const ButtonTouchBlock = styled.TouchableOpacity`
     justify-content: center;
     align-items: center;
     border-radius: 5px;
-    /* background: rgba(176, 196, 222, 0.5); */
     background: rgba(123, 104, 238, 0.8);
     ${props => props.disabled && css`
         background: rgba(0, 0, 0, 0.05);
-        /* background: rgba(176, 196, 222, 0.2); */
     `}
 `;
 
@@ -207,6 +201,7 @@ const TextInputForm = React.memo(({
     nextMention,
     onPress,
     plainForm,
+    focused,
     ...rest
 }) => {
     return (
@@ -215,9 +210,9 @@ const TextInputForm = React.memo(({
                 <ImageBlock source={ErrorIcon} />
             ) : (
                 validation ? (
-                    <ImageBlock source={CheckAfterIcon} />
+                    <ImageBlock source={CheckAfterIcon} focused={focused} />
                 ) : (
-                    <ImageBlock source={CheckBeforeIcon} />
+                    <ImageBlock source={CheckBeforeIcon} focused={focused}/>
                 )
             )}
             <InputBlock
@@ -255,6 +250,7 @@ const TextInputForm = React.memo(({
 const AuthSignUpBase = ({
     inputRef,
     scrollRef,
+    focused,
     username,
     password,
     passwordConfirm,
@@ -263,6 +259,7 @@ const AuthSignUpBase = ({
     duplicateCheckFlag,
     duplicateCheckLoading,
     duplicateCheckError,
+    duplicateCheckErrorRecord,
     onChangeText,
     onPressUsername,
     onFocusUsername,
@@ -271,13 +268,14 @@ const AuthSignUpBase = ({
     onLayout,
     onFocus,
 }) => {
-    
     let inValidSignUp = false;
     Object.keys(validation).forEach(key => {
         if(!validation[key]) {
             inValidSignUp = true;
         }
     })
+
+    // inValidSignUp |= duplicateCheckErrorRecord;
 
     return (
         
@@ -290,132 +288,125 @@ const AuthSignUpBase = ({
              <KeyboardAvoidingView
                 behavior={Platform.select({android: undefined, ios: 'padding'})}
             >
-            <AuthSignUpBaseScrollViewBlock
-                ref={scrollRef}
-                // contentContainerStyle={{flexGrow: 1}}
-                horizontal={false}
-                keyboardShouldPersistTaps='always'
-            >
-            {/* <KeyboardAvoidingView
-                behavior={Platform.select({android: undefined, ios: 'padding'})}
-                // keyboardVerticalOffset={
-                //     Platform.select({
-                //        ios: () => 0,
-                //        android: () => 200
-                //     })()
-                // }
-                // keyboardVerticalOffset={200}
-                // keyboardVerticalOffset = {500}
-            > */}
-                <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 0)}>
-                    <TextBlock title={1}>
-                        이메일
-                    </TextBlock>
-                    <TextInputForm
-                        inputRef={inputRef}
-                        index={0}
-                        validation={validation.username}
-                        flag={duplicateCheckFlag && !duplicateCheckError}
-                        error={duplicateCheckError}
-                        loading={duplicateCheckLoading}
-                        mention='중복검사'
-                        nextMention='재검사'
-                        onPress={onPressUsername}
-                        onFocus={() => onFocus(0)}
-                        // onFocus={onFocusUsername}
-                        value={username}
-                        onChangeText={text => onChangeText('username', text)}
-                        keyboardType='email-address'
-                    />
-                </InputOuterFrameBlock>
-                {duplicateCheckError ? (
-                    <RedWarningBlock>
-                        <RedTextBlock>
-                            {duplicateCheckError}
-                        </RedTextBlock>
-                    </RedWarningBlock>
-                ): (
+                <AuthSignUpBaseScrollViewBlock
+                    // bounces={false}
+                    // scrollToOverflowEnabled={false}
+                    // contentContainerStyle={{flexGrow: 1}}
+                    ref={scrollRef}
+                    horizontal={false}
+                    keyboardShouldPersistTaps='always'
+                >
+                    <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 0)}>
+                        <TextBlock title={1}>
+                            이메일
+                        </TextBlock>
+                        <TextInputForm
+                            inputRef={inputRef}
+                            index={0}
+                            validation={validation.username}
+                            flag={duplicateCheckFlag && !duplicateCheckError}
+                            error={duplicateCheckError}
+                            loading={duplicateCheckLoading}
+                            mention='중복검사'
+                            nextMention='재검사'
+                            onPress={onPressUsername}
+                            onFocus={onFocusUsername}
+                            focused={focused[0]}
+                            // onFocus={onFocusUsername}
+                            value={username}
+                            onChangeText={text => onChangeText('username', text)}
+                            keyboardType='email-address'
+                        />
+                    </InputOuterFrameBlock>
+                    {duplicateCheckError ? (
+                        <RedWarningBlock>
+                            <RedTextBlock>
+                                {duplicateCheckError}
+                            </RedTextBlock>
+                        </RedWarningBlock>
+                    ): (
+                        <MarginBlock />
+                    )}
+                    <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 1)}>
+                        <TextBlock title={1}>
+                            비밀번호
+                        </TextBlock>
+                        <TextInputForm
+                            inputRef={inputRef}
+                            index={1}
+                            validation={validation.password}
+                            plainForm={true}
+                            error={false}
+                            // onFocus={onFocusUsername}
+                            onFocus={() => onFocus(1)}
+                            focused={focused[1]}
+                            value={password}
+                            onChangeText={text => onChangeText('password', text)}
+                            secureTextEntry
+                            textContentType='newPassword'
+                            keyboardType='default'
+                        />
+                    </InputOuterFrameBlock>
+                    <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 2)}>
+                        <TextBlock title={1}>
+                            비밀번호 확인
+                        </TextBlock>
+                        <TextInputForm
+                            inputRef={inputRef}
+                            index={1}
+                            validation={validation.passwordConfirm}
+                            plainForm={true}
+                            error={false}
+                            // onFocus={onFocusUsername}
+                            onFocus={() => onFocus(2)}
+                            focused={focused[2]}
+                            value={passwordConfirm}
+                            onChangeText={text => onChangeText('passwordConfirm', text)}
+                            secureTextEntry
+                            textContentType='newPassword'
+                            keyboardType='default'
+                        />
+                    </InputOuterFrameBlock>
                     <MarginBlock />
-                )}
-                <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 1)}>
-                    <TextBlock title={1}>
-                        비밀번호
-                    </TextBlock>
-                    <TextInputForm
-                        inputRef={inputRef}
-                        index={1}
-                        validation={validation.password}
-                        plainForm={true}
-                        error={false}
-                        // onFocus={onFocusUsername}
-                        onFocus={() => onFocus(1)}
-                        value={password}
-                        onChangeText={text => onChangeText('password', text)}
-                        secureTextEntry
-                        textContentType='newPassword'
-                        keyboardType='default'
-                    />
-                </InputOuterFrameBlock>
-                <InputOuterFrameBlock marginTop={1} onLayout={e => onLayout(e, 2)}>
-                    <TextBlock title={1}>
-                        비밀번호 확인
-                    </TextBlock>
-                    <TextInputForm
-                        inputRef={inputRef}
-                        index={1}
-                        validation={validation.passwordConfirm}
-                        plainForm={true}
-                        error={false}
-                        // onFocus={onFocusUsername}
-                        onFocus={() => onFocus(2)}
-                        value={passwordConfirm}
-                        onChangeText={text => onChangeText('passwordConfirm', text)}
-                        secureTextEntry
-                        textContentType='newPassword'
-                        keyboardType='default'
-                    />
-                </InputOuterFrameBlock>
-                <MarginBlock />
-                <InputOuterFrameBlock marginTop={1}>
-                    <TextBlock title={1}>
-                        성별
-                    </TextBlock>
-                    <InputFrameBlock>
-                        {validation.gender ? (
-                            <ImageBlock source={CheckAfterIcon} />
-                        ) : (
-                            <ImageBlock source={CheckBeforeIcon} />
-                        )}
-                        <CheckBoxFrameBlock margin={1}>
-                            <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'male')}>
-                                <CheckBoxTextBlock gender={gender === 'male'}>
-                                    남자
-                                </CheckBoxTextBlock>
-                            </CheckBoxTouchBlock>
-                        </CheckBoxFrameBlock>
-                        <CheckBoxFrameBlock>
-                            <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'female')}>
-                                <CheckBoxTextBlock gender={gender === 'female'}>
-                                    여자
-                                </CheckBoxTextBlock>
-                            </CheckBoxTouchBlock>
-                        </CheckBoxFrameBlock>
-                    </InputFrameBlock>
-                </InputOuterFrameBlock>
-                <ButtonViewBlock>
-                    <ButtonTouchBlock
-                        disabled={inValidSignUp}
-                        onPress={onPressSubmit}
-                    >
-                        <ButtonTextBlock
+                    <InputOuterFrameBlock marginTop={1}>
+                        <TextBlock title={1}>
+                            성별
+                        </TextBlock>
+                        <InputFrameBlock>
+                            {validation.gender ? (
+                                <ImageBlock source={CheckAfterIcon} focused={focused[3]}/>
+                            ) : (
+                                <ImageBlock source={CheckBeforeIcon} focused={focused[3]}/>
+                            )}
+                            <CheckBoxFrameBlock margin={1}>
+                                <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'male')}>
+                                    <CheckBoxTextBlock gender={gender === 'male'}>
+                                        남자
+                                    </CheckBoxTextBlock>
+                                </CheckBoxTouchBlock>
+                            </CheckBoxFrameBlock>
+                            <CheckBoxFrameBlock>
+                                <CheckBoxTouchBlock onPress={() => onPressCheckBox('gender', 'female')}>
+                                    <CheckBoxTextBlock gender={gender === 'female'}>
+                                        여자
+                                    </CheckBoxTextBlock>
+                                </CheckBoxTouchBlock>
+                            </CheckBoxFrameBlock>
+                        </InputFrameBlock>
+                    </InputOuterFrameBlock>
+                    <BottomViewBlock>
+                        <ButtonTouchBlock
                             disabled={inValidSignUp}
+                            onPress={onPressSubmit}
                         >
-                            계정 생성하기
-                        </ButtonTextBlock>
-                    </ButtonTouchBlock>
-                </ButtonViewBlock>
-            {/* </KeyboardAvoidingView>   */}
-            </AuthSignUpBaseScrollViewBlock>
+                            <ButtonTextBlock
+                                disabled={inValidSignUp}
+                            >
+                                계정 생성하기
+                            </ButtonTextBlock>
+                        </ButtonTouchBlock>
+                    </BottomViewBlock>
+                </AuthSignUpBaseScrollViewBlock>
             </KeyboardAvoidingView>
         </AuthSignUpBaseBlock>
         

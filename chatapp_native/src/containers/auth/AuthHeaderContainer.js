@@ -3,6 +3,7 @@ import { Alert } from 'react-native';
 import { useDispatch, useSelector } from 'react-redux';
 
 import Header from '../../components/common/Header';
+import { clearAll as clearBaseValue } from '../../modules/base';
 import { clearValue as clearImageValue } from '../../modules/image';
 import { clearValue as clearProfileValue } from '../../modules/profile';
 import { clearAll as clearVerifyValue } from '../../modules/verify';
@@ -28,6 +29,7 @@ const AuthHeaderContainer = ({ left, center, right, leftNav, rightNav, navigatio
                     text: '가입취소',
                     onPress: () => {
                         navigation.navigate(leftNav);
+                        dispatch(clearBaseValue());
                         dispatch(clearVerifyValue());
                         dispatch(clearImageValue());
                         dispatch(clearProfileValue());
