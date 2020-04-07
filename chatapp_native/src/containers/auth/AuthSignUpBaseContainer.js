@@ -108,7 +108,7 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         });
 
         setFocused([ false, false, false, false ]);
-    }, []);
+    }, [inputComponentNum]);
 
     const onFocus = useCallback(index => {
         if(scrollRef.current) {
@@ -150,6 +150,14 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         navigation.navigate('AuthSignUpVerify');
     }, [navigation]);
 
+    const onKeyboardReturn = useCallback(index => {
+        if(index+1 < inputComponentNum) {
+            inputRef.current[index+1].focus();
+        } else if(index+1 === inputComponentNum) {
+            clearFocus();
+        }
+    }, [onFocus, clearFocus, inputComponentNum]);
+
     return (
         <AuthSignUpBase
             inputRef={inputRef}
@@ -172,6 +180,7 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
             onPressBackground={onPressBackground}
             onLayout={onLayout}
             onFocus={onFocus}
+            onKeyboardReturn={onKeyboardReturn}
         />
     )
 };

@@ -282,6 +282,7 @@ const AuthSignUpBase = ({
     onPressBackground,
     onLayout,
     onFocus,
+    onKeyboardReturn,
 }) => {
 
     let inValidSignUp = false;
@@ -335,6 +336,7 @@ const AuthSignUpBase = ({
                                     value={username}
                                     onChangeText={text => onChangeText('username', text)}
                                     keyboardType='email-address'
+                                    onSubmitEditing={() => onKeyboardReturn(0)}
                                 />
                             </InputOuterFrameBlock>
                         </InputOuterTouchBlock>
@@ -366,6 +368,7 @@ const AuthSignUpBase = ({
                                     secureTextEntry
                                     textContentType='newPassword'
                                     keyboardType='default'
+                                    onSubmitEditing={() => onKeyboardReturn(1)}
                                 />
                             </InputOuterFrameBlock>
                         </InputOuterTouchBlock>
@@ -388,6 +391,7 @@ const AuthSignUpBase = ({
                                     secureTextEntry
                                     textContentType='newPassword'
                                     keyboardType='default'
+                                    onSubmitEditing={() => onKeyboardReturn(2)}
                                 />
                             </InputOuterFrameBlock>
                         </InputOuterTouchBlock>
