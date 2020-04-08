@@ -54,9 +54,16 @@ const App = () => {
           />
         )
         : (
+          // <Stack.Screen
+          //   name="Auth"
+          //   component={AuthNavigator}
+          //   options={{
+          //     transitionSpec,
+          //   }}
+          // />
           <Stack.Screen
-            name="Auth"
-            component={AuthNavigator}
+            name="Main"
+            component={MainNavigator}
             options={{
               transitionSpec,
             }}

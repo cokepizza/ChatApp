@@ -9,7 +9,6 @@ export const read = async (req, res, next) => {
     //  기본적인 유저 정보는 TOKEN단에서 처리
     const { gender, score } = await User.findOne({ username });
 
-    const gender = 0;
     const requiredGender = 1 - gender;
     try {
         const selected = await User.findOne({ gender: requiredGender });
