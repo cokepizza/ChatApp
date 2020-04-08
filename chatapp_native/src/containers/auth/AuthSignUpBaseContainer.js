@@ -134,12 +134,7 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         inputRef.current[index].focus();
     }, []);
 
-    const onPressBackground = useCallback(() => {
-        clearFocus();
-    }, [clearFocus]);
-
     const onPressUsername = useCallback(async() => {
-        clearFocus();
         try {
             await dispatch(duplicateCheck({
                 username,
@@ -148,13 +143,17 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         } catch(e) {
             console.log('duplicateCheck error');
         }
-    }, [dispatch, clearFocus, username]);
+    }, [dispatch, username]);
 
     const onPressSubmit = useCallback(() => {
         clearFocus();
         navigation.navigate('AuthSignUpVerify');
     }, [navigation]);
 
+    const onPressBackground = useCallback(() => {
+        clearFocus();
+    }, [clearFocus]);
+    
     const onKeyboardReturn = useCallback(index => {
         if(index+1 < inputComponentNum) {
             inputRef.current[index+1].focus();

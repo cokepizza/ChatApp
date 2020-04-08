@@ -7,11 +7,15 @@ import CheckBeforeIcon from '../../assets/images/check_before.png';
 import CheckAfterIcon from '../../assets/images/check_after.png';
 import ErrorIcon from '../../assets/images/error.png';
 
+const AuthSignUpVerifyTouchBlock = styled.TouchableWithoutFeedback``;
+
 const AuthSignUpVerifyBlock = styled.SafeAreaView`
     flex: 1;
     background: white;
     align-items: center;
 `;
+
+const InputOuterTouchBlock = styled.TouchableWithoutFeedback``;
 
 const WarningBlock = styled.View`
     width: 100%;
@@ -196,6 +200,8 @@ const AuthSignUpVerify = ({
     onChangeText,
     onPressSubmit,
     onPressVerify,
+    onPressFrame,
+    onPressBackground,
     onFocusVerify,
     onFocus,
 }) => {
@@ -210,86 +216,92 @@ const AuthSignUpVerify = ({
     const time = minute + ":" + second;
 
     return (
-        <AuthSignUpVerifyBlock>
-            <SubHeaderContainer
-                title='본인 인증'
-                index={2}
-                total={3}
-            />
-            <WarningBlock>
-                <TextBlock>
-                    허위/중복 가입을 막기 위한 절차이며,
-                </TextBlock>
-                <TextBlock>
-                    휴대폰번호는 절대 외부에 공개되지 않습니다.
-                </TextBlock>
-            </WarningBlock>
-            <InputOuterFrameBlock>
-                <TextBlock title={1}>
-                    휴대폰 번호
-                </TextBlock>
-                <TextInputForm
-                    inputRef={inputRef}
-                    index={0}
-                    validation={validation.createSMSInput}
-                    flag={createSMSFlag && !createSMSError}
-                    error={createSMSError}
-                    loading={createSMSLoading}
-                    mention='인증번호 전송'
-                    nextMention='재전송'
-                    value={createSMSInput}
-                    onFocus={() => onFocus(0)}
-                    focused={focused[0]}
-                    onChangeText={text => onChangeText('createSMSInput', text)}
-                    onPress={onPressSubmit}
-                    keyboardType='number-pad'
+        <AuthSignUpVerifyTouchBlock onPress={onPressBackground}>
+            <AuthSignUpVerifyBlock>
+                <SubHeaderContainer
+                    title='본인 인증'
+                    index={2}
+                    total={3}
                 />
-            </InputOuterFrameBlock>
-            {createSMSError && (
-                <RedWarningBlock>
-                    <RedTextBlock>
-                        {createSMSError}
-                    </RedTextBlock>
-                </RedWarningBlock>
-            )}
-            {createSMSFlag && !createSMSError && (
-                <>
-                    <InputOuterFrameBlock marginTop={1}>
+                <WarningBlock>
+                    <TextBlock>
+                        허위/중복 가입을 막기 위한 절차이며,
+                    </TextBlock>
+                    <TextBlock>
+                        휴대폰번호는 절대 외부에 공개되지 않습니다.
+                    </TextBlock>
+                </WarningBlock>
+                <InputOuterTouchBlock onPress={() => onPressFrame(0)}>
+                    <InputOuterFrameBlock>
                         <TextBlock title={1}>
-                            인증번호
+                            휴대폰 번호
                         </TextBlock>
                         <TextInputForm
                             inputRef={inputRef}
-                            index={1}
-                            validation={validation.verificationTokenInput}
-                            loading={verificationTokenLoading}
-                            error={verificationTokenError}
-                            mention='인증하기'
-                            nextMention='인증하기'
-                            value={verificationTokenInput}
-                            onChangeText={text => onChangeText('verificationTokenInput', text)}
-                            onPress={onPressVerify}
-                            onFocus={onFocusVerify}
-                            focused={focused[1]}
+                            index={0}
+                            validation={validation.createSMSInput}
+                            flag={createSMSFlag && !createSMSError}
+                            error={createSMSError}
+                            loading={createSMSLoading}
+                            mention='인증번호 전송'
+                            nextMention='재전송'
+                            value={createSMSInput}
+                            onFocus={() => onFocus(0)}
+                            focused={focused[0]}
+                            onChangeText={text => onChangeText('createSMSInput', text)}
+                            onPress={onPressSubmit}
                             keyboardType='number-pad'
                         />
                     </InputOuterFrameBlock>
+                </InputOuterTouchBlock>
+                {createSMSError && (
                     <RedWarningBlock>
-                        {verificationTokenError ? (
-                            <RedTextBlock>
-                                {verificationTokenError}
-                            </RedTextBlock>
-                        ) : (
-                                !!timeLimit && (
-                                    <PurpleTextBlock>
-                                        인증번호 유효시간 {time}
-                                    </PurpleTextBlock>
-                                )
-                        )}
+                        <RedTextBlock>
+                            {createSMSError}
+                        </RedTextBlock>
                     </RedWarningBlock>
-                </>
-            )}
-        </AuthSignUpVerifyBlock>
+                )}
+                {createSMSFlag && !createSMSError && (
+                    <>
+                        <InputOuterTouchBlock onPress={() => onPressFrame(1)}>
+                            <InputOuterFrameBlock marginTop={1}>
+                                <TextBlock title={1}>
+                                    인증번호
+                                </TextBlock>
+                                <TextInputForm
+                                    inputRef={inputRef}
+                                    index={1}
+                                    validation={validation.verificationTokenInput}
+                                    loading={verificationTokenLoading}
+                                    error={verificationTokenError}
+                                    mention='인증하기'
+                                    nextMention='인증하기'
+                                    value={verificationTokenInput}
+                                    onChangeText={text => onChangeText('verificationTokenInput', text)}
+                                    onPress={onPressVerify}
+                                    onFocus={onFocusVerify}
+                                    focused={focused[1]}
+                                    keyboardType='number-pad'
+                                />
+                            </InputOuterFrameBlock>
+                        </InputOuterTouchBlock>
+                        <RedWarningBlock>
+                            {verificationTokenError ? (
+                                <RedTextBlock>
+                                    {verificationTokenError}
+                                </RedTextBlock>
+                            ) : (
+                                    !!timeLimit && (
+                                        <PurpleTextBlock>
+                                            인증번호 유효시간 {time}
+                                        </PurpleTextBlock>
+                                    )
+                            )}
+                        </RedWarningBlock>
+                    </>
+                )}
+            </AuthSignUpVerifyBlock>
+        </AuthSignUpVerifyTouchBlock>
     );
 };
 

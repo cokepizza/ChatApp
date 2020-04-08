@@ -47,59 +47,6 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
     const [ focused, setFocused ] = useState([ false, false ]);
     const inputRef = useRef([ createRef(), createRef() ]);
 
-    const clearFocus = useCallback(() => {
-        inputRef.current.forEach(ref => {
-            if(ref.blur) {
-                ref.blur();
-            }
-        });
-
-        setFocused([ false, false ]);
-    }, []);
-
-    const onFocus = useCallback(index => {
-        setFocused(prevState => {
-            const nextFocused = [ false, false ];
-            nextFocused[index] = true;
-            return nextFocused;
-        });
-    }, []);
-
-    const onFocusVerify = useCallback(() => {
-        onFocus(1);
-        dispatch(clearValue({
-            key: 'verificationTokenError',
-        }));
-    }, [dispatch, onFocus]);
-
-    const onChangeText = useCallback((key, value) => {
-        dispatch(setValue({
-            key,
-            value,
-        }));
-    }, [dispatch]);
-    
-    const onPressSubmit = useCallback(async() => {
-        dispatch(disconnectWebsocket());
-        dispatch(clearPressSubmit());
-        try {
-            await dispatch(createSMS({
-                createSMSInput,
-            }));
-            inputRef.current[1].focus();
-        } catch(e) {
-            console.log('createSMS Error');
-        }
-    }, [dispatch, createSMSInput, clearFocus]);
-
-    const onPressVerify = useCallback(() => {
-        dispatch(verifyToken({
-            code: verificationTokenInput,
-            token,
-        }));
-        clearFocus();
-    }, [token, verificationTokenInput, token, clearFocus]);
-
     useEffect(() => {
         const schema = Joi.object().keys({
             createSMSInput: Joi.string().min(10).max(11).required(),
@@ -161,6 +108,63 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
         }
     }, [timeFlag, timeLimit]);
 
+    const clearFocus = useCallback(() => {
+        inputRef.current.forEach(ref => {
+            if(ref.blur) {
+                ref.blur();
+            }
+        });
+
+        setFocused([ false, false ]);
+    }, []);
+
+    const onFocus = useCallback(index => {
+        setFocused(prevState => {
+            const nextFocused = [ false, false ];
+            nextFocused[index] = true;
+            return nextFocused;
+        });
+    }, []);
+
+    const onFocusVerify = useCallback(() => {
+        onFocus(1);
+        dispatch(clearValue({
+            key: 'verificationTokenError',
+        }));
+    }, [dispatch, onFocus]);
+
+    const onChangeText = useCallback((key, value) => {
+        dispatch(setValue({
+            key,
+            value,
+        }));
+    }, [dispatch]);
+    
+    const onPressFrame = useCallback(index => {
+        inputRef.current[index].focus();
+    }, []);
+
+    const onPressSubmit = useCallback(() => {
+        dispatch(createSMS({
+            createSMSInput,
+        }));
+        dispatch(disconnectWebsocket());
+        dispatch(clearPressSubmit());
+        clearFocus();
+    }, [dispatch, createSMSInput, clearFocus]);
+
+    const onPressVerify = useCallback(() => {
+        dispatch(verifyToken({
+            code: verificationTokenInput,
+            token,
+        }));
+        clearFocus();
+    }, [token, verificationTokenInput, token, clearFocus]);
+
+    const onPressBackground = useCallback(() => {
+        clearFocus();
+    }, [clearFocus]);
+
     return (
         <AuthSignUpVerify
             inputRef={inputRef}
@@ -177,6 +181,8 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
             onChangeText={onChangeText}
             onPressSubmit={onPressSubmit}
             onPressVerify={onPressVerify}
+            onPressFrame={onPressFrame}
+            onPressBackground={onPressBackground}
             onFocusVerify={onFocusVerify}
             onFocus={onFocus}
         />
