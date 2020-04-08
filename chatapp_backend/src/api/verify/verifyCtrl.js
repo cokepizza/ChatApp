@@ -19,8 +19,8 @@ export const createSMS = (req, res, next) => {
     client.messages.create({
         body: `hixxx service. Code: ${verificationCode}`,
         from: originNumber,
-        // to: '+82-1026699539',
-        to: '+82-1077486664',
+        to: '+82-1026699539',
+        // to: '+82-1077486664',
         // to: '+82-1036324836',
         // to: '+82-1025734800',
     })

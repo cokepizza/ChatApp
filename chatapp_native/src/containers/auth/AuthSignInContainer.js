@@ -6,8 +6,8 @@ import { signInThunk, setValue } from '../../modules/auth';
 
 const AuthSignInContainer = ({ navigation }) => {
     const { username, password } = useSelector(({ auth }) => ({
-        username: auth.signIn.username,
-        password: auth.signIn.password,
+        username: auth.username,
+        password: auth.password,
     }));
 
     const dispatch = useDispatch();
@@ -34,7 +34,6 @@ const AuthSignInContainer = ({ navigation }) => {
 
     const onChangeText = useCallback((key, value) => {
         dispatch(setValue({
-            kind: 'signIn',
             key,
             value,
         }));
@@ -54,8 +53,8 @@ const AuthSignInContainer = ({ navigation }) => {
 
     const onPressNavigate = useCallback(() => {
         clearFocus();
-        navigation.navigate('AuthSignUpBase');
-        // navigation.navigate('AuthSignUpVerify');
+        // navigation.navigate('AuthSignUpBase');
+        navigation.navigate('AuthSignUpVerify');
     }, [navigation]);
 
     return (

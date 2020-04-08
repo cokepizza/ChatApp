@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect, useRef, createRef } from 'react';
+import React, { useCallback, useEffect, useRef, createRef, useState } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 import Joi from 'react-native-joi';
 
@@ -44,6 +44,7 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
 
     const dispatch = useDispatch();
 
+    const [ focused, setFocused ] = useState([ false, false ]);
     const inputRef = useRef([ createRef(), createRef() ]);
 
     const clearFocus = useCallback(() => {
@@ -51,8 +52,25 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
             if(ref.blur) {
                 ref.blur();
             }
-        })
+        });
+
+        setFocused([ false, false ]);
     }, []);
+
+    const onFocus = useCallback(index => {
+        setFocused(prevState => {
+            const nextFocused = [ false, false ];
+            nextFocused[index] = true;
+            return nextFocused;
+        });
+    }, []);
+
+    const onFocusVerify = useCallback(() => {
+        onFocus(1);
+        dispatch(clearValue({
+            key: 'verificationTokenError',
+        }));
+    }, [dispatch, onFocus]);
 
     const onChangeText = useCallback((key, value) => {
         dispatch(setValue({
@@ -76,13 +94,7 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
             token,
         }));
         clearFocus();
-    }, [token, verificationTokenInput, clearFocus]);
-
-    const onFocusVerify = useCallback(() => {
-        dispatch(clearValue({
-            key: 'verificationTokenError',
-        }))
-    }, [dispatch]);
+    }, [token, verificationTokenInput, token, clearFocus]);
 
     useEffect(() => {
         const schema = Joi.object().keys({
@@ -137,7 +149,6 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
     }, [verificationTokenFlag]);
 
     useEffect(() => {
-        console.log(timeLimit);
         if(timeFlag && timeLimit === 0) {
             dispatch(setValue({
                 key: 'verificationTokenError',
@@ -149,6 +160,7 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
     return (
         <AuthSignUpVerify
             inputRef={inputRef}
+            focused={focused}
             timeLimit={timeLimit}
             createSMSInput={createSMSInput}
             createSMSFlag={createSMSFlag}
@@ -162,6 +174,7 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
             onPressSubmit={onPressSubmit}
             onPressVerify={onPressVerify}
             onFocusVerify={onFocusVerify}
+            onFocus={onFocus}
         />
     );
 };

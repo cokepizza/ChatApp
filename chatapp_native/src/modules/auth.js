@@ -110,26 +110,9 @@ export const autoSignInThunk = () => async ( dispatch, getState ) => {
 }
 
 const initialState = {
-    signIn: {
-        username: '',
-        password: '',    
-    },
-    signUp: {
-        username: '',
-        nickname: '',
-        password: '',
-        passwordConfirm: '',
-        gender: '',
-    },
-    validation: {
-        signUp: {
-            username: false,
-            nickname: false,
-            password: false,
-            passwordConfirm: false,
-            gender: false,
-        }
-    },
+    username: '',
+    password: '',
+    
     user: null,
     token: null,
     expiryDate: null,
@@ -154,12 +137,9 @@ export default handleActions({
         token: initialState.token,
         expiryDate: initialState.token,
     }),
-    [SET_VALUE]: (state, { payload: { kind, key, value } }) => ({
+    [SET_VALUE]: (state, { payload: { key, value } }) => ({
         ...state,
-        [kind]: {
-            ...state[kind],
-            [key]: value,
-        }
+        [key]: value,
     }),
     [CHECK_SUCCESS]: state => state,
     [SIGNIN_SUCCESS]: state => state,

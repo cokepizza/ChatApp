@@ -147,6 +147,7 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
     }, [clearFocus]);
 
     const onPressSubmit = useCallback(() => {
+        clearFocus();
         navigation.navigate('AuthSignUpVerify');
     }, [navigation]);
 
@@ -156,7 +157,7 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         } else if(index+1 === inputComponentNum) {
             clearFocus();
         }
-    }, [onFocus, clearFocus, inputComponentNum]);
+    }, [clearFocus, inputComponentNum]);
 
     return (
         <AuthSignUpBase

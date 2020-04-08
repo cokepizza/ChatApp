@@ -366,6 +366,7 @@ const AuthSignUpBase = ({
                                     value={password}
                                     onChangeText={text => onChangeText('password', text)}
                                     secureTextEntry
+                                    blurOnSubmit={false}
                                     textContentType='newPassword'
                                     keyboardType='default'
                                     onSubmitEditing={() => onKeyboardReturn(1)}
@@ -389,6 +390,7 @@ const AuthSignUpBase = ({
                                     value={passwordConfirm}
                                     onChangeText={text => onChangeText('passwordConfirm', text)}
                                     secureTextEntry
+                                    blurOnSubmit={false}
                                     textContentType='newPassword'
                                     keyboardType='default'
                                     onSubmitEditing={() => onKeyboardReturn(2)}

@@ -169,6 +169,7 @@ const TextInputForm = React.memo(({
 
 const AuthSignUpVerify = ({
     inputRef,
+    focused,
     timeLimit,
     createSMSInput,
     createSMSFlag,
@@ -222,6 +223,7 @@ const AuthSignUpVerify = ({
                     mention='인증번호 전송'
                     nextMention='재전송'
                     value={createSMSInput}
+                    onFocus={() => onFocus(0)}
                     onChangeText={text => onChangeText('createSMSInput', text)}
                     onPress={onPressSubmit}
                     keyboardType='number-pad'
