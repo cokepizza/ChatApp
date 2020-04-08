@@ -5,8 +5,8 @@ const client = axios.create();
 // client.defaults.baseURL = 'https://hixxx.me/';
 // client.defaults.baseURL = 'http://.168.0.11:5000/';
 // client.defaults.baseURL = 'http://172.20.10.3:5000/';
-// client.defaults.baseURL = 'http://192.168.0.11:5000/';
-client.defaults.baseURL = 'http://192.168.0.107:5000/';
+client.defaults.baseURL = 'http://192.168.0.11:5000/';
+// client.defaults.baseURL = 'http://192.168.0.107:5000/';
 // client.defaults.baseURL = 'http://192.168.0.58:5000/';
 // client.defaults.baseURL = 'http://52.79.100.5:4000/';
 

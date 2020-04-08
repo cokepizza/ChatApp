@@ -14,10 +14,17 @@ const SwipeContainer = () => {
                     y: pan.y._value,
                 });
             },
-            onPanResponderMove: Animated.event([
-                null,
-                { dx: pan.x, dy: pan.y }
-            ]),
+            // onPanResponderMove: Animated.event([
+            //     null,
+            //     { dx: pan.x, dy: pan.y }
+            // ]),
+            onPanResponderMove: (e, gestureState) => {
+                console.log('onPanResponderMove');
+                Animated.event([
+                    null,
+                    { dx: pan.x, dy: pan.y }
+                ])(e, gestureState);
+            },
             onPanResponderRelease: () => {
                 pan.flattenOffset();
             }

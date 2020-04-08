@@ -94,12 +94,6 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
         }))
     }, [dispatch, onFocus, clearFocus]);
 
-    const onPressUsername = useCallback(() => {
-        dispatch(duplicateCheck({
-            username,
-        }))
-    }, [dispatch, username]);
-
     const clearFocus = useCallback(() => {
         inputRef.current.forEach((input, index) => {
             if(index < inputComponentNum) {
@@ -113,8 +107,6 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
     const onFocus = useCallback(index => {
         if(scrollRef.current) {
             //  sugar
-            console.log(index);
-            console.log(componentHeight.current[index]);
             setTimeout(() => {
                 scrollRef.current.scrollTo({ y: componentHeight.current[index], animated: true });
             }, 100);
@@ -145,6 +137,18 @@ const AuthSignUpBaseContainer = ({ navigation }) => {
     const onPressBackground = useCallback(() => {
         clearFocus();
     }, [clearFocus]);
+
+    const onPressUsername = useCallback(async() => {
+        clearFocus();
+        try {
+            await dispatch(duplicateCheck({
+                username,
+            }))
+             inputRef.current[1].focus();
+        } catch(e) {
+            console.log('duplicateCheck error');
+        }
+    }, [dispatch, clearFocus, username]);
 
     const onPressSubmit = useCallback(() => {
         clearFocus();

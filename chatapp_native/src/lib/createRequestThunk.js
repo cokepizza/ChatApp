@@ -14,6 +14,7 @@ export default function createRequestThunk (type, request) {
             type: LOADING,
             payload: true,
         });
+
         try {
             const response = await request(params);
             dispatch({

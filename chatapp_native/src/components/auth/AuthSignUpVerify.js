@@ -23,7 +23,11 @@ const WarningBlock = styled.View`
 const ImageBlock = styled.Image`
     width: 18px;
     height: 18px;
-    opacity: 0.8;
+    opacity: 0.3;
+
+    ${props => props.focused && css`
+        opacity: 0.8;
+    `}
 `;
 
 const InputOuterFrameBlock = styled.View`
@@ -124,17 +128,27 @@ const TextInputForm = React.memo(({
     mention,
     nextMention,
     onPress,
+    focused,
     ...rest
 }) => {
     return (
         <InputInnerFrameBlock>
             {error ? (
-                <ImageBlock source={ErrorIcon} />
+                <ImageBlock
+                    source={ErrorIcon}
+                    focused={focused}
+                />
             ) : (
                 validation ? (
-                    <ImageBlock source={CheckAfterIcon} />
+                    <ImageBlock
+                        source={CheckAfterIcon}
+                        focused={focused}
+                    />
                 ) : (
-                    <ImageBlock source={CheckBeforeIcon} />
+                    <ImageBlock
+                        source={CheckBeforeIcon}
+                        focused={focused}
+                    />
                 )
             )}
             <InputBlock
@@ -183,6 +197,7 @@ const AuthSignUpVerify = ({
     onPressSubmit,
     onPressVerify,
     onFocusVerify,
+    onFocus,
 }) => {
     let minute = parseInt(timeLimit / 60);
     let second = parseInt(timeLimit % 60);
@@ -224,6 +239,7 @@ const AuthSignUpVerify = ({
                     nextMention='재전송'
                     value={createSMSInput}
                     onFocus={() => onFocus(0)}
+                    focused={focused[0]}
                     onChangeText={text => onChangeText('createSMSInput', text)}
                     onPress={onPressSubmit}
                     keyboardType='number-pad'
@@ -254,6 +270,7 @@ const AuthSignUpVerify = ({
                             onChangeText={text => onChangeText('verificationTokenInput', text)}
                             onPress={onPressVerify}
                             onFocus={onFocusVerify}
+                            focused={focused[1]}
                             keyboardType='number-pad'
                         />
                     </InputOuterFrameBlock>

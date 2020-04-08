@@ -6,12 +6,12 @@ import { createAuthImage } from '../../modules/image';
 import { signUpThunk } from '../../modules/auth';
 
 const AuthSignUpDetailContainer = () => {
-    const { files, username, nickname, password, gender } = useSelector(({ image, auth }) => ({
+    const { files, username, nickname, password, gender } = useSelector(({ image, base, profile }) => ({
         files: image.files,
-        username: auth.signUp.username,
-        nickname: auth.signUp.nickname,
-        password: auth.signUp.password,
-        gender: auth.signUp.gender,
+        username: base.username,
+        nickname: profile.nickname,
+        password: base.password,
+        gender: base.gender,
     }));
 
     const dispatch = useDispatch();

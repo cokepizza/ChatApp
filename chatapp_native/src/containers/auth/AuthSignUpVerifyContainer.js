@@ -79,13 +79,17 @@ const AuthSignUpVerifyContainer = ({ navigation }) => {
         }));
     }, [dispatch]);
     
-    const onPressSubmit = useCallback(() => {
-        dispatch(createSMS({
-            createSMSInput,
-        }));
+    const onPressSubmit = useCallback(async() => {
         dispatch(disconnectWebsocket());
         dispatch(clearPressSubmit());
-        clearFocus();
+        try {
+            await dispatch(createSMS({
+                createSMSInput,
+            }));
+            inputRef.current[1].focus();
+        } catch(e) {
+            console.log('createSMS Error');
+        }
     }, [dispatch, createSMSInput, clearFocus]);
 
     const onPressVerify = useCallback(() => {
