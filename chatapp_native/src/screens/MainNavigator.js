@@ -4,7 +4,7 @@ import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import IntroduceContainer from '../containers/introduce/IntroduceContainer';
 import SwipeContainer from '../containers/swipe/SwipeContainer';
 import TalkScreen from './talk/TalkScreen';
-import LikeScreen from './like/LikeScreen';
+import FeedNavigator from './FeedNavigator';
 import ChatNavigator from './ChatNavigator';
 import SettingScreen from './setting/SettingScreen';
 
@@ -15,7 +15,7 @@ const MainNavigator = () => (
       <Tab.Screen name='Introduce' component={SwipeContainer}/>
       {/* <Tab.Screen name='Introduce' component={IntroduceContainer}/> */}
       <Tab.Screen name='Talk' component={TalkScreen}/>
-      <Tab.Screen name='Like' component={LikeScreen}/>
+      <Tab.Screen name='Feed' component={FeedNavigator}/>
       <Tab.Screen
         name='ChatNav'
         component={ChatNavigator}
