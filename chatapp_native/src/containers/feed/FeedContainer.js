@@ -9,7 +9,9 @@ const FeedContainer = () => {
     }, []);
 
     return (
-        <Feed />
+        <Feed
+            list={list}
+        />
     );
 };
 
