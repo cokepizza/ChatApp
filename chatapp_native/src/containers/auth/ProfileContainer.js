@@ -121,7 +121,6 @@ const ProfileContainer = ({ scrollRef }) => {
             });
         }
         
-
         clearFocus();
         onFocus(index);
     }, [dispatch, clearFocus, onFocus, inform]);
@@ -141,7 +140,7 @@ const ProfileContainer = ({ scrollRef }) => {
         if(index === -1) {
             containerHeight.current = y;
         } else {
-            componentHeight.current[index] = y;
+            componentHeight.current[index] = y - 10;
         }
     }, []);
 

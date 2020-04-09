@@ -54,20 +54,20 @@ const App = () => {
           />
         )
         : (
-          // <Stack.Screen
-          //   name="Auth"
-          //   component={AuthNavigator}
-          //   options={{
-          //     transitionSpec,
-          //   }}
-          // />
           <Stack.Screen
-            name="Main"
-            component={MainNavigator}
+            name="Auth"
+            component={AuthNavigator}
             options={{
               transitionSpec,
             }}
           />
+          // <Stack.Screen
+          //   name="Main"
+          //   component={MainNavigator}
+          //   options={{
+          //     transitionSpec,
+          //   }}
+          // />
         )}
       </Stack.Navigator>
     </NavigationContainer>

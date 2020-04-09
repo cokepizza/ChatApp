@@ -1,6 +1,8 @@
 import React from 'react';
 import styled, { css } from 'styled-components/native';
 
+import Cocktail from '../../assets/images/cocktail.png';
+
 const HeaderSafeBlock = styled.SafeAreaView`
     background: white;
 
@@ -51,36 +53,34 @@ const HeaderTextBlock = styled.Text`
 const HeaderTouchBlock = styled.TouchableOpacity`
     height: 100%;
     justify-content: center;
+    align-items: center;
+    flex-direction: row;
 `;
 
 const ImageBlock = styled.Image`
-    width: 18px;
-    height: 18px;
+    width: 20px;
+    height: 20px;
 `;
 
-const FeedHeader = ({ modal, left, center, right, onPressLeft, onPressRight }) => {
+const FeedHeader = ({ coin }) => {
 
     return (
-        <HeaderSafeBlock modal={modal}>
+        <HeaderSafeBlock>
             <HeaderBlock>
                 <HeaderViewBlock left={1}>
-                    {left &&(
-                        <HeaderTouchBlock onPress={onPressLeft}>
-                            <HeaderTextBlock left={1}>
-                                {left}
-                            </HeaderTextBlock>
-                        </HeaderTouchBlock>
-                    )}
+                    <HeaderTouchBlock onPress={() => {}}>
+                        <HeaderTextBlock left={1}>
+                            left
+                        </HeaderTextBlock>
+                    </HeaderTouchBlock>
                 </HeaderViewBlock>
-                <HeaderViewBlock>
-                    <HeaderTextBlock>
-                        {center}
-                    </HeaderTextBlock>
-                </HeaderViewBlock>
+                <HeaderViewBlock />
                 <HeaderViewBlock right={1}>
-                    <HeaderTouchBlock onPress={onPressRight}>
-                        <ImageBlock src={} />
-                        
+                    <HeaderTouchBlock onPress={() => {}}>
+                        <ImageBlock source={Cocktail} />
+                        <HeaderTextBlock>
+                            {coin}
+                        </HeaderTextBlock>
                     </HeaderTouchBlock>
                 </HeaderViewBlock>
             </HeaderBlock>

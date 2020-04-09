@@ -11,6 +11,9 @@ import profile from './profile';
 import modal from './modal';
 import image from './image';
 
+//  main
+import store from './store';
+
 const rootReducer = combineReducers({
     auth,
 
@@ -20,7 +23,9 @@ const rootReducer = combineReducers({
     modal,
     image,
 
+    store,
     chat,
+
 });
 
 export function* rootSaga() {

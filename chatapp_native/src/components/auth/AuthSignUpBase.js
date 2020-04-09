@@ -35,14 +35,6 @@ const InputFrameBlock = styled.View`
     border-bottom-width: 1px;
     border-bottom-color: rgba(0, 0, 0, 0.2);
     align-items: center;
-
-    ${props => props.margin && css`
-        margin-top: 10px;
-    `}
-
-    ${props => props.focused && css`
-        opacity: 1;
-    `}
 `;
 
 const InputBlock = styled.TextInput`

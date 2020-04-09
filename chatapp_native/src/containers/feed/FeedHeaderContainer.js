@@ -1,15 +1,19 @@
 import React from 'react';
-import Header from '../../components/common/Header';
+import { useSelector, useDispatch } from 'react-redux';
 
-const FeedHeaderContainer = ({ left, center, right, onPressLeft, onPressRight }) => {
-    
+import FeedHeader from '../../components/feed/FeedHeader';
+
+const FeedHeaderContainer = ({ navigation }) => {
+
+    const { coin } = useSelector(({ store }) => ({
+        coin: store.coin,
+    }));
+
+    const dispatch = useDispatch();
+
     return (
-        <Header
-            left={left}
-            center={center}
-            right={right}
-            onPressLeft={onPressLeft}
-            onPressRight={onPressRight}
+        <FeedHeader
+            coin={coin}
         />
     );
 };

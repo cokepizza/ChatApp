@@ -26,14 +26,7 @@ const FeedContainer = ({ navigation }) => {
     }
 
     return (
-        <Feed
-            list={list}
-            loading={loading}
-            onRefresh={onRefresh}
-            onEndReached={onEndReached}
-            onScroll={onScroll}
-            onPress={onPress}
-        />
+        <Feed />
     );
 };
 

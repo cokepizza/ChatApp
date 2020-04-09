@@ -11,8 +11,8 @@ const FeedBlock = styled.SafeAreaView`
 `;
 
 const ImageFrameBlock = styled.TouchableOpacity`
-    padding-left: ${index % 3 === 0 ? 0 : 1}px;
-    padding-right: ${indx % 3 === 2 ? 0 : 1}px;
+    padding-left: ${props => props.index % 3 === 0 ? 0 : 1}px;
+    padding-right: ${props => props.index % 3 === 2 ? 0 : 1}px;
 `;
 
 const ImageBlock = styled.Image`
