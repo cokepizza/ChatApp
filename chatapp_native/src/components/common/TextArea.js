@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 // const TextAreaFrameBlock = styled.View`
 //     border: 1px dashed rgba(0, 0, 0, 0.2);
@@ -10,11 +10,15 @@ import styled from 'styled-components/native';
 // `;
 
 const TextAreaFrameBlock = styled.View`
-    border: 1px dashed rgba(0, 0, 0, 0.2);
+    border: 1px dashed rgba(0, 0, 0, 0.3);
     border-radius: 10px;
     padding: 10px;
     height: 150px;
     align-items: flex-end;
+
+    ${props => props.focused && css`
+        border: 1px dashed rgba(0, 0, 0, 0.8);
+    `}
 `;
 
 const TextAreaBlock = styled.TextInput`
@@ -37,11 +41,12 @@ const TextArea = ({
     textState,
     textLength,
     textLimit,
+    focused,
     onFocus,
     onChangeTextState,
 }) => {
     return (
-        <TextAreaFrameBlock>
+        <TextAreaFrameBlock focused={focused}>
             <TextAreaBlock
                 ref={ref => inputRef.current[index] = ref}
                 multiline={true}

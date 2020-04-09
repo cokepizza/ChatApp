@@ -8,10 +8,10 @@ const bigCanvasSize = parseInt((croppedCanvas / 3 * 2) + 10);
 const smallCanvasSize = parseInt((bigCanvasSize - 10) / 2);
 
 const OuterFrameBlock = styled.View`
-    width: 100%;
+    flex: 1;
     /* bigCanvasSize + smallCanvasSize + 50 까지가 frame 영역 */
     height: ${bigCanvasSize + smallCanvasSize + 50}px;
-    padding: 20px;  
+    padding: 20px;
 `;
 
 const BigHorizontalFrameBlock = styled.View`
@@ -59,7 +59,7 @@ const ImageViewBlock = styled.View`
     height: ${props => props.size}px;
     justify-content: center;
     align-items: center;
-    border: 1px solid rgba(0, 0, 0, 0.1);
+    border: 1px solid rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     margin-right: 10px;
     margin-bottom: 10px;
@@ -118,7 +118,7 @@ const ImageCanvas = React.memo(({
                                 style={{
                                     justifyContent: 'center',
                                     alignItems: 'center',
-                                    color: 'rgba(0, 0, 0, 0.1)',
+                                    color: 'rgba(0, 0, 0, 0.2)',
                                 }}
                             />
                         )

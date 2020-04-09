@@ -44,7 +44,10 @@ const Selection = ({ list, value, onPressItem }) => {
     for(let i=0; i<list.length; i+=2) {
         selectionRow.push(
             <RowBlock key={`row_${i}`}>
-                <ItemBlock borderRight={1} borderTop={i/2 > 0 ? 1 : 0}>
+                <ItemBlock
+                    borderRight={1}
+                    borderTop={i/2 > 0 ? 1 : 0}
+                >
                     <ItemTouchBlock
                         onPress={() => onPressItem(i)}
                         value={value[i]}
@@ -55,7 +58,9 @@ const Selection = ({ list, value, onPressItem }) => {
                     </ItemTouchBlock>
                 </ItemBlock>
                 {list[i+1] && (
-                    <ItemBlock borderTop={i/2 > 0 ? 1 : 0}>
+                    <ItemBlock
+                        borderTop={i/2 > 0 ? 1 : 0}
+                    >
                         <ItemTouchBlock
                             onPress={() => onPressItem(i+1)}
                             value={value[i+1]}

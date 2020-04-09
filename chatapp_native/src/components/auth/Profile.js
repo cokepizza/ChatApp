@@ -10,8 +10,6 @@ const ProfileTouchBlock = styled.TouchableWithoutFeedback``;
 
 const ProfileBlock = styled.View`
     width: 100%;
-    /* padding-left: 20px;
-    padding-right: 20px; */
     height: 1600px;
 `;
 
@@ -48,10 +46,14 @@ const InputInnerFrameBlock = styled.View`
 const TextBlock = styled.Text`
     font-size: 13px;
     color: rgba(0, 0, 0, 0.5);
-    margin-bottom: 10px;
-
+    margin-bottom: 5px;
+    
     ${props => props.title && css`
         font-size: 15px;
+    `}
+
+    ${props => props.marginBottom && css`
+        margin-bottom: 15px;
     `}
 `;
 
@@ -64,12 +66,15 @@ const InputBlock = styled.TextInput`
 
 const PickerBlock = styled.View`
     flex: 1;
-    height: 30px;
+    height: 100%;
     margin-left: 10px;
     justify-content: center;
 `;
 
-const PickerTextBlock = styled.Text``;
+const PickerTextBlock = styled.Text`
+    font-size: 13px;
+    color: rgba(0, 0, 0, 0.7);
+`;
 
 const SubmitTouchBlock = styled.TouchableOpacity`
     height: 30px;
@@ -101,6 +106,11 @@ const SubmitTextBlock = styled.Text`
     ${props => props.invalid && css`
         color: rgba(0, 0, 0, 0.2);
     `}
+`;
+
+const MarginBlock = styled.View`
+    width: 100%;
+    height: 20px;
 `;
 
 const TextInputForm = React.memo(({
@@ -157,13 +167,23 @@ const TextInputForm = React.memo(({
     )
 });
 
-const PickerForm = React.memo(({ validation, value }) => {
+const PickerForm = React.memo(({
+    validation,
+    value,
+    focused
+}) => {
     return (
         <InputInnerFrameBlock>
             {validation ? (
-                <ImageBlock source={CheckAfterIcon} />
+                <ImageBlock
+                    source={CheckAfterIcon}
+                    focused={focused}
+                />
             ) : (
-                <ImageBlock source={CheckBeforeIcon} />
+                <ImageBlock
+                    source={CheckBeforeIcon}
+                    focused={focused}
+                />
             )}
             <PickerBlock>
                 <PickerTextBlock>
@@ -205,7 +225,10 @@ const Profile = ({
             <ProfileBlock onLayout={e => onLayout(e, -1)}>
                 <InputTouchFrameBlock onPress={() => onPress(0)}>
                     <InputOuterFrameBlock onLayout={e => onLayout(e, 0)}>
-                        <TextBlock title={1}>
+                        <TextBlock
+                            title={1}
+                            marginBottom={1}
+                        >
                             자기소개
                         </TextBlock>
                         <TextAreaContainer
@@ -214,10 +237,12 @@ const Profile = ({
                             text={introduction}
                             textLimit={introductionWordLimit}
                             onFocus={() => onFocus(0)}
+                            focused={focused[0]}
                             onChangeText={text => onChangeText('introduction', text)}
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
+                <MarginBlock />
                 <InputTouchFrameBlock onPress={() => onPress(1)}>
                     <InputOuterFrameBlock
                         marginTop={1}
@@ -238,6 +263,7 @@ const Profile = ({
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
+                <MarginBlock />
                 <InputTouchFrameBlock onPress={() => onPress(2)}>
                     <InputOuterFrameBlock
                         marginTop={1}
@@ -318,6 +344,7 @@ const Profile = ({
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
+                <MarginBlock />
                 <InputTouchFrameBlock onPress={() => onPressPicker('region', region, 6)}>
                     <InputOuterFrameBlock
                         marginTop={1}
@@ -328,6 +355,7 @@ const Profile = ({
                         </TextBlock>
                         <PickerForm
                             validation={validation.region}
+                            focused={focused[6]}
                             value={region}
                         />
                     </InputOuterFrameBlock>
@@ -342,6 +370,7 @@ const Profile = ({
                         </TextBlock>
                         <PickerForm
                             validation={validation.birth}
+                            focused={focused[7]}
                             value={birth}
                         />
                     </InputOuterFrameBlock>
@@ -356,6 +385,7 @@ const Profile = ({
                         </TextBlock>
                         <PickerForm
                             validation={validation.tall}
+                            focused={focused[8]}
                             value={tall}
                         />
                     </InputOuterFrameBlock>
@@ -370,6 +400,7 @@ const Profile = ({
                         </TextBlock>
                         <PickerForm
                             validation={validation.shape}
+                            focused={focused[9]}
                             value={shape}
                         />
                     </InputOuterFrameBlock>
@@ -384,6 +415,7 @@ const Profile = ({
                         </TextBlock>
                         <PickerForm
                             validation={validation.character}
+                            focused={focused[10]}
                             value={character}
                         />
                     </InputOuterFrameBlock>
@@ -398,10 +430,12 @@ const Profile = ({
                         </TextBlock>
                         <PickerForm
                             validation={validation.bloodType}
+                            focused={focused[11]}
                             value={bloodType}
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
+                <MarginBlock />
                 <InputTouchFrameBlock onPress={() => onPressPicker('smoking', smoking, 12)}>
                     <InputOuterFrameBlock
                         marginTop={1}
@@ -412,6 +446,7 @@ const Profile = ({
                         </TextBlock>
                         <PickerForm
                             validation={validation.smoking}
+                            focused={focused[12]}
                             value={smoking}
                         />
                     </InputOuterFrameBlock>
@@ -426,6 +461,7 @@ const Profile = ({
                         </TextBlock>
                         <PickerForm
                             validation={validation.drinking}
+                            focused={focused[13]}
                             value={drinking}
                         />
                     </InputOuterFrameBlock>

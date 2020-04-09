@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
 
 import SubHeaderContainer from '../../containers/common/SubHeaderContainer';
 import AuthImageContainer from '../../containers/auth/AuthImageContainer';
@@ -40,7 +40,19 @@ const SubmitTouchBlock = styled.TouchableOpacity`
 
 const SubmitTextBlock = styled.Text``;
 
-const AuthSignUpDetail = ({ onPressSubmit, scrollRef }) => {
+const TextBlock = styled.Text`
+    font-size: 11px;
+    color: rgba(0, 0, 0, 0.5);
+    margin-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    
+    ${props => props.title && css`
+        font-size: 15px;
+    `}
+`;
+
+const AuthSignUpDetail = ({ scrollRef, mention, onPressSubmit }) => {
     return (
         <AuthSignUpDetailBlock>
             <SubHeaderContainer
@@ -54,6 +66,15 @@ const AuthSignUpDetail = ({ onPressSubmit, scrollRef }) => {
                 // scrollEnabled={!modal}
                 keyboardShouldPersistTaps='always'
             >
+                <TextBlock title={1}>
+                    사진
+                </TextBlock>
+                {mention && (
+                    <TextBlock style={{ marginLeft: 5 }}>
+                        {mention}
+                    </TextBlock>
+                )}
+
                 <AuthImageContainer />
                 <MarginBlock />
                 <ProfileContainer scrollRef={scrollRef} />

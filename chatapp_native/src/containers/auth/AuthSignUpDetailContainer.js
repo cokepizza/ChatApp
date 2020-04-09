@@ -1,9 +1,11 @@
-import React, { useCallback, useRef} from 'react';
+import React, { useCallback, useRef, useState, useEffect } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import AuthSignUpDetail from '../../components/auth/AuthSignUpDetail';
 import { createAuthImage } from '../../modules/image';
 import { signUpThunk } from '../../modules/auth';
+
+const minimumPhoto = 3;
 
 const AuthSignUpDetailContainer = () => {
     const { files, username, nickname, password, gender } = useSelector(({ image, base, profile }) => ({
@@ -16,6 +18,12 @@ const AuthSignUpDetailContainer = () => {
 
     const dispatch = useDispatch();
     const scrollRef = useRef();
+    const [ mention, setMention ] = useState(null);
+
+    useEffect(() => {
+        const count = files.reduce((acc, cur) => acc + (cur ? 1 : 0), 0);
+        setMention(minimumPhoto > count ? `${minimumPhoto - count}장이 더 필요합니다`: null);
+    }, [files])
 
     const onPressSubmit = useCallback(async () => {
         const { user } = await dispatch(signUpThunk({
@@ -54,8 +62,9 @@ const AuthSignUpDetailContainer = () => {
     
     return (
         <AuthSignUpDetail
+            scrollRef={scrollRef}    
+            mention={mention}
             onPressSubmit={onPressSubmit}
-            scrollRef={scrollRef}
         />
     );
 };
