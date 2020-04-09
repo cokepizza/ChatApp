@@ -52,6 +52,37 @@ const TextBlock = styled.Text`
     `}
 `;
 
+const BottomViewBlock = styled.View`
+    padding-left: 24px;
+    padding-right: 24px;
+    /* 전체높이 - 상태표시줄 -아이폰X 바텀바 -navigation 헤더 -서브헤더 -바디컴포넌트 높이*/
+    
+    height: 40px;
+    justify-content: flex-end;
+    padding-bottom: 30px;
+`;
+
+const ButtonTouchBlock = styled.TouchableOpacity`
+    width: 100%;
+    height: 50px;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+    background: rgba(123, 104, 238, 0.8);
+    ${props => props.disabled && css`
+        background: rgba(0, 0, 0, 0.05);
+    `}
+`;
+
+const ButtonTextBlock = styled.Text`
+    font-size: 15px;
+    color: white;
+
+    ${props => props.disabled && css`
+        color: rgba(0, 0, 0, 0.2);
+    `}
+`;
+
 const AuthSignUpDetail = ({ scrollRef, mention, onPressSubmit }) => {
     return (
         <AuthSignUpDetailBlock>
@@ -78,13 +109,27 @@ const AuthSignUpDetail = ({ scrollRef, mention, onPressSubmit }) => {
                 <AuthImageContainer />
                 <MarginBlock />
                 <ProfileContainer scrollRef={scrollRef} />
-                <SubmitFrameBlock>
+                <BottomViewBlock>
+                    <ButtonTouchBlock
+                        // disabled={inValidSignUp}
+                        disabled={true}
+                        onPress={onPressSubmit}
+                    >
+                        <ButtonTextBlock
+                            // disabled={inValidSignUp}
+                            disabled={true}
+                        >
+                            계정 생성하기
+                        </ButtonTextBlock>
+                    </ButtonTouchBlock>
+                </BottomViewBlock>
+                {/* <SubmitFrameBlock>
                     <SubmitTouchBlock onPress={onPressSubmit}>
                         <SubmitTextBlock>
                             Submit
                         </SubmitTextBlock>
                     </SubmitTouchBlock>
-                </SubmitFrameBlock>
+                </SubmitFrameBlock> */}
             </AuthSignUpScrollViewBlock>
             <ModalContainer />
         </AuthSignUpDetailBlock>

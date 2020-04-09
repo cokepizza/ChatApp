@@ -144,6 +144,14 @@ const ProfileContainer = ({ scrollRef }) => {
         }
     }, []);
 
+    const onKeyboardReturn = useCallback(index => {
+        if(index+1 < inputComponentNum) {
+            inputRef.current[index+1].focus();
+        } else if(index+1 === inputComponentNum) {
+            clearFocus();
+        }
+    }, [clearFocus, inputComponentNum]);
+
     return (
         <Profile
             inputRef={inputRef}
@@ -170,6 +178,7 @@ const ProfileContainer = ({ scrollRef }) => {
             onPressPicker={onPressPicker}
             onPressBackground={onPressBackground}
             onLayout={onLayout}
+            onKeyboardReturn={onKeyboardReturn}
         />
     );
 };

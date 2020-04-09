@@ -219,6 +219,7 @@ const Profile = ({
     onPressPicker,
     onPressBackground,
     onLayout,
+    onKeyboardReturn,
 }) => {
     return (
         <ProfileTouchBlock onPress={onPressBackground}>
@@ -260,6 +261,7 @@ const Profile = ({
                             onFocus={() => onFocus(1)}
                             focused={focused[1]}
                             onChangeText={text => onChangeText('nickname', text)}
+                            onSubmitEditing={() => onKeyboardReturn(1)}
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
@@ -281,6 +283,7 @@ const Profile = ({
                             onFocus={() => onFocus(2)}
                             focused={focused[2]}
                             onChangeText={text => onChangeText('school', text)}
+                            onSubmitEditing={() => onKeyboardReturn(2)}
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
@@ -301,6 +304,7 @@ const Profile = ({
                             onFocus={() => onFocus(3)}
                             focused={focused[3]}
                             onChangeText={text => onChangeText('major', text)}
+                            onSubmitEditing={() => onKeyboardReturn(3)}
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
@@ -321,6 +325,7 @@ const Profile = ({
                             onFocus={() => onFocus(4)}
                             focused={focused[4]}
                             onChangeText={text => onChangeText('job', text)}
+                            onSubmitEditing={() => onKeyboardReturn(4)}
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
@@ -341,6 +346,7 @@ const Profile = ({
                             onFocus={() => onFocus(5)}
                             focused={focused[5]}
                             onChangeText={text => onChangeText('work', text)}
+                            onSubmitEditing={() => onKeyboardReturn(5)}
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
