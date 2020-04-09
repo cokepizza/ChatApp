@@ -5,7 +5,7 @@ const FeedContainer = () => {
     const [list, setList] = useState([]);
 
     useEffect(() => {
-        //  list 받아오기
+        //  list 
     }, []);
 
     return (

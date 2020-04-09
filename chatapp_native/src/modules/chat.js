@@ -26,8 +26,8 @@ function* connectWebsocketSaga (action) {
 
     const socketTask = yield fork(connectNamespace, {
         // url: 'https://hixxx.me/chat',
-        url: 'http://192.168.0.11:5000/chat',
-        // url: 'http://192.168.0.107:5000/chat',
+        // url: 'http://192.168.0.11:5000/chat',
+        url: 'http://192.168.0.107:5000/chat',
         // url: 'http://172.20.10.3:5000/chat',
         // url: 'http://192.168.0.16:5000/chat',
         // url: 'http://192.168.0.58:5000/chat',
