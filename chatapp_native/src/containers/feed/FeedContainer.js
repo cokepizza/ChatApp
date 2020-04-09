@@ -1,16 +1,38 @@
 import React, { useEffect, useState } from 'react';
 import Feed from '../../components/feed/Feed';
 
-const FeedContainer = () => {
-    const [list, setList] = useState([]);
+const FeedContainer = ({ navigation }) => {
+    const [ list, setList ] = useState([]);
+    const [ loading, setLoading ] = useState(false);
 
     useEffect(() => {
         //  list 받아오기
     }, []);
 
+    const onPress = () => {
+
+    };
+
+    const onScroll = () => {
+
+    }
+
+    const onEndReached = () => {
+
+    }
+
+    const onRefresh = () => {
+
+    }
+
     return (
         <Feed
             list={list}
+            loading={loading}
+            onRefresh={onRefresh}
+            onEndReached={onEndReached}
+            onScroll={onScroll}
+            onPress={onPress}
         />
     );
 };

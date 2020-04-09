@@ -1,41 +1,63 @@
 import React from 'react';
-import styled from 'styled-components/native';
+import styled, { css } from 'styled-components/native';
+import { FlatList, Dimensions } from 'react-native';
+
+const numColumns = 3;
+const imageSize = Dimensions.get('window').width / 3;
 
 const FeedBlock = styled.SafeAreaView`
     flex: 1;
     background: white;
 `;
 
-const FeedScrollBlock = styled.ScrollView`
+const ImageFrameBlock = styled.TouchableOpacity`
+    padding-left: ${index % 3 === 0 ? 0 : 1}px;
+    padding-right: ${indx % 3 === 2 ? 0 : 1}px;
 `;
 
-const ItemBlock = styled.View`
-    width: 100px;
-    height: 100px;
-    border: 1px solid black;
+const ImageBlock = styled.Image`
+    width: ${imageSize}px;
+    height: ${imageSize}px;
 `;
 
-const ItemRowBlock = styled.View`
-    flex-direction: row;
-`;
-
-const Feed = ({ list }) => {
-    const rowList = [];
-    for(let i=0; i<list; i+=3) {
-        rowList.push(
-            <ItemRowBlock>
-                {list.splice(0, 3).map(item => (
-                    <ItemBlock item={item} />
-                ))}
-            </ItemRowBlock>
-        );
-    }
+const Feed = ({
+    list,
+    loading,
+    onRefresh,
+    onEndReached,
+    onScroll,
+    onPress,
+}) => {
 
     return (
         <FeedBlock>
-            <FeedScrollBlock>
-                {rowList}
-            </FeedScrollBlock>
+            <FlatList
+                data={list}
+                // style={{ width: Dimensions.get('window').width }}
+                // style={{ flex: 1 }}
+                style={{ width: '100%' }}
+                keyExtractor={(item, index) => `feed_${item.name}`}
+                showsVerticalScrollIndicator={false}
+                scrollEnabled={true}
+                bounces={true}
+                numColumns={numColumns}
+                onRefresh={onRefresh}
+                onEndReached={onEndReached}
+                onEndReachedThreshold={0.5}
+                refreshing={loading}
+                onScroll={onScroll}
+                scrollEventThrottle={400}
+                renderItem={({ item, index }) => (
+                    <ImageFrameBlock
+                        index={index}
+                        onPress={() => onPress(item.id)}
+                    >
+                        <ImageBlock
+                            source={{ uri: item.uri }}
+                        />
+                    </ImageFrameBlock>
+                )}
+            />
         </FeedBlock>
     );
 };
