@@ -47,7 +47,26 @@ export const signIn = (req, res, next) => {
 };
 
 export const signUp = async (req, res, next) => {
-    const { username, password, nickname, gender } = req.body;
+    const {
+        username,
+        password,
+        gender,
+        phone,
+        introduction,
+        nickname,
+        school,
+        major,
+        job,
+        work,
+        region,
+        birth,
+        tall,
+        shape,
+        character,
+        bloodType,
+        smoking,
+        drinking
+} = req.body;
 
     try {
         const exist = await User.findOne({ where: { username } });
@@ -58,8 +77,22 @@ export const signUp = async (req, res, next) => {
 
         const user = await User.build({
             username,
-            nickname,
             gender,
+            phone,
+            introduction,
+            nickname,
+            school,
+            major,
+            job,
+            work,
+            region,
+            birth,
+            tall,
+            shape,
+            character,
+            bloodType,
+            smoking,
+            drinking
         });
 
         await user.setPassword(password);

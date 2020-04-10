@@ -9,15 +9,71 @@ const user = sequelize => {
             unique: true,
         },
         password: {
-            type: DataTypes.STRING(100),
+            type: DataTypes.STRING(20),
             allowNull: false,
+        },
+        gender: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
+        phone: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+        },
+        introduction: {
+            type: DataTypes.STRING(250),
+            allowNull: true,
         },
         nickname: {
             type: DataTypes.STRING(30),
             allowNull: false,
         },
-        gender: {
+        school: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
+        major: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
+        job: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
+        work: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
+        region: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
+        birth: {
+            type: DataTypes.STRING(30),
+            allowNull: false,
+        },
+        tall: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        shape: {
+            type: DataTypes.STRING(20),
+            allowNull: false,
+        },
+        character: {
+            type: DataTypes.STRING(60),
+            allowNull: false,
+        },
+        bloodType: {
             type: DataTypes.STRING(10),
+            allowNull: false,
+        },
+        smoking: {
+            type: DataTypes.BOOLEAN,
+            allowNull: false,
+        },
+        drinking: {
+            type: DataTypes.STRING(30),
             allowNull: false,
         },
     }, {
