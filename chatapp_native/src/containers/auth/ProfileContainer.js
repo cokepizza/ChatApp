@@ -4,9 +4,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import Profile from '../../components/auth/Profile';
 import { setValue as setProfileValue } from '../../modules/profile';
 import { setModal, setValue as setModalValue } from '../../modules/modal';
+import { inform as modalInform } from '../../modules/modal';
 
 const componentNum = 14;
 const inputComponentNum = 6;
+const modalList = Object.keys(modalInform);
 
 const ProfileContainer = ({ scrollRef }) => {
     //  TextArea는 라이브러리 형태로 만들어봄
@@ -148,9 +150,14 @@ const ProfileContainer = ({ scrollRef }) => {
         if(index+1 < inputComponentNum) {
             inputRef.current[index+1].focus();
         } else if(index+1 === inputComponentNum) {
-            clearFocus();
+            // clearFocus();
+            // inputRef.current[inputComponentNum].focus();
+            onFocus(inputComponentNum);
+            dispatch(setModal({
+                modal: modalList[0],
+            }));
         }
-    }, [clearFocus, inputComponentNum]);
+    }, [dispatch, clearFocus, onFocus, inputComponentNum]);
 
     return (
         <Profile

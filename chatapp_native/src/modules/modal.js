@@ -9,7 +9,7 @@ export const clearModal = createAction(CLEAR_MODAL);
 export const setValue = createAction(SET_VALUE, payload => payload);
 export const clearValue = createAction(CLEAR_VALUE, payload => payload);
 
-const inform = {
+export const inform = {
     'region': {
         name: '지역',
         type: 'picker',
