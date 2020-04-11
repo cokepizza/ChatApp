@@ -80,14 +80,14 @@ const ModalContainer = () => {
         }));
 
         const currentIndex = modalList.indexOf(modal);
-        if(currentIndex === -1) {
+        if(currentIndex === modalList.length - 1) {
             dispatch(clearModal());
         } else {
             dispatch(setModal({
                 modal: modalList[currentIndex+1],
             }));
-        }        
-    }, [dispatch, modal, inform, value, list, range]);
+        }
+    }, [dispatch, modal, inform, value, list, range, modalList]);
 
     const onPressCancel = useCallback(() => {
         dispatch(clearModalValue({

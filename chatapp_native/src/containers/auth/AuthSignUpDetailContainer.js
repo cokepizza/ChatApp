@@ -8,12 +8,13 @@ import { signUpThunk } from '../../modules/auth';
 const minimumPhoto = 3;
 
 const AuthSignUpDetailContainer = () => {
-    const { files, username, nickname, password, gender } = useSelector(({ image, base, profile }) => ({
+    const { files, username, nickname, password, gender, validation } = useSelector(({ image, base, profile, validation }) => ({
         files: image.files,
         username: base.username,
         nickname: profile.nickname,
         password: base.password,
         gender: base.gender,
+        validation: profile.validation,
     }));
 
     const dispatch = useDispatch();
@@ -64,6 +65,7 @@ const AuthSignUpDetailContainer = () => {
         <AuthSignUpDetail
             scrollRef={scrollRef}    
             mention={mention}
+            validation={validation}
             onPressSubmit={onPressSubmit}
         />
     );

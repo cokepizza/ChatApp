@@ -8,7 +8,6 @@ import ModalContainer from '../../containers/common/ModalContainer';
 
 const AuthSignUpDetailBlock = styled.SafeAreaView`
     flex: 1;
-    /* position: relative; */
     background: white;
     align-items: center;
 `;
@@ -20,25 +19,6 @@ const AuthSignUpScrollViewBlock = styled.ScrollView`
 const MarginBlock = styled.View`
     height: 30px;
 `;
-
-const SubmitFrameBlock = styled.View`
-    width: 100%;
-    padding-left: 20px;
-    padding-right: 20px;
-    height: 40px;
-    justify-content: center;
-    align-items: center;
-`;
-
-const SubmitTouchBlock = styled.TouchableOpacity`
-    width: 100%;
-    height: 100%;
-    background: green;
-    justify-content: center;
-    align-items: center;
-`;
-
-const SubmitTextBlock = styled.Text``;
 
 const TextBlock = styled.Text`
     font-size: 11px;
@@ -56,8 +36,7 @@ const BottomViewBlock = styled.View`
     padding-left: 24px;
     padding-right: 24px;
     /* 전체높이 - 상태표시줄 -아이폰X 바텀바 -navigation 헤더 -서브헤더 -바디컴포넌트 높이*/
-    
-    height: 40px;
+    /* height: 40px; */
     justify-content: flex-end;
     padding-bottom: 30px;
 `;
@@ -83,7 +62,23 @@ const ButtonTextBlock = styled.Text`
     `}
 `;
 
-const AuthSignUpDetail = ({ scrollRef, mention, onPressSubmit }) => {
+const AuthSignUpDetail = ({ scrollRef, mention, validation, onPressSubmit }) => {
+
+    let inValidSignUp = false;
+    Object.keys(validation).forEach(key => {
+        if(!validation[key]) {
+            inValidSignUp = true;
+        }
+    })
+
+    if(mention) {
+        inValidSignUp = true;
+    }
+
+    // if(!duplicateCheckFlag) {
+    //     inValidSignUp = true;
+    // }
+
     return (
         <AuthSignUpDetailBlock>
             <SubHeaderContainer
@@ -111,25 +106,16 @@ const AuthSignUpDetail = ({ scrollRef, mention, onPressSubmit }) => {
                 <ProfileContainer scrollRef={scrollRef} />
                 <BottomViewBlock>
                     <ButtonTouchBlock
-                        // disabled={inValidSignUp}
-                        disabled={true}
+                        disabled={inValidSignUp}
                         onPress={onPressSubmit}
                     >
                         <ButtonTextBlock
-                            // disabled={inValidSignUp}
-                            disabled={true}
+                            disabled={inValidSignUp}
                         >
                             계정 생성하기
                         </ButtonTextBlock>
                     </ButtonTouchBlock>
                 </BottomViewBlock>
-                {/* <SubmitFrameBlock>
-                    <SubmitTouchBlock onPress={onPressSubmit}>
-                        <SubmitTextBlock>
-                            Submit
-                        </SubmitTextBlock>
-                    </SubmitTouchBlock>
-                </SubmitFrameBlock> */}
             </AuthSignUpScrollViewBlock>
             <ModalContainer />
         </AuthSignUpDetailBlock>

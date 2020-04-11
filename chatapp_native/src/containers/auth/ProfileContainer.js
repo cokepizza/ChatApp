@@ -1,5 +1,6 @@
 import React, { useState, useCallback, useEffect, useRef, createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
+import Joi from 'react-native-joi';
 
 import Profile from '../../components/auth/Profile';
 import { setValue as setProfileValue } from '../../modules/profile';
@@ -70,12 +71,68 @@ const ProfileContainer = ({ scrollRef }) => {
     const inputRef = useRef(initialStateMaker(createRef));
 
     useEffect(() => {
+        const schema = Joi.object().keys({
+            nickname: Joi.string().min(2).max(30).required(),
+            school: Joi.string().min(2).max(30).required(),
+            major: Joi.string().min(2).max(30).required(),
+            job: Joi.string().min(2).max(30).required(),
+            work: Joi.string().min(2).max(30).required(),
+            region: Joi.string().min(2).max(30).required(),
+            birth: Joi.string().min(2).max(30).required(),
+            tall: Joi.string().min(2).max(30).required(),
+            shape: Joi.string().min(2).max(30).required(),
+            character: Joi.string().min(2).max(30).required(),
+            bloodType: Joi.string().min(1).max(30).required(),
+            smoking: Joi.string().min(2).max(30).required(),
+            drinking: Joi.string().min(2).max(30).required(),
+        });
+
+        const profile = {
+            nickname,
+            school,
+            major,
+            job,
+            work,
+            region,
+            birth,
+            tall,
+            shape,
+            character,
+            bloodType,
+            smoking,
+            drinking,
+        }
+
+        const revisedValidation =
+            Object.keys(profile)
+                .reduce((acc, cur) =>
+                    ({
+                        ...acc,
+                        [cur]: true,
+                    }), {});
+
+        const result = Joi.validate(profile, schema, { abortEarly: false });
+
+        if(result.error) {
+            result.error.details.forEach(detail => {
+                revisedValidation[detail.path] = false;
+            });
+        };
+
+        dispatch(setProfileValue({
+            key: 'validation',
+            value: revisedValidation,
+        }));
+    }, [dispatch, nickname, school, major, job, work, region, birth, tall, shape, character, bloodType, smoking, drinking]);        
+
+    useEffect(() => {
         if(modal) {
             const currentIndex = modalList.indexOf(modal);
-            console.log(currentIndex + inputComponentNum);
             onFocus(inputComponentNum + currentIndex);
+        } else {
+            clearFocus();
         }
-    }, [modal, inputComponentNum]);
+    }, [modal, inputComponentNum, onFocus, clearFocus]);
 
     const onPress = useCallback(index => {
         inputRef.current[index].focus();

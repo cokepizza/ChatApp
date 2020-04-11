@@ -10,7 +10,6 @@ const ProfileTouchBlock = styled.TouchableWithoutFeedback``;
 
 const ProfileBlock = styled.View`
     width: 100%;
-    height: 1600px;
 `;
 
 const ImageBlock = styled.Image`
