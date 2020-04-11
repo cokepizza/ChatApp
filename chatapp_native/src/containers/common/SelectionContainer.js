@@ -4,8 +4,6 @@ import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 import Selection from '../../components/common/Selection';
 import { setValue, inform } from '../../modules/modal';
 
-const countLimit = 3;
-
 const SelectionContainer = () => {
     const { modal, value } = useSelector(({ modal }) => ({
         modal: modal.modal,
@@ -20,7 +18,7 @@ const SelectionContainer = () => {
             return acc;
         }, 0);
         
-        if(count+1 > countLimit && !value[modal][index]) {
+        if(count+1 > inform[modal].required && !value[modal][index]) {
             return;
         }
 
@@ -29,7 +27,7 @@ const SelectionContainer = () => {
             index,
             value: !value[modal][index],
         }))
-    }, [dispatch, value]);
+    }, [dispatch, inform, value, modal]);
 
     return (
         <Selection

@@ -53,6 +53,4 @@ export default handleActions({
         ...state,
         duplicateCheckLoading: loading,
     }),
-
-
 }, initialState);

@@ -3,7 +3,11 @@ import { useSelector, useDispatch } from 'react-redux';
 import Joi from 'react-native-joi';
 
 import Profile from '../../components/auth/Profile';
-import { setValue as setProfileValue } from '../../modules/profile';
+import {
+    setValue as setProfileValue,
+    clearValue as clearProfileValue,
+    duplicateCheck
+} from '../../modules/profile';
 import { setModal, setValue as setModalValue } from '../../modules/modal';
 import { inform } from '../../modules/modal';
 
@@ -31,6 +35,9 @@ const ProfileContainer = ({ scrollRef }) => {
         drinking,
         validation,
         modal,
+        duplicateCheckFlag,
+        duplicateCheckLoading,
+        duplicateCheckError,
     } = useSelector(({ profile, modal }) => ({
         introduction: profile.introduction,
         introductionWordLimit: profile.introductionWordLimit,
@@ -48,6 +55,9 @@ const ProfileContainer = ({ scrollRef }) => {
         smoking: profile.smoking,
         drinking: profile.drinking,
         validation: profile.validation,
+        duplicateCheckFlag: profile.duplicateCheckFlag,
+        duplicateCheckLoading: profile.duplicateCheckLoading,
+        duplicateCheckError: profile.duplicateCheckError,
         modal: modal.modal,
     }));
 
@@ -221,6 +231,24 @@ const ProfileContainer = ({ scrollRef }) => {
         }
     }, [dispatch, clearFocus, onFocus, inputComponentNum]);
 
+    const onPressNickname = useCallback(async () => {
+        try {
+            await dispatch(duplicateCheck({
+                nickname,
+            }));    
+             inputRef.current[2].focus();
+        } catch(e) {
+            console.log('duplicateCheck error');
+        }
+    }, [dispatch, nickname]);
+
+    const onFocusNickname = useCallback(() => {
+        onFocus(1);
+        dispatch(clearProfileValue({
+            key: 'duplicateCheckError'
+        }));
+    }, [dispatch, onFocus]);
+
     return (
         <Profile
             inputRef={inputRef}
@@ -241,11 +269,16 @@ const ProfileContainer = ({ scrollRef }) => {
             smoking={smoking}
             drinking={drinking}
             validation={validation}
+            duplicateCheckFlag={duplicateCheckFlag}
+            duplicateCheckLoading={duplicateCheckLoading}
+            duplicateCheckError={duplicateCheckError}
             onChangeText={onChangeText}
             onFocus={onFocus}
             onPress={onPress}
             onPressPicker={onPressPicker}
             onPressBackground={onPressBackground}
+            onPressNickname={onPressNickname}
+            onFocusNickname={onFocusNickname}
             onLayout={onLayout}
             onKeyboardReturn={onKeyboardReturn}
         />

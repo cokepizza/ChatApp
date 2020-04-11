@@ -8,13 +8,50 @@ import { signUpThunk } from '../../modules/auth';
 const minimumPhoto = 3;
 
 const AuthSignUpDetailContainer = () => {
-    const { files, username, nickname, password, gender, validation } = useSelector(({ image, base, profile, validation }) => ({
-        files: image.files,
+    const {
+        username,
+        password,
+        gender,
+        phone,
+        nickname,
+        introduction,
+        school,
+        major,
+        job,
+        work,
+        region,
+        birth,
+        tall,
+        shape,
+        character,
+        bloodType,
+        smoking,
+        drinking,
+        files,
+        validation,
+        duplicateCheckFlag
+    } = useSelector(({ base, verify, profile, image }) => ({ 
         username: base.username,
-        nickname: profile.nickname,
         password: base.password,
         gender: base.gender,
+        phone: verify.createSMSInput,
+        nickname: profile.nickname,
+        introduction: profile.introduction,
+        school: profile.school,
+        major: profile.major,
+        job: profile.job,
+        work: profile.work,
+        region: profile.region,
+        birth: profile.birth,
+        tall: profile.tall,
+        shape: profile.shape,
+        character: profile.character,
+        bloodType: profile.bloodType,
+        smoking: profile.smoking,
+        drinking: profile.drinking,
+        files: image.files,
         validation: profile.validation,
+        duplicateCheckFlag: profile.duplicateCheckFlag,
     }));
 
     const dispatch = useDispatch();
@@ -29,9 +66,23 @@ const AuthSignUpDetailContainer = () => {
     const onPressSubmit = useCallback(async () => {
         const { user } = await dispatch(signUpThunk({
             username,
-            nickname,
             password,
             gender,
+            phone,
+            nickname,
+            introduction,
+            school,
+            major,
+            job,
+            work,
+            region,
+            birth,
+            tall,
+            shape,
+            character,
+            bloodType,
+            smoking,
+            drinking,
         }));
 
         const formData = new FormData();
@@ -59,13 +110,33 @@ const AuthSignUpDetailContainer = () => {
             formData,
         ));
 
-    }, [dispatch, files, username, nickname, password, gender]);
+    }, [dispatch,
+        username,
+        password,
+        gender,
+        phone,
+        nickname,
+        introduction,
+        school,
+        major,
+        job,
+        work,
+        region,
+        birth,
+        tall,
+        shape,
+        character,
+        bloodType,
+        smoking,
+        drinking,
+        files]);
     
     return (
         <AuthSignUpDetail
             scrollRef={scrollRef}    
             mention={mention}
             validation={validation}
+            duplicateCheckFlag={duplicateCheckFlag}
             onPressSubmit={onPressSubmit}
         />
     );

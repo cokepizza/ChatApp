@@ -5,11 +5,13 @@ import styled, { css } from 'styled-components/native';
 import TextAreaContainer from '../../containers/common/TextAreaContainer';
 import CheckBeforeIcon from '../../assets/images/check_before.png';
 import CheckAfterIcon from '../../assets/images/check_after.png';
+import ErrorIcon from '../../assets/images/error.png';
 
 const ProfileTouchBlock = styled.TouchableWithoutFeedback``;
 
 const ProfileBlock = styled.View`
     width: 100%;
+    height: 1580px;
 `;
 
 const ImageBlock = styled.Image`
@@ -112,27 +114,54 @@ const MarginBlock = styled.View`
     height: 20px;
 `;
 
+const RedWarningBlock = styled.View`
+    width: 100%;
+    height: 40px;
+    padding-left: 54px;
+    padding-right: 54px;
+    margin-top: 5px;
+`;
+
+const RedTextBlock = styled.Text`
+    font-size: 13px;
+    color: rgba(220, 20, 60, 0.8);
+    margin-bottom: 10px;
+`;
+
 const TextInputForm = React.memo(({
+    inputRef,
+    index,
     validation,
     value,
-    index,
-    inputRef,
-    focused,
+    flag,
+    loading,
+    error,
+    mention,
+    nextMention,
+    onPress,
     plainForm,
+    focused,
     ...rest
 }) => {
     return (
         <InputInnerFrameBlock>
-            {validation ? (
+            {error ? (
                 <ImageBlock
-                    source={CheckAfterIcon}
+                    source={ErrorIcon}
                     focused={focused}
                 />
             ) : (
-                <ImageBlock
-                    source={CheckBeforeIcon}
-                    focused={focused}
-                />
+                validation ? (
+                    <ImageBlock
+                        source={CheckAfterIcon}
+                        focused={focused}
+                    />
+                ) : (
+                    <ImageBlock
+                        source={CheckBeforeIcon}
+                        focused={focused}
+                    />
+                )
             )}
             <InputBlock
                 ref={ref => inputRef.current[index] = ref}
@@ -212,11 +241,16 @@ const Profile = ({
     smoking,
     drinking,
     validation,
+    duplicateCheckFlag,
+    duplicateCheckLoading,
+    duplicateCheckError,
     onChangeText,
     onFocus,
     onPress,
     onPressPicker,
     onPressBackground,
+    onPressNickname,
+    onFocusNickname,
     onLayout,
     onKeyboardReturn,
 }) => {
@@ -255,16 +289,29 @@ const Profile = ({
                             inputRef={inputRef}
                             index={1}
                             validation={validation.nickname}
-                            plainForm={true}
-                            value={nickname}
-                            onFocus={() => onFocus(1)}
+                            flag={duplicateCheckFlag && !duplicateCheckError}
+                            error={duplicateCheckError}
+                            loading={duplicateCheckLoading}
+                            mention='중복검사'
+                            nextMention='재검사'
+                            onPress={onPressNickname}
+                            onFocus={onFocusNickname}
                             focused={focused[1]}
+                            value={nickname}
                             onChangeText={text => onChangeText('nickname', text)}
                             onSubmitEditing={() => onKeyboardReturn(1)}
                         />
                     </InputOuterFrameBlock>
                 </InputTouchFrameBlock>
-                <MarginBlock />
+                {duplicateCheckError ? (
+                    <RedWarningBlock>
+                        <RedTextBlock>
+                            {duplicateCheckError}
+                        </RedTextBlock>
+                    </RedWarningBlock>
+                ): (
+                    <MarginBlock />
+                )}
                 <InputTouchFrameBlock onPress={() => onPress(2)}>
                     <InputOuterFrameBlock
                         marginTop={1}

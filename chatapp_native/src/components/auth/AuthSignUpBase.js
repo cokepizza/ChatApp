@@ -324,7 +324,6 @@ const AuthSignUpBase = ({
                                     onPress={onPressUsername}
                                     onFocus={onFocusUsername}
                                     focused={focused[0]}
-                                    // onFocus={onFocusUsername}
                                     value={username}
                                     onChangeText={text => onChangeText('username', text)}
                                     keyboardType='email-address'
@@ -352,7 +351,6 @@ const AuthSignUpBase = ({
                                     validation={validation.password}
                                     plainForm={true}
                                     error={false}
-                                    // onFocus={onFocusUsername}
                                     onFocus={() => onFocus(1)}
                                     focused={focused[1]}
                                     value={password}
@@ -376,7 +374,6 @@ const AuthSignUpBase = ({
                                     validation={validation.passwordConfirm}
                                     plainForm={true}
                                     error={false}
-                                    // onFocus={onFocusUsername}
                                     onFocus={() => onFocus(2)}
                                     focused={focused[2]}
                                     value={passwordConfirm}

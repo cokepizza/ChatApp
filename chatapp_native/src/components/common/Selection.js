@@ -31,12 +31,17 @@ const ItemTouchBlock = styled.TouchableOpacity`
     align-items: center;
 
     ${props => props.value && css`
-        background: gray;
+        background: rgba(123, 104, 238, 0.05);
     `}
 `;
 
 const TextBlock = styled.Text`
     font-size: 12px;
+    color: rgba(0, 0, 0, 0.5);
+
+    ${props => props.value && css`
+        color: rgba(123, 104, 238, 0.8);
+    `}
 `;
 
 const Selection = ({ list, value, onPressItem }) => {
@@ -52,7 +57,7 @@ const Selection = ({ list, value, onPressItem }) => {
                         onPress={() => onPressItem(i)}
                         value={value[i]}
                     >
-                        <TextBlock>
+                        <TextBlock value={value[i]}>
                             {list[i]}
                         </TextBlock>
                     </ItemTouchBlock>
@@ -65,7 +70,7 @@ const Selection = ({ list, value, onPressItem }) => {
                             onPress={() => onPressItem(i+1)}
                             value={value[i+1]}
                         >
-                            <TextBlock>
+                            <TextBlock value={value[i+1]}>
                                 {list[i+1]}
                             </TextBlock>
                         </ItemTouchBlock>

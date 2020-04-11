@@ -1,4 +1,4 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState, useEffect } from 'react';
 import { useDispatch, useSelector, shallowEqual } from 'react-redux';
 
 import Modal from '../../components/common/Modal';
@@ -23,10 +23,27 @@ const ModalContainer = () => {
 
     const dispatch = useDispatch();
 
+    const [ validation, setValidation ] = useState(true);
+
     let  name, type, list, range, unit, join, detail;
     if(inform[modal]) {
         ({ name, type, list, range, unit, join, detail } = inform[modal]);
     }
+
+    useEffect(() => {
+        if(modal && inform[modal].type === 'selection' && inform[modal].required) {
+            const count = value[modal].reduce((acc, cur) => {
+                if(cur) return acc+1;
+                return acc;
+            }, 0);
+    
+            if(count === inform[modal].required) {
+                setValidation(true);
+            } else {
+                setValidation(false);
+            }
+        }
+    }, [inform, value, modal]);
     
     const onPressSubmit = useCallback(() => {
         let revisedValue = [];
@@ -120,6 +137,7 @@ const ModalContainer = () => {
             unit={unit}
             detail={detail}
             value={value[modal]}
+            validation={validation}
             onPressSubmit={onPressSubmit}
             onPressCancel={onPressCancel}
             onValueChange={onValueChange}

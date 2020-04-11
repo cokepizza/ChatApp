@@ -80,11 +80,23 @@ const ButtonFrameBlock = styled.View`
     `}
 `;
 
-const ButtonTextBlock = styled.Text`
+const ButtonTextBlock = css`
     border-top-color: rgba(0, 0, 0, 0.3);
     border-top-width: 1px;
-    color: rgba(0, 0, 0, 0.3);
     font-size: 14px;
+`;
+
+const SubmitBlock = styled.Text`
+    ${ButtonTextBlock};
+    color: rgba(123, 104, 238, 0.8);
+    ${props => props.disabled && css`
+        color: rgba(0, 0, 0, 0.3);
+    `}
+`;
+
+const CancelBlock = styled.Text`
+    ${ButtonTextBlock};
+    color: rgba(0, 0, 0, 0.3);
 `;
 
 const PickerFrameBlock = styled.View`
@@ -106,6 +118,7 @@ const Modal = ({
     unit,
     detail,
     value,
+    validation,
     onPressSubmit,
     onPressCancel,
     onValueChange
@@ -189,16 +202,19 @@ const Modal = ({
                 <ModalFooterBlock>
                     <ButtonFrameBlock borderRight={1}>
                         <ButtonTouchBlock onPress={onPressCancel}>
-                            <ButtonTextBlock>
+                            <CancelBlock>
                                 취소
-                            </ButtonTextBlock>                        
+                            </CancelBlock>                        
                         </ButtonTouchBlock>
                     </ButtonFrameBlock>
                     <ButtonFrameBlock>
-                        <ButtonTouchBlock onPress={onPressSubmit}>
-                            <ButtonTextBlock>
+                        <ButtonTouchBlock
+                            onPress={onPressSubmit}
+                            disabled={!validation}
+                        >
+                            <SubmitBlock disabled={!validation}>
                                 확인
-                            </ButtonTextBlock>
+                            </SubmitBlock>
                         </ButtonTouchBlock>
                     </ButtonFrameBlock>
                 </ModalFooterBlock>

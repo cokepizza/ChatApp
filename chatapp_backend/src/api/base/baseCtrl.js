@@ -13,5 +13,5 @@ export const duplicateCheck = async (req, res, next) => {
         });
     }
 
-    return res.send(202).end();
+    return res.status(202).end();
 }

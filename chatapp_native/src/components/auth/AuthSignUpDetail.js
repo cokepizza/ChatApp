@@ -62,7 +62,13 @@ const ButtonTextBlock = styled.Text`
     `}
 `;
 
-const AuthSignUpDetail = ({ scrollRef, mention, validation, onPressSubmit }) => {
+const AuthSignUpDetail = ({
+    scrollRef,
+    mention,
+    validation,
+    duplicateCheckFlag,
+    onPressSubmit
+}) => {
 
     let inValidSignUp = false;
     Object.keys(validation).forEach(key => {
@@ -75,9 +81,9 @@ const AuthSignUpDetail = ({ scrollRef, mention, validation, onPressSubmit }) => 
         inValidSignUp = true;
     }
 
-    // if(!duplicateCheckFlag) {
-    //     inValidSignUp = true;
-    // }
+    if(!duplicateCheckFlag) {
+        inValidSignUp = true;
+    }
 
     return (
         <AuthSignUpDetailBlock>
