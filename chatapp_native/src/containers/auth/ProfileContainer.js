@@ -150,8 +150,6 @@ const ProfileContainer = ({ scrollRef }) => {
         if(index+1 < inputComponentNum) {
             inputRef.current[index+1].focus();
         } else if(index+1 === inputComponentNum) {
-            // clearFocus();
-            // inputRef.current[inputComponentNum].focus();
             onFocus(inputComponentNum);
             dispatch(setModal({
                 modal: modalList[0],

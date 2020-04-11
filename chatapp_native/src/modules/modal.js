@@ -81,7 +81,7 @@ export default handleActions({
         ...state,
         modal: initialState.modal,
     }),
-    [SET_VALUE]: (state, { payload: { key, index, value } }) => { console.log(state); return {
+    [SET_VALUE]: (state, { payload: { key, index, value } }) => ({
         ...state,
         value: {
             ...state.value,
@@ -91,7 +91,7 @@ export default handleActions({
                 ...state.value[key].slice(index+1, state.value[key].length),
             ],
         },
-    }},
+    }),
     [CLEAR_VALUE]: (state, { payload: { key } }) => ({
         ...state,
         value: {
