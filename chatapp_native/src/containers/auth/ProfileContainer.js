@@ -1,14 +1,14 @@
-import React, { useState, useCallback, useRef, createRef } from 'react';
+import React, { useState, useCallback, useEffect, useRef, createRef } from 'react';
 import { useSelector, useDispatch } from 'react-redux';
 
 import Profile from '../../components/auth/Profile';
 import { setValue as setProfileValue } from '../../modules/profile';
 import { setModal, setValue as setModalValue } from '../../modules/modal';
-import { inform as modalInform } from '../../modules/modal';
+import { inform } from '../../modules/modal';
 
 const componentNum = 14;
 const inputComponentNum = 6;
-const modalList = Object.keys(modalInform);
+const modalList = Object.keys(inform);
 
 const ProfileContainer = ({ scrollRef }) => {
     //  TextArea는 라이브러리 형태로 만들어봄
@@ -29,7 +29,7 @@ const ProfileContainer = ({ scrollRef }) => {
         smoking,
         drinking,
         validation,
-        inform,
+        modal,
     } = useSelector(({ profile, modal }) => ({
         introduction: profile.introduction,
         introductionWordLimit: profile.introductionWordLimit,
@@ -47,7 +47,7 @@ const ProfileContainer = ({ scrollRef }) => {
         smoking: profile.smoking,
         drinking: profile.drinking,
         validation: profile.validation,
-        inform: modal.inform,
+        modal: modal.modal,
     }));
 
     const dispatch = useDispatch();
@@ -69,6 +69,14 @@ const ProfileContainer = ({ scrollRef }) => {
     const componentHeight = useRef(initialStateMaker(null));
     const inputRef = useRef(initialStateMaker(createRef));
 
+    useEffect(() => {
+        if(modal) {
+            const currentIndex = modalList.indexOf(modal);
+            console.log(currentIndex + inputComponentNum);
+            onFocus(inputComponentNum + currentIndex);
+        }
+    }, [modal, inputComponentNum]);
+
     const onPress = useCallback(index => {
         inputRef.current[index].focus();
     }, []);
@@ -81,7 +89,7 @@ const ProfileContainer = ({ scrollRef }) => {
         });
 
         setFocused(initialStateMaker(false));
-    }, []);
+    }, [inputComponentNum]);
 
     const onFocus = useCallback(index => {
         if(scrollRef.current) {
@@ -150,7 +158,6 @@ const ProfileContainer = ({ scrollRef }) => {
         if(index+1 < inputComponentNum) {
             inputRef.current[index+1].focus();
         } else if(index+1 === inputComponentNum) {
-            onFocus(inputComponentNum);
             dispatch(setModal({
                 modal: modalList[0],
             }));

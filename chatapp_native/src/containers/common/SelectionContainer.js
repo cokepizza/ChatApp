@@ -2,15 +2,14 @@ import React, { useCallback } from 'react';
 import { useSelector, useDispatch, shallowEqual } from 'react-redux';
 
 import Selection from '../../components/common/Selection';
-import { setValue } from '../../modules/modal';
+import { setValue, inform } from '../../modules/modal';
 
 const countLimit = 3;
 
 const SelectionContainer = () => {
-    const { modal, value, inform } = useSelector(({ modal }) => ({
+    const { modal, value } = useSelector(({ modal }) => ({
         modal: modal.modal,
         value: modal.value,
-        inform: modal.inform,
     }), shallowEqual);
 
     const dispatch = useDispatch();

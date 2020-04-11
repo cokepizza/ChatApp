@@ -69,7 +69,6 @@ const initialState = {
         smoking: [''],
         drinking: [''],
     },
-    inform,
 };
 
 export default handleActions({
