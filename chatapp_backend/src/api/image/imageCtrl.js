@@ -11,6 +11,7 @@ export const createAuthImage = async (req, res, next) => {
     const promiseArr = [];
 
     imageOrder.forEach((order, index) => {
+        console.log(authImages[index]);
         const { key, size } = authImages[index];
         
         promiseArr.push(AuthImage.create({

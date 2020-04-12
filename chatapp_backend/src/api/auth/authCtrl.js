@@ -1,6 +1,8 @@
 import passport from 'passport';
-import db from '../../models/';
 import jwt from 'jsonwebtoken';
+
+import db from '../../models/';
+import { profileConverter } from '../../lib/profileConverter';
 
 const { User } = db;
 
@@ -48,25 +50,10 @@ export const signIn = (req, res, next) => {
 
 export const signUp = async (req, res, next) => {
     const {
-        username,
         password,
-        gender,
-        phone,
-        introduction,
-        nickname,
-        school,
-        major,
-        job,
-        work,
-        region,
-        birth,
-        tall,
-        shape,
-        character,
-        bloodType,
-        smoking,
-        drinking
-} = req.body;
+        username,
+        ...rest
+    } = req.body;
 
     try {
         const exist = await User.findOne({ where: { username } });
@@ -75,24 +62,10 @@ export const signUp = async (req, res, next) => {
             return res.status(409).send('Registered user');
         }
 
+        const profile = profileConverter({ username, ...rest });
+
         const user = await User.build({
-            username,
-            gender,
-            phone,
-            introduction,
-            nickname,
-            school,
-            major,
-            job,
-            work,
-            region,
-            birth,
-            tall,
-            shape,
-            character,
-            bloodType,
-            smoking,
-            drinking
+            ...profile,
         });
 
         await user.setPassword(password);

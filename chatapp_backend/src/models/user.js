@@ -9,11 +9,11 @@ const user = sequelize => {
             unique: true,
         },
         password: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.STRING(100),
             allowNull: false,
         },
         gender: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         phone: {
@@ -45,11 +45,19 @@ const user = sequelize => {
             allowNull: false,
         },
         region: {
-            type: DataTypes.STRING(30),
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
-        birth: {
-            type: DataTypes.STRING(30),
+        birthYear: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        birthMonth: {
+            type: DataTypes.INTEGER,
+            allowNull: false,
+        },
+        brithDay: {
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         tall: {
@@ -57,7 +65,7 @@ const user = sequelize => {
             allowNull: false,
         },
         shape: {
-            type: DataTypes.STRING(20),
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         character: {
@@ -65,15 +73,15 @@ const user = sequelize => {
             allowNull: false,
         },
         bloodType: {
-            type: DataTypes.STRING(10),
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         smoking: {
-            type: DataTypes.BOOLEAN,
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
         drinking: {
-            type: DataTypes.STRING(30),
+            type: DataTypes.INTEGER,
             allowNull: false,
         },
     }, {
