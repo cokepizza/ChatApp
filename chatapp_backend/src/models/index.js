@@ -3,6 +3,7 @@ import dbConfig from '../config/dbConfig.json';
 import user from './user';
 import authImage from './authImage';
 import dailyImage from './dailyImage';
+import recommend from './recommend';
 
 const env = process.env.NODE_ENV || 'development';
 const config = dbConfig[env];
@@ -15,6 +16,13 @@ db.sequelize = sequelize;
 db.User = user(sequelize);
 db.AuthImage = authImage(sequelize);
 db.DailyImage = dailyImage(sequelize);
+db.Recommend = recommend(sequelize);
+
+db.User.hasMany(db.Recommend, { foreignKey: 'origin_id', sourceKey: 'id' });
+db.Recommend.belongsTo(db.User, { foreignKey: 'origin_id', sourceKey: 'id' });
+
+db.User.hasMany(db.Recommend, { foreignKey: 'target_id', sourceKey: 'id' });
+db.Recommend.belongsTo(db.User, { foreignKey: 'target_id', sourceKey: 'id' });
 
 db.User.hasMany(db.AuthImage, { foreignKey: 'userId', sourceKey: 'id' });
 db.AuthImage.belongsTo(db.User, { foreignKey: 'userId', targetKey: 'id' });
