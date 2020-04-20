@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useState, useRef } from 'react';
 import { Animated, PanResponder, Dimensions } from 'react-native';
 
 import Deck from '../../components/swipe/Deck';
@@ -38,21 +38,21 @@ const DeckContainer = () => {
                 }
             },
         })
-    );
+    ).current;
 
     const [ cardIndex, setCardIndex ] = useState(0);
 
-    const getDynamicStyle = () => {
+    const getDynamicStyle = useCallback(() => {
         const rotate = position.x.interpolate({
             inputRange: [-screenWidth * 1.5, 0, screenWidth * 1.5],
-            outRange: ['-120deg', '0deg', '120deg'],
+            outputRange: ['-120deg', '0deg', '120deg'],
         });
         
         return {
             ...position.getLayout(),
             transform: [{ rotate }],
         };
-    }
+    }, []);
 
     const resetPosition = useCallback(() => {
         Animated.spring(position, {
