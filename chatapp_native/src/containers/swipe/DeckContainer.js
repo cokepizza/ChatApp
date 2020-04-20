@@ -1,5 +1,6 @@
-import React, { useCallback } from 'react';
+import React, { useCallback, useState } from 'react';
 import { Animated, PanResponder, Dimensions } from 'react-native';
+
 import Deck from '../../components/swipe/Deck';
 
 const DATA = [
@@ -39,6 +40,8 @@ const DeckContainer = () => {
         })
     );
 
+    const [ cardIndex, setCardIndex ] = useState(0);
+
     const getDynamicStyle = () => {
         const rotate = position.x.interpolate({
             inputRange: [-screenWidth * 1.5, 0, screenWidth * 1.5],
@@ -62,6 +65,7 @@ const DeckContainer = () => {
             toValue: { x, y },
             duration: 250
         }).start(() => {
+            setCardIndex(prevState => prevState + 1);
             console.log('swipe end');
         });
     });
@@ -76,7 +80,9 @@ const DeckContainer = () => {
 
     return (
         <Deck
-            DATA={DATA}
+            data={DATA}
+            cardIndex={cardIndex}
+            screenWidth={screenWidth}
             position={position}
             panResponder={panResponder}
             getDynamicStyle={getDynamicStyle}
