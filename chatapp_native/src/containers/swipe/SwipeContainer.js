@@ -7,7 +7,7 @@ const SwipeContainer = () => {
     const panResponder = useRef(
         PanResponder.create({
             // onMoveShouldSetPanResponderCapture: () => true,
-            onMoveShouldSetPanResponder: () => true,
+            onStartShouldSetPanResponder: () => true,
             onPanResponderGrant: () => {
                 pan.setOffset({
                     x: pan.x._value,

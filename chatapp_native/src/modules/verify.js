@@ -22,7 +22,6 @@ export const clearValue = createAction(CLEAR_VALUE, payload => payload);
 export const clearPressSubmit = createAction(CLEAR_PRESS_SUBMIT);
 export const clearAll = createAction(CLEAR_ALL);
 
-
 const [ CREATE_SMS, CREATE_SMS_SUCCESS, CREATE_SMS_FAILURE, CREATE_SMS_LOADING ] = createRequestActionTypes('verify/CREATE_SMS');
 const [ VERIFY_TOKEN, VERIFY_TOKEN_SUCCESS, VERIFY_TOKEN_FAILURE, VERIFY_TOKEN_LOADING ] = createRequestActionTypes('verify/VERIFY_TOKEN');
 export const createSMS = createRequestThunk(CREATE_SMS, verifyCtrl.createSMS);
@@ -33,9 +32,9 @@ function* connectWebsocketSaga (action) {
 
     const socketTask = yield fork(connectNamespace, {
         // url: 'https://hixxx.me/chat',
-        url: 'http://192.168.0.11:5000/verify',
+        // url: 'http://192.168.0.11:5000/verify',
         // url: 'http://192.168.219.190:5000/verify',
-        // url: 'http://192.168.0.107:5000/verify',
+        url: 'http://192.168.0.107:5000/verify',
         // url: 'http://172.20.10.3:5000/verify',
         initializeValue,
         query,
