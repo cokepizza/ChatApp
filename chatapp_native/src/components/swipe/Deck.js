@@ -1,18 +1,19 @@
 import React from 'react';
 import { Animated, Dimensions } from 'react-native';
-import styled from 'styled-components/native';
 
 const screenWidth = Dimensions.get('window').width;
 
 import CardContainer from '../../containers/swipe/CardContainer';
 
-const DeckView = styled.View`
-    position: absolute;
-    width: ${screenWidth}px;
-    z-index: 1;
-`;
-
-const Deck = ({ data, cardIndex, position, panResponder, getDynamicStyle }) => {
+const Deck = ({
+    data,
+    cardIndex,
+    panResponder,
+    getDynamicStyle,
+    getRightTagStyle,
+    getLeftTagStyle,
+    getNextCardStyle
+}) => {
     const deckArr = data.map((item, itemIndex) => {
         console.log(itemIndex);
         console.log(cardIndex);
@@ -30,14 +31,22 @@ const Deck = ({ data, cardIndex, position, panResponder, getDynamicStyle }) => {
                     style={[getDynamicStyle(), { position: 'absolute', width: screenWidth, zIndex: 10 }]}
                     {...panResponder.panHandlers}
                 >
-                    <CardContainer item={item} />
+                    <CardContainer
+                        item={item}
+                        getRightTagStyle={getRightTagStyle}
+                        getLeftTagStyle={getLeftTagStyle}
+                    />
                 </Animated.View>
             )
         } else {
             return (
-                <DeckView key={item.id}>
+                <Animated.View
+                    key={item.id}
+                    style={[getNextCardStyle(), { position: 'absolute', width: screenWidth, zIndex: 1 }]}
+                >
                     <CardContainer item={item} />
-                </DeckView>
+                </Animated.View>
+                
             )
         }
         

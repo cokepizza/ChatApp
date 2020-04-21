@@ -52,6 +52,45 @@ const DeckContainer = () => {
         };
     }, []);
 
+    const getNextCardStyle = useCallback(() => {
+        const rotate = position.x.interpolate({
+            inputRange: [-screenWidth * 0.3, -screenWidth * 0.1, 0, screenWidth * 0.1, screenWidth * 0.3],
+            outputRange: [0, 20, 0, 20, 0],
+        });
+
+        return {
+            top: rotate,
+        }
+    }, []);
+
+    const getRightTagStyle = useCallback(() => {
+        const rotate = position.x.interpolate({
+            inputRange: [-screenWidth * 0.5, 0, screenWidth * 0.5],
+            outputRange: [1, 0, 0],
+        });
+
+        // return {
+        //     opacity: rotate,
+        // }
+        return {
+            
+        }
+    }, []);
+
+    const getLeftTagStyle = useCallback(() => {
+        const rotate = position.x.interpolate({
+            inputRange: [-screenWidth * 0.5, 0, screenWidth * 0.5],
+            outputRange: [0, 0, 1],
+        });
+
+        // return {
+        //     opacity: rotate,
+        // }
+        return {
+           
+        }
+    }, []);
+
     const resetPosition = useCallback(() => {
         Animated.spring(position, {
             toValue: { x: 0, y: 0 }
@@ -66,11 +105,11 @@ const DeckContainer = () => {
         }).start(() => swipeComplete(direction));
     });
 
-    const swipeComplete = direction => {
+    const swipeComplete = useCallback(direction => {
         direction === 'right' ? onSwipeRight() : onSwipeLeft();
         position.setValue({ x : 0, y : 0 });
         setCardIndex(prevState => prevState + 1);
-    }
+    }, []);
     
     const onSwipeRight = useCallback(() => {
 
@@ -84,9 +123,11 @@ const DeckContainer = () => {
         <Deck
             data={DATA}
             cardIndex={cardIndex}
-            position={position}
             panResponder={panResponder}
             getDynamicStyle={getDynamicStyle}
+            getRightTagStyle={getRightTagStyle}
+            getLeftTagStyle={getLeftTagStyle}
+            getNextCardStyle={getNextCardStyle}
         />
     );
 };
