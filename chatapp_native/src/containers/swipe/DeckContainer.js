@@ -24,15 +24,13 @@ const DeckContainer = () => {
         PanResponder.create({
             onStartShouldSetPanResponder: () => true,
             onPanResponderMove: (e, gestureState) => {
-                console.log('onPanResponderMove');
                 position.setValue({ x: gestureState.dx, y: gestureState.dy })
             },
             onPanResponderRelease: (e, gestureState) => {
-                console.log('onPanResponderRelease');
                 if(gestureState.dx > swipeThreshold) {
-                    swipeRight();
+                    forceSwipe('right');
                 } else if(gestureState.dx < -swipeThreshold) {
-                    swipeLeft();
+                    forceSwipe('left');
                 } else {
                     resetPosition();
                 }
@@ -60,29 +58,32 @@ const DeckContainer = () => {
         }).start();
     }, []);
 
-    const forceSwipe = useCallback(({ x, y }) => {
+    const forceSwipe = useCallback(direction => {
+        const x = direction === 'right' ? screenWidth : -screenWidth;
         Animated.timing(position, {
-            toValue: { x, y },
+            toValue: { x, y: 0 },
             duration: 250
-        }).start(() => {
-            setCardIndex(prevState => prevState + 1);
-            console.log('swipe end');
-        });
+        }).start(() => swipeComplete(direction));
     });
 
-    const swipeRight = useCallback(() => {
-        forceSwipe({ x: screenWidth, y: 0 });
-    }, [forceSwipe]);
+    const swipeComplete = direction => {
+        direction === 'right' ? onSwipeRight() : onSwipeLeft();
+        position.setValue({ x : 0, y : 0 });
+        setCardIndex(prevState => prevState + 1);
+    }
+    
+    const onSwipeRight = useCallback(() => {
 
-    const swipeLeft = useCallback(() => {
-        forceSwipe({ x: -screenWidth, y: 0 });
-    }, [forceSwipe]);
+    }, []);
+
+    const onSwipeLeft = useCallback(() => {
+
+    }, []);
 
     return (
         <Deck
             data={DATA}
             cardIndex={cardIndex}
-            screenWidth={screenWidth}
             position={position}
             panResponder={panResponder}
             getDynamicStyle={getDynamicStyle}
