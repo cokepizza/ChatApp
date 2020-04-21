@@ -65,29 +65,23 @@ const DeckContainer = () => {
 
     const getRightTagStyle = useCallback(() => {
         const rotate = position.x.interpolate({
-            inputRange: [-screenWidth * 0.5, 0, screenWidth * 0.5],
-            outputRange: [1, 0, 0],
+            inputRange: [-screenWidth * 0.1, 0],
+            outputRange: [1, 0],
         });
 
-        // return {
-        //     opacity: rotate,
-        // }
         return {
-            
+            opacity: rotate,
         }
     }, []);
 
     const getLeftTagStyle = useCallback(() => {
         const rotate = position.x.interpolate({
-            inputRange: [-screenWidth * 0.5, 0, screenWidth * 0.5],
-            outputRange: [0, 0, 1],
+            inputRange: [0, screenWidth * 0.1],
+            outputRange: [0, 1],
         });
 
-        // return {
-        //     opacity: rotate,
-        // }
         return {
-           
+            opacity: rotate,
         }
     }, []);
 

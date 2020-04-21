@@ -1,6 +1,9 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
+import { Dimensions, Animated } from 'react-native';
 import styled from 'styled-components/native';
+
+import LikeIcon from '../../assets/images/Like.png';
+import NopeIcon from '../../assets/images/Nope.png';
 
 const screen_width = Dimensions.get('window').width;
 const cardSize = screen_width * 0.9;
@@ -29,26 +32,27 @@ const CardTextBlock = styled.Text`
     font-size: 15px;
 `;
 
-const CardRightTagBlock = styled.View``;
-const CardLeftTagBlock = styled.View``;
+const TagImageBlock = styled.Image`
+    width: 100px;
+    height: 50px;
+`;
 
 const Card = ({ item, getRightTagStyle ,getLeftTagStyle }) => {
-    
     return (
         <CardBlock>
             <CardImageBlock
                 source={{ uri: item.uri }}
             />
-            <CardRightTagBlock style={getRightTagStyle ? getRightTagStyle(): null}>
-                <CardTextBlock>
-                    Yes
-                </CardTextBlock>
-            </CardRightTagBlock>
-            <CardLeftTagBlock style={getLeftTagStyle ? getLeftTagStyle(): null}>
-                <CardTextBlock>
-                    No
-                </CardTextBlock>
-            </CardLeftTagBlock>
+            {getRightTagStyle && getLeftTagStyle && (
+                <>
+                    <Animated.View style={[getRightTagStyle(), { position: 'absolute', left: 0 }]}>
+                        <TagImageBlock source={NopeIcon}/>
+                    </Animated.View>
+                    <Animated.View style={[getLeftTagStyle(), { position: 'absolute', left:cardSize-100}]}>
+                        <TagImageBlock source={LikeIcon}/>
+                    </Animated.View>
+                </>
+            )}
             <CardTextFrameBlock>
                 <CardTextBlock>
                     {item.text}

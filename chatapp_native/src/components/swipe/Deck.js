@@ -20,11 +20,9 @@ const Deck = ({
         console.log(itemIndex < cardIndex);
         console.log('---------------');
         if(itemIndex < cardIndex) {
-            console.log('other~');
             return null;
         }
         else if(itemIndex === cardIndex) {
-            console.log(`card View: ${itemIndex}`);
             return (
                 <Animated.View
                     key={item.id}
@@ -44,7 +42,9 @@ const Deck = ({
                     key={item.id}
                     style={[getNextCardStyle(), { position: 'absolute', width: screenWidth, zIndex: 1 }]}
                 >
-                    <CardContainer item={item} />
+                    <CardContainer
+                        item={item}
+                    />
                 </Animated.View>
                 
             )
