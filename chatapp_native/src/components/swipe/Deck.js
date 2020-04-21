@@ -1,9 +1,9 @@
 import React from 'react';
 import { Animated, Dimensions } from 'react-native';
 
-const screenWidth = Dimensions.get('window').width;
-
 import CardContainer from '../../containers/swipe/CardContainer';
+
+const screenWidth = Dimensions.get('window').width;
 
 const Deck = ({
     data,
@@ -15,10 +15,6 @@ const Deck = ({
     getNextCardStyle
 }) => {
     const deckArr = data.map((item, itemIndex) => {
-        console.log(itemIndex);
-        console.log(cardIndex);
-        console.log(itemIndex < cardIndex);
-        console.log('---------------');
         if(itemIndex < cardIndex) {
             return null;
         }
@@ -26,7 +22,7 @@ const Deck = ({
             return (
                 <Animated.View
                     key={item.id}
-                    style={[getDynamicStyle(), { position: 'absolute', width: screenWidth, zIndex: 10 }]}
+                    style={[getDynamicStyle(), { position: 'absolute', width: screenWidth, alignItems: 'center', zIndex: 10 }]}
                     {...panResponder.panHandlers}
                 >
                     <CardContainer
@@ -40,7 +36,7 @@ const Deck = ({
             return (
                 <Animated.View
                     key={item.id}
-                    style={[getNextCardStyle(), { position: 'absolute', width: screenWidth, zIndex: 1 }]}
+                    style={[getNextCardStyle(), { position: 'absolute', width: screenWidth, alignItems: 'center', zIndex: 1 }]}
                 >
                     <CardContainer
                         item={item}

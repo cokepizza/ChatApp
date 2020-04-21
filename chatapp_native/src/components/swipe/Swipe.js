@@ -1,31 +1,26 @@
 import React from 'react';
-import { Animated } from 'react-native';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
 import DeckContainer from '../../containers/swipe/DeckContainer';
 
+const screenWidth = Dimensions.get('window').width;
+
 const SwipeBlock = styled.SafeAreaView`
     flex: 1;
-    background: white;
 `;
 
-const SquareBlock = styled.View`
-    height: 300px;
-    width: 300px;
-    background: red;
+const DeckBlock = styled.View`
+    position: relative;
 `;
 
 const Swipe = () => {
 
     return (
         <SwipeBlock>
-            {/* <Animated.View
-                style={{ transform: [{ translateX: pan.x }, { translateY: pan.y }] }}
-                {...panResponder.panHandlers}
-            >
-                <SquareBlock />
-            </Animated.View> */}
-            <DeckContainer />
+            <DeckBlock>
+                <DeckContainer />
+            </DeckBlock>
         </SwipeBlock>
     );
 };

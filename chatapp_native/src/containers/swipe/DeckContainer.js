@@ -48,40 +48,45 @@ const DeckContainer = () => {
         
         return {
             ...position.getLayout(),
-            transform: [{ rotate }],
+            transform: [
+                { translateX: position.x },
+                { translateY: position.y },
+                { rotate },
+                { scale: 0.98 }
+            ],
         };
     }, []);
 
     const getNextCardStyle = useCallback(() => {
-        const rotate = position.x.interpolate({
-            inputRange: [-screenWidth * 0.3, -screenWidth * 0.1, 0, screenWidth * 0.1, screenWidth * 0.3],
-            outputRange: [0, 20, 0, 20, 0],
+        const scale = position.x.interpolate({
+            inputRange: [-screenWidth, -screenWidth * 0.2, 0, screenWidth * 0.2, screenWidth],
+            outputRange: [0.98, 0.98, 0.9, 0.98, 0.98],
         });
 
         return {
-            top: rotate,
+            transform: [{ scale }]
         }
     }, []);
 
     const getRightTagStyle = useCallback(() => {
-        const rotate = position.x.interpolate({
-            inputRange: [-screenWidth * 0.1, 0],
-            outputRange: [1, 0],
-        });
-
-        return {
-            opacity: rotate,
-        }
-    }, []);
-
-    const getLeftTagStyle = useCallback(() => {
-        const rotate = position.x.interpolate({
+        const opacity = position.x.interpolate({
             inputRange: [0, screenWidth * 0.1],
             outputRange: [0, 1],
         });
 
         return {
-            opacity: rotate,
+            opacity,
+        }
+    }, []);
+
+    const getLeftTagStyle = useCallback(() => {
+        const opacity = position.x.interpolate({
+            inputRange: [-screenWidth * 0.1, 0],
+            outputRange: [1, 0],
+        });
+
+        return {
+            opacity,
         }
     }, []);
 
