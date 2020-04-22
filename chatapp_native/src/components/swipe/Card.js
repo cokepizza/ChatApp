@@ -1,7 +1,6 @@
 import React from 'react';
 import { Dimensions, Animated } from 'react-native';
 import styled from 'styled-components/native';
-// import { TouchableOpacity } from 'react-native-gesture-handler';
 
 import LikeIcon from '../../assets/images/like.png';
 import NopeIcon from '../../assets/images/nope.png';
@@ -69,7 +68,7 @@ const BarFrameBlock = styled.View`
 
 const BarBlock = styled.View`
     height: 5px;
-    background: rgba(0, 0, 0, 0.3);
+    background: rgba(0, 0, 0, 0.2);
     border-radius: 10px;
     z-index: 100;
     margin-right: 20px;
@@ -85,10 +84,8 @@ const Card = ({
     onPressRight,
     onPressLeft,
 }) => {
-    // marginRight: i === uriLength-1 ? 0 : 10 
     const barBundle = [];
     const width = (screenWidth -2 - 20 - 10 * (uriLength-1)) / uriLength;
-    // alert(uriLength);
     if(uriLength > 1) {
         for(let i=0; i<uriLength; ++i) {
             if(i === uriIndex) {

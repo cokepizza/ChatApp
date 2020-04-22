@@ -37,7 +37,7 @@ const Deck = ({
                     />
                 </Animated.View>
             )
-        } else {
+        } else if(itemIndex === cardIndex+1) {
             return (
                 <Animated.View
                     key={item.id}
@@ -47,7 +47,18 @@ const Deck = ({
                         item={item}
                     />
                 </Animated.View>
-                
+            )
+        } else {
+            return (
+                null
+                // <Animated.View
+                //     key={item.id}
+                //     style={{ transform: [{ scale: 0.9 }], position: 'absolute', width: screenWidth, alignItems: 'center', zIndex: 1 }}
+                // >
+                //     <CardContainer
+                //         item={item}
+                //     />
+                // </Animated.View>
             )
         }
         

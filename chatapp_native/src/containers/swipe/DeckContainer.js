@@ -26,7 +26,6 @@ const DeckContainer = () => {
             onMoveShouldSetPanResponder: (e, gestureState) => {
                 const { dx, dy } = gestureState;
                 return dx > 2 || dx < -2 || dy > 2 || dy < -2;
-                // return !(gestureState.dx === 0 && gestureState.dy === 0);
             },
             onPanResponderMove: (e, gestureState) => {
                 position.setValue({ x: gestureState.dx, y: gestureState.dy })
@@ -48,7 +47,9 @@ const DeckContainer = () => {
     const getDynamicStyle = useCallback(() => {
         const rotate = position.x.interpolate({
             inputRange: [-screenWidth * 1.5, 0, screenWidth * 1.5],
-            outputRange: ['-120deg', '0deg', '120deg'],
+            // outputRange: ['-120deg', '0deg', '120deg'],
+            outputRange: ['-50deg', '0deg', '50deg'],
+            
         });
         
         return {
@@ -97,7 +98,8 @@ const DeckContainer = () => {
 
     const resetPosition = useCallback(() => {
         Animated.spring(position, {
-            toValue: { x: 0, y: 0 }
+            toValue: { x: 0, y: 0 },
+            // useNativeDriver: true,
         }).start();
     }, []);
 
@@ -105,7 +107,8 @@ const DeckContainer = () => {
         const x = direction === 'right' ? screenWidth : -screenWidth;
         Animated.timing(position, {
             toValue: { x, y: 0 },
-            duration: 250
+            duration: 250,
+            // useNativeDriver: true,
         }).start(() => swipeComplete(direction));
     });
 
