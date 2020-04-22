@@ -22,7 +22,10 @@ const DeckContainer = () => {
 
     const panResponder = useRef(
         PanResponder.create({
-            onStartShouldSetPanResponder: () => true,
+            onStartShouldSetPanResponder: (e, gestureState) => true,
+            onMoveShouldSetPanResponder: (e, gestureState) => {
+                return !(gestureState.dx === 0 && gestureState.dy === 0);
+            },
             onPanResponderMove: (e, gestureState) => {
                 position.setValue({ x: gestureState.dx, y: gestureState.dy })
             },
@@ -49,8 +52,8 @@ const DeckContainer = () => {
         return {
             ...position.getLayout(),
             transform: [
-                { translateX: position.x },
-                { translateY: position.y },
+                // { translateX: position.x },
+                // { translateY: position.y },
                 { rotate },
                 { scale: 0.98 }
             ],

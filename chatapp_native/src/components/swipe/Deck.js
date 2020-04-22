@@ -1,9 +1,14 @@
 import React from 'react';
 import { Animated, Dimensions } from 'react-native';
+import styled from 'styled-components/native';
 
 import CardContainer from '../../containers/swipe/CardContainer';
 
 const screenWidth = Dimensions.get('window').width;
+
+const DeckBlock = styled.View`
+    position: relative;
+`;
 
 const Deck = ({
     data,
@@ -49,9 +54,9 @@ const Deck = ({
     }).reverse();
 
     return (
-        <>
+        <DeckBlock>
             {deckArr}
-        </>
+        </DeckBlock>
     );
 };
 

@@ -1,16 +1,18 @@
 import React from 'react';
-import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
 
 import DeckContainer from '../../containers/swipe/DeckContainer';
 
-const screenWidth = Dimensions.get('window').width;
-
 const SwipeBlock = styled.SafeAreaView`
+    flex: 1;
+    background: white;
+`;
+
+const ButtonBundleBlock = styled.View`
     flex: 1;
 `;
 
-const DeckBlock = styled.View`
+const DeckView = styled.View`
     position: relative;
 `;
 
@@ -18,9 +20,10 @@ const Swipe = () => {
 
     return (
         <SwipeBlock>
-            <DeckBlock>
-                <DeckContainer />
-            </DeckBlock>
+            <DeckContainer />
+            {/* <ButtonBundleBlock>
+
+            </ButtonBundleBlock> */}
         </SwipeBlock>
     );
 };
