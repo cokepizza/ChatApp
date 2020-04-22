@@ -59,22 +59,67 @@ const RightViewBlock = styled.View`
     height: ${screenWidth-2}px;
 `;
 
+const BarFrameBlock = styled.View`
+    position: absolute;
+    top: 5px;
+    flex-direction: row;
+    padding-left: 10px;
+    padding-right: 10px;
+`;
+
+const BarBlock = styled.View`
+    height: 5px;
+    background: rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+    z-index: 100;
+    margin-right: 20px;
+    width: 0px;
+`;
+
 const Card = ({
     item,
+    uriIndex,
+    uriLength,
     getRightTagStyle,
     getLeftTagStyle,
     onPressRight,
     onPressLeft,
 }) => {
+    // marginRight: i === uriLength-1 ? 0 : 10 
+    const barBundle = [];
+    const width = (screenWidth -2 - 20 - 10 * (uriLength-1)) / uriLength;
+    // alert(uriLength);
+    if(uriLength > 1) {
+        for(let i=0; i<uriLength; ++i) {
+            if(i === uriIndex) {
+                barBundle.push(
+                    <BarBlock
+                        key={`item.text_${i}`}
+                        style={{ width, marginRight: i === uriLength-1 ? 0 : 10, backgroundColor: 'white' }}
+                    />
+                )
+            } else {
+                barBundle.push(
+                    <BarBlock
+                        key={`item.text_${i}`}
+                        style={{ width, marginRight: i === uriLength-1 ? 0 : 10 }}
+                    />
+                )
+            }
+        }
+    }
+
     return (
         <>
-            
             <CardBlock>
                 <CardImageBlock
-                    source={{ uri: item.uri }}
+                    source={{ uri: item.uri[uriIndex] }}
                 />
+                <BarFrameBlock>
+                    {barBundle}
+                </BarFrameBlock>
                 {getRightTagStyle && getLeftTagStyle && (
-                    <>
+                    <>      
                         <LeftTouchBlock onPress={onPressLeft}>
                             <LeftViewBlock />
                         </LeftTouchBlock>

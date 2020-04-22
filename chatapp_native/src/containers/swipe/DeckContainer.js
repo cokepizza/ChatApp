@@ -4,14 +4,14 @@ import { Animated, PanResponder, Dimensions } from 'react-native';
 import Deck from '../../components/swipe/Deck';
 
 const DATA = [
-    { id: 1, text: 'Card #1', uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-04.jpg' },
-    { id: 2, text: 'Card #2', uri: 'http://www.fluxdigital.co/wp-content/uploads/2015/04/Unsplash.jpg' },
-    { id: 3, text: 'Card #3', uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-09.jpg' },
-    { id: 4, text: 'Card #4', uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-01.jpg' },
-    { id: 5, text: 'Card #5', uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-04.jpg' },
-    { id: 6, text: 'Card #6', uri: 'http://www.fluxdigital.co/wp-content/uploads/2015/04/Unsplash.jpg' },
-    { id: 7, text: 'Card #7', uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-09.jpg' },
-    { id: 8, text: 'Card #8', uri: 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-01.jpg' },
+    { id: 1, text: 'Card #1', uri: ['http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-04.jpg', 'http://www.fluxdigital.co/wp-content/uploads/2015/04/Unsplash.jpg', 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-09.jpg', 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-01.jpg'] },
+    { id: 2, text: 'Card #2', uri: ['http://www.fluxdigital.co/wp-content/uploads/2015/04/Unsplash.jpg', 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-01.jpg', 'http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-09.jpg'] },
+    { id: 3, text: 'Card #3', uri: ['http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-09.jpg'] },
+    { id: 4, text: 'Card #4', uri: ['http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-01.jpg'] },
+    { id: 5, text: 'Card #5', uri: ['http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-04.jpg'] },
+    { id: 6, text: 'Card #6', uri: ['http://www.fluxdigital.co/wp-content/uploads/2015/04/Unsplash.jpg'] },
+    { id: 7, text: 'Card #7', uri: ['http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-09.jpg'] },
+    { id: 8, text: 'Card #8', uri: ['http://imgs.abduzeedo.com/files/paul0v2/unsplash/unsplash-01.jpg'] },
   ];
   
 const screenWidth = Dimensions.get('window').width;
@@ -24,7 +24,9 @@ const DeckContainer = () => {
         PanResponder.create({
             onStartShouldSetPanResponder: (e, gestureState) => true,
             onMoveShouldSetPanResponder: (e, gestureState) => {
-                return !(gestureState.dx === 0 && gestureState.dy === 0);
+                const { dx, dy } = gestureState;
+                return dx > 2 || dx < -2 || dy > 2 || dy < -2;
+                // return !(gestureState.dx === 0 && gestureState.dy === 0);
             },
             onPanResponderMove: (e, gestureState) => {
                 position.setValue({ x: gestureState.dx, y: gestureState.dy })
