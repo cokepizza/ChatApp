@@ -1,6 +1,7 @@
 # CHATAPP
 
-Real-time Chat Application (This repository is for introduction. More complete commercial code is managed in a private repository)
+Real-time Chat Application
+(This repository is for introduction. More complete commercial code is managed in a private repository)
 
 ----
 
