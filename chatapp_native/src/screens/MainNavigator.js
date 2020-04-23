@@ -12,9 +12,8 @@ import SettingScreen from './setting/SettingScreen';
 const Tab = createBottomTabNavigator();
 const MainNavigator = () => (
   <Tab.Navigator>
-      <Tab.Screen name='Introduce' component={SwipeContainer}/>
-      {/* <Tab.Screen name='Introduce' component={IntroduceContainer}/> */}
-      <Tab.Screen name='Talk' component={TalkScreen}/>
+      <Tab.Screen name='Introduce' component={IntroduceContainer}/>
+      <Tab.Screen name='Swipe' component={SwipeContainer}/>
       <Tab.Screen name='Feed' component={FeedNavigator}/>
       <Tab.Screen
         name='ChatNav'

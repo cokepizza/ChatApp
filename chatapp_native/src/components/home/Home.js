@@ -1,5 +1,8 @@
 import React from 'react';
+import { Dimensions } from 'react-native';
 import styled from 'styled-components/native';
+
+const screenWidth = Dimensions.get('window').width;
 
 const HomeBlock = styled.SafeAreaView`
     flex: 1;
