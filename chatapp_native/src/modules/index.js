@@ -2,7 +2,6 @@ import { combineReducers } from 'redux';
 import { all } from 'redux-saga/effects';
 
 import auth from './auth';
-import chat, { chatSaga } from './chat';
 
 //  signUp
 import base from './base';
@@ -12,6 +11,8 @@ import modal from './modal';
 import image from './image';
 
 //  main
+import introduce from './introduce';
+import chat, { chatSaga } from './chat';
 import store from './store';
 
 const rootReducer = combineReducers({
@@ -23,8 +24,9 @@ const rootReducer = combineReducers({
     modal,
     image,
 
-    store,
+    introduce,
     chat,
+    store,
 
 });
 
