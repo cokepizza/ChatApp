@@ -38,6 +38,9 @@ Real-time Chat Application
     * Saga
   * React Navigation
 
+## Architecture
+![architecture drawio](https://user-images.githubusercontent.com/56418546/132109676-cd291e0b-09c4-441c-9af5-0170d8d590f5.png)
+
 ## Service Overview
 
 * How this service works
