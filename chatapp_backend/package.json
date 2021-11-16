@@ -1,6 +1,6 @@
 {
   "dependencies": {
-    "aws-sdk": "^2.639.0",
+    "aws-sdk": "^2.814.0",
     "bcrypt": "^4.0.1",
     "cookie-parser": "^1.4.4",
     "cors": "^2.8.5",
